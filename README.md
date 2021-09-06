@@ -1,7 +1,10 @@
 ```
 input-string
 
-Multiplatform text entry utility for GameMaker Studio 2.3 with physical, virtual keyboard and modal support. Different platforms call for different text entry affordances, and input-string provides a suggested source and careful handling for each.
+Multiplatform text entry utility for GameMaker Studio 2.3 with 
+physical, virtual keyboard and modal support. Different platforms 
+call for different text entry affordances, and input-string
+provides a suggested source and careful handling for each.
 
 input_string_platform_hint
    returns: String
