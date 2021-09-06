@@ -1,3 +1,4 @@
+```
 input-string
 
 Multiplatform text entry utility for GameMaker Studio 2.3 with physical, virtual keyboard and modal support. Different platforms call for different text entry affordances, and input-string provides a suggested source and careful handling for each.
@@ -38,3 +39,4 @@ Discord: https://discord.gg/8krYCqr
 
 @offalynne, 2021
 MIT licensed, use as you please
+```
