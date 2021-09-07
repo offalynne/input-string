@@ -11,7 +11,7 @@ function input_string_dialog_async_event()
     }
     else
     {
-        if (input_string_async_is_active() && (async_load != undefined)
+        if (input_string_async_active() && (async_load != undefined)
         && (async_load[? "id"] == global.__input_string_async_id) && (async_load[? "status"] != undefined))
         {
             //Report results            

@@ -1,14 +1,15 @@
 {
   "resources": [
+    {"id":{"name":"input_string_virtual_submit","path":"scripts/input_string_virtual_submit/input_string_virtual_submit.yy",},"order":7,},
     {"id":{"name":"rm_input_string_example","path":"rooms/rm_input_string_example/rm_input_string_example.yy",},"order":6,},
     {"id":{"name":"obj_input_string_example","path":"objects/obj_input_string_example/obj_input_string_example.yy",},"order":5,},
     {"id":{"name":"input_string_dialog_async_event","path":"scripts/input_string_dialog_async_event/input_string_dialog_async_event.yy",},"order":2,},
-    {"id":{"name":"input_string_get","path":"scripts/input_string_get/input_string_get.yy",},"order":1,},
-    {"id":{"name":"input_string_set","path":"scripts/input_string_set/input_string_set.yy",},"order":2,},
-    {"id":{"name":"input_string_tick","path":"scripts/input_string_tick/input_string_tick.yy",},"order":0,},
-    {"id":{"name":"input_string_platform_hint","path":"scripts/input_string_platform_hint/input_string_platform_hint.yy",},"order":4,},
+    {"id":{"name":"input_string_get","path":"scripts/input_string_get/input_string_get.yy",},"order":3,},
+    {"id":{"name":"input_string_set","path":"scripts/input_string_set/input_string_set.yy",},"order":4,},
+    {"id":{"name":"input_string_tick","path":"scripts/input_string_tick/input_string_tick.yy",},"order":6,},
+    {"id":{"name":"input_string_platform_hint","path":"scripts/input_string_platform_hint/input_string_platform_hint.yy",},"order":5,},
     {"id":{"name":"input_string_async_get","path":"scripts/input_string_async_get/input_string_async_get.yy",},"order":0,},
-    {"id":{"name":"input_string_async_is_active","path":"scripts/input_string_async_is_active/input_string_async_is_active.yy",},"order":1,},
+    {"id":{"name":"input_string_async_active","path":"scripts/input_string_async_active/input_string_async_active.yy",},"order":1,},
   ],
   "Options": [],
   "isDnDProject": false,
@@ -23,7 +24,7 @@
   ],
   "Folders": [
     {"folderPath":"folders/input string.yy","order":4,"resourceVersion":"1.0","name":"input string","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/input string/async.yy","order":3,"resourceVersion":"1.0","name":"async","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/input string/async.yy","order":0,"resourceVersion":"1.0","name":"async","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},

@@ -8,7 +8,7 @@ function input_string_async_get(_prompt, _string = global.__input_string)
     //Issue modal request when not awaiting response
     if (global.__input_string_async_id != undefined)
     {
-        show_debug_message("Input String: Dialog prompt refused: waiting for callback ID \"" + string(global.__input_string_async_id) + "\"");
+        show_debug_message("Input String: Dialog prompt refused: awaiting callback ID \"" + string(global.__input_string_async_id) + "\"");
         return false;
     }
     else

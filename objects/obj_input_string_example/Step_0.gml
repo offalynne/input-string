@@ -1,7 +1,7 @@
 input_string_tick();
 
 //Pointer buttons
-if (mouse_check_button_released(mb_any) && !input_string_async_is_active())
+if (mouse_check_button_released(mb_any) && !input_string_async_active())
 {
     var _x = device_mouse_x(0);
     if (device_mouse_y(0) < 300)
@@ -29,25 +29,4 @@ if (mouse_check_button_released(mb_any) && !input_string_async_is_active())
 }
 
 //Close virtual keyboard on submit
-if (!is_undefined(keyboard_virtual_status()) && !input_string_async_is_active())
-{
-    //On iOS
-    if ((os_type == os_ios) || (os_type == os_tvos))
-    {
-        if ((keyboard_lastkey == 10) && (keyboard_lastkey != keyboard_lastkey_previous))
-        {
-            keyboard_virtual_hide();
-            input_string_set(string_delete(input_string_get(), string_length(input_string_get()), 1));
-        }
-    }
-    else
-    {
-        //Off iOS
-        if (keyboard_check_pressed(vk_enter))
-        {
-            keyboard_virtual_hide();
-        }
-    }
-}
-
-keyboard_lastkey_previous = keyboard_lastkey;
+if (input_string_virtual_submit()) keyboard_virtual_hide();

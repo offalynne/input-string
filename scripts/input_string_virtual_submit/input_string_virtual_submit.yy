@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "async",
-    "path": "folders/input string/async.yy",
+    "name": "input string",
+    "path": "folders/input string.yy",
   },
   "resourceVersion": "1.0",
-  "name": "input_string_async_is_active",
+  "name": "input_string_virtual_submit",
   "tags": [],
   "resourceType": "GMScript",
 }
