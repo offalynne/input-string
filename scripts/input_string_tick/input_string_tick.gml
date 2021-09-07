@@ -12,8 +12,7 @@ global.__input_string_keyboard_supported = ((os_browser != browser_not_a_browser
 function input_string_tick()
 {
     //Manage text input
-    if ((global.__input_string_keyboard_supported || os_type == os_ios)
-    && (!input_string_async_is_active()))
+    if (global.__input_string_keyboard_supported && !input_string_async_is_active())
     {
         var _string = keyboard_string;
 
@@ -24,7 +23,6 @@ function input_string_tick()
         }
         
         input_string_set(_string);
+        global.__input_string_tick_last = current_time;
     }
-    
-    global.__input_string_tick_last = current_time;
 }
