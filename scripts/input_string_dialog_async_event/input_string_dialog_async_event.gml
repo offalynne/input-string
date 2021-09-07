@@ -16,7 +16,7 @@ function input_string_dialog_async_event()
         {
             //Report results
             var _result = string(async_load[? "result"]);
-            if (!global.__input_string_allow_empty && ((_result == undefined) || (string(_result) == "")))
+            if (!global.__input_string_allow_empty && ((_result == "undefined") || (string(_result) == "")))
             {
                 _result = global.__input_string_predialogue;
             }
