@@ -1,9 +1,11 @@
 input-string
 
-Multiplatform text entry utility for GameMaker Studio 2.3 with 
-physical, virtual keyboard and modal support. Different platform
-cases call for different text entry affordances, and input-string
-provides a suggested source and unified handling for each.
+Multiplatform text entry utility for GameMaker 
+Studio 2.3 with physical, virtual keyboard and 
+modal support. Different platform cases call for 
+different text entry affordances; input-string 
+provides a suggested source and unified handling 
+for each.
 
 input_string_get
    function: Serves managed text
@@ -14,7 +16,7 @@ input_string_set
   arguments: String
 
 input_string_tick
-  function: Manages state
+  function: Manages state, `keyboard_string`
   usage: Once in Begin Step (Optional)
 
 input_string_platform_hint
@@ -29,7 +31,7 @@ input_string_virtual_submit
 
 input_string_async_get
   function: Opens modal dialog
-  arguments: Dialog caption, Initial string (Optional)
+  arguments: Caption, String (Optional)
   returns: Boolean
   requires: input_string_dialog_async_event
 
@@ -38,7 +40,7 @@ input_string_async_active
    returns: Boolean
 
 input_string_dialog_async_event
-   function: Managed dialog entry
+   function: Dialog entry manager
    usage: Once in Dialog Async (Optional)
 
 Thanks: Juju, Elf, Nik
