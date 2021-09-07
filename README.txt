@@ -1,4 +1,3 @@
-```
 input-string
 
 Multiplatform text entry utility for GameMaker Studio 2.3 with 
@@ -47,4 +46,3 @@ Discord: https://discord.gg/8krYCqr
 
 @offalynne, 2021
 MIT licensed, use as you please
-```
