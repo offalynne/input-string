@@ -10,8 +10,8 @@ input_string_get
    returns: String
 
 input_string_set
-  arguments: String
   function: Sets managed text
+  arguments: String
 
 input_string_tick
   function: Manages state
@@ -28,8 +28,8 @@ input_string_virtual_submit
    requires: input_string_tick
 
 input_string_async_get
-  arguments: Dialog caption, Initial string (Optional)
   function: Opens modal dialog
+  arguments: Dialog caption, Initial string (Optional)
   returns: Boolean
   requires: input_string_dialog_async_event
 
