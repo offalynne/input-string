@@ -1,8 +1,7 @@
 input-string
 
 Multiplatform text entry utility for GameMaker Studio 2.3.
-
-Robust alternative for using inbuilt `keyboard_string`.
+A robust alternative for using inbuilt `keyboard_string`.
 
 input_string_get
    function: Serves managed text
