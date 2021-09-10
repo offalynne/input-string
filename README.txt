@@ -42,7 +42,7 @@ input_string_platform_hint
   possible: “keyboard”, “virtual”, “async”
 
 Thanks to: Juju, Elf, Nik
-Community: https://discord.gg/8krYCqr
+Community: discord.gg/8krYCqr
 
 @offalynne, 2021
 MIT licensed, use as you please
