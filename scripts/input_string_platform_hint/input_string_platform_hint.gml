@@ -6,7 +6,7 @@ function input_string_platform_hint()
         //On console, or non-desktop web
         return "async";
     }
-    else if ((uwp_device_touchscreen_available() && (os_type == os_uwp)) || (os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos))
+    else if (((os_type == os_uwp) && uwp_device_touchscreen_available()) || (os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos))
     {
         //Native mobile
         return "virtual";
