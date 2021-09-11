@@ -4,39 +4,39 @@ Multiplatform text entry utility for GameMaker Studio 2.3.
 
 A robust alternative to inbuilt `keyboard_string` usage.
 
-input_​string_​get
+input_string_get
   function: Serves managed text
   argument: None
   returned: String
 
-input_​string_​set
+input_string_set
   function: Sets managed text
   argument: String (Optional)
 
-input_​string_​virtual_​submit
+input_string_virtual_submit
   function: Serves virtual keyboard state
   requires: input_​string_​tick
 
-input_​string_​tick
-  function: Manages state and `keyboard_​string`
+input_string_tick
+  function: Manages state and `keyboard_string`
   in event: Begin Step (Once, Optional)
 
-input_​string_​async_​get
+input_string_async_get
   function: Opens modal dialog
   requires: input_​string_​dialog_​async_​event
   argument: Caption, Default String (Optional)
   returned: Boolean
 
-input_​string_​async_​active
+input_string_async_active
   function: Serves dialog status
   requires: input_​string_​dialog_​async_​event
   returned: Boolean
 
-input_​string_​dialog_​async_​event
+input_string_dialog_async_event
   function: Dialog entry manager
   in event: Dialog Async (Once, Optional)
 
-input_​string_​platform_​hint
+input_string_platform_hint
   function: Serves entry method hint
   returned: String (Hint)
   possible: “keyboard”, “virtual”, “async”
