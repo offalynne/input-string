@@ -23,4 +23,6 @@ function input_string_async_get(_prompt, _string = global.__input_string)
         global.__input_string_predialogue = input_string_get();
         return true;
     }
+    
+    show_error("Input String: Failed to issue async dialog", true);
 }
