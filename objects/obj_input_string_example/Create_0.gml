@@ -5,7 +5,7 @@ callback_test = function()
     _string = input_string_get();
     if (string_length(_string) > 0)
     {
-        show_message_async("Callback test @" + string(current_time) + " : " + _string);
+        show_message_async("Callback test @" + string(current_time) + ": " + _string);
         input_string_set();
     }
 }
