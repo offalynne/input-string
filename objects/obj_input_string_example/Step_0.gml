@@ -27,6 +27,3 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
         }
     }
 }
-
-//Close virtual keyboard on submit
-if (input_string_virtual_submit()) keyboard_virtual_hide();

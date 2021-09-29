@@ -24,6 +24,7 @@ function input_string_dialog_async_event()
             }
             
             input_string_set(_result);
+            global.__input_string_async_submit = true;
             global.__input_string_async_id = undefined;
         }
     }
