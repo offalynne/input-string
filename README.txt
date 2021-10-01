@@ -14,8 +14,14 @@ input_string_set
   argument: String (Optional)
 
 input_string_virtual_submit
-  function: Serves virtual keyboard state
+  function: Serves virtual keyboard submit state
   requires: input_​string_​tick
+  returned: Boolean
+  
+input_string_callback_set
+  function: Sets submission callback
+  requires: input_​string_​tick
+  argument: Function (optional)
 
 input_string_tick
   function: Manages state and `keyboard_string`
@@ -35,11 +41,6 @@ input_string_async_active
 input_string_dialog_async_event
   function: Dialog entry manager
   in event: Dialog Async (Once, Optional)
-  
-input_string_callback_set
-  function: Sets submission callback
-  requires: input_​string_​tick
-  argument: Function (optional)
 
 input_string_platform_hint
   function: Serves entry method hint
