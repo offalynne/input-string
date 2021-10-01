@@ -7,7 +7,7 @@ function input_string_set(_string = "")
     {
         //Enforce length limit
         _string = string_copy(_string, 1, global.__input_string_max_length);
-        
+
         if ((os_type == os_android) && !_trim)
         {
             //Set leading space
@@ -15,9 +15,9 @@ function input_string_set(_string = "")
             _trim = true;
         }
         
-        //Set inbuilt value if necessary
         if (global.__input_string_tick_last != undefined && keyboard_string != _string)
         {
+            //Set inbuilt value if necessary
             keyboard_string = _string;
         }
         
