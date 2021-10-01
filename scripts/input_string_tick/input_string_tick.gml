@@ -1,13 +1,14 @@
 //Config
-global.__input_string_max_length    = 1000;
-global.__input_string_allow_empty   = false;
-global.__input_string_autoclose_vkb = true;
+global.__input_string_max_length    = 1000;   //Maximum text entry string length. Do not exceed 1023
+global.__input_string_allow_empty   = false;  //Whether a blank field submission is considered valid
+global.__input_string_autoclose_vkb = true;   //Whether the 'Return' key closes the virtual keyboard
 
 //Init
 global.__input_string_tick_last   = undefined;
 global.__input_string_async_id    = undefined;
 global.__input_string_callback    = undefined;
 global.__input_string_lastkey     = undefined;
+
 global.__input_string             = "";
 global.__input_string_prev        = "";
 global.__input_string_predialogue = "";
@@ -24,9 +25,8 @@ function input_string_tick()
     if (!input_string_async_active()
     && (global.__input_string_keyboard_supported || os_type == os_ios || os_type == os_tvos))
     {
-        var _string = keyboard_string;
-
         //Revert overflow
+        var _string = keyboard_string;
         if ((_string == "") && (string_length(global.__input_string_prev) > 1))
         {
             _string = "";
@@ -49,7 +49,6 @@ function input_string_tick()
             }
             
             global.__input_string_lastkey = keyboard_lastkey;
-        
             if (global.__input_string_autoclose_vkb && global.__input_string_virtual_submit)
             {
                 //Close virtual keyboard on submission
@@ -59,7 +58,7 @@ function input_string_tick()
         
         //Issue string submission callback
         if (is_method(global.__input_string_callback)
-        && (global.__input_string_allow_empty || global.__input_string != "")
+        && (global.__input_string_allow_empty  || global.__input_string != "")
         && (global.__input_string_async_submit || global.__input_string_virtual_submit
         || (global.__input_string_keyboard_supported && keyboard_check_pressed(vk_enter))))
         {
