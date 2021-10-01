@@ -37,7 +37,7 @@ function input_string_tick()
 
         //Catch virtual keyboard submission        
         global.__input_string_virtual_submit = false;
-        if (!is_undefined(keyboard_virtual_status()))
+        if (keyboard_virtual_status() != undefined)
         {
             if ((os_type == os_ios) || (os_type == os_tvos))
             {
