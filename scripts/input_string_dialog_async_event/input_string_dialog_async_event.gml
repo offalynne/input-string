@@ -15,8 +15,7 @@ function input_string_dialog_async_event()
         && (async_load[? "id"] == global.__input_string_async_id) && (async_load[? "status"] != undefined))
         {
             //Report results            
-            var _result = string(async_load[? "result"]);
-            
+            var _result = string(async_load[? "result"]);            
             if (!global.__input_string_allow_empty && ((_result == "undefined") || (_result == "")))
             {
                 //Revert empty
@@ -24,6 +23,7 @@ function input_string_dialog_async_event()
             }
             
             input_string_set(_result);
+            
             global.__input_string_async_submit = true;
             global.__input_string_async_id = undefined;
         }
