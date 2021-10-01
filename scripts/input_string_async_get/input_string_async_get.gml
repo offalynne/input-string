@@ -13,14 +13,15 @@ function input_string_async_get(_prompt, _string = global.__input_string)
     }
     else
     {
-        //Enforce Switch character limit
         if (os_type == os_switch)
         {
+            //Enforce Switch character limit
             _string = string_copy(_string, 1, 500);
         }
         
         global.__input_string_async_id    = get_string_async(_prompt, _string);
         global.__input_string_predialogue = input_string_get();
+        
         return true;
     }
     
