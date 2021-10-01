@@ -1,6 +1,6 @@
 input-string
 
-Multiplatform text entry utility for GameMaker Studio 2.3.
+Multiplatform text entry utility for GameMaker Studio 2
 
 A robust alternative to inbuilt `keyboard_string` usage.
 
