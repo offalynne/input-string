@@ -21,7 +21,7 @@ input_string_virtual_submit
 input_string_callback_set
   function: Sets submission callback
   requires: input_​string_​tick
-  argument: Function (optional)
+  argument: Function (Optional)
 
 input_string_tick
   function: Manages state and `keyboard_string`
