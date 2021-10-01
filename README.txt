@@ -45,7 +45,7 @@ input_string_dialog_async_event
 input_string_platform_hint
   function: Serves entry method hint
   returned: String (Hint)
-  possible: “keyboard”, “virtual”, “async”
+  possible: "keyboard", "virtual", "async"
 
 Thanks to: Juju, Elf, Nik
 Community: discord.gg/8krYCqr
