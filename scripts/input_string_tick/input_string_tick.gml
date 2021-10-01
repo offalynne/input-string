@@ -41,7 +41,8 @@ function input_string_tick()
         {
             if ((os_type == os_ios) || (os_type == os_tvos))
             {
-                global.__input_string_virtual_submit = ((keyboard_lastkey == 10) && (keyboard_lastkey != global.__input_string_lastkey));
+                global.__input_string_virtual_submit = ((keyboard_lastkey == 10) 
+                                                     && (keyboard_lastkey != global.__input_string_lastkey));
             }
             else
             {
@@ -56,12 +57,12 @@ function input_string_tick()
             }
         }
         
-        //Issue string submission callback
         if (is_method(global.__input_string_callback)
         && (global.__input_string_allow_empty  || global.__input_string != "")
         && (global.__input_string_async_submit || global.__input_string_virtual_submit
         || (global.__input_string_keyboard_supported && keyboard_check_pressed(vk_enter))))
         {
+            //Issue string submission callback
             global.__input_string_callback();
         }
         
