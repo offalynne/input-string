@@ -12,16 +12,16 @@ input_string_get
 input_string_set
   function: Sets managed text
   argument: String (Optional)
-
-input_string_virtual_submit
-  function: Serves virtual keyboard submit state
-  requires: input_​string_​tick
-  returned: Boolean
   
 input_string_callback_set
   function: Sets submission callback
   requires: input_​string_​tick
   argument: Function (Optional)
+
+input_string_virtual_submit
+  function: Serves virtual keyboard submit state
+  requires: input_​string_​tick
+  returned: Boolean
 
 input_string_tick
   function: Manages state and `keyboard_string`
