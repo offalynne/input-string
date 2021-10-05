@@ -1,7 +1,7 @@
 function input_string_platform_hint()
 {
-    if  ((os_type == os_switch) || (os_type == os_xboxone) || (os_type == os_xboxseriesxs) || (os_type == os_ps4) || (os_type == os_ps5)) 
-    || !((os_type == os_macosx) || (os_type == os_windows) || (os_type == os_linux)) && ((os_browser != browser_not_a_browser))
+    if ((os_type == os_switch) || (os_type == os_xboxone) || (os_type == os_xboxseriesxs) || (os_type == os_ps4) || (os_type == os_ps5)) 
+    || ((os_browser != browser_not_a_browser) && !((os_type == os_macosx) || (os_type == os_windows) || (os_type == os_linux)))
     {
         //On console, or non-desktop web
         return "async";
