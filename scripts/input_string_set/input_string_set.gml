@@ -15,7 +15,7 @@ function input_string_set(_string = "")
             _trim = true;
         }
         
-        if (global.__input_string_tick_last != undefined && keyboard_string != _string)
+        if ((global.__input_string_tick_last != undefined) && (keyboard_string != _string))
         {
             //Set inbuilt value if necessary
             keyboard_string = _string;
