@@ -39,7 +39,7 @@ function input_string_tick()
         && clipboard_has_text())
         {
             //Paste
-        	_string += clipboard_get_text();
+            _string += clipboard_get_text();
         }
         
         if (!global.__input_string_allow_newline && (_string != ""))
