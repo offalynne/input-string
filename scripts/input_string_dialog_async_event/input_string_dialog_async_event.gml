@@ -3,7 +3,7 @@ function input_string_dialog_async_event()
     if (event_number != (os_browser == browser_not_a_browser ? ev_dialog_async : 0))
     {
         //Use in async dialog event only
-        show_error("Input String: Async dialogue used in invalid event (" 
+        show_error("Input String Error: Async dialogue used in invalid event (" 
                     + object_get_name(object_index) + ", " 
                     + string(event_type) + ", " 
                     + string(event_number) 

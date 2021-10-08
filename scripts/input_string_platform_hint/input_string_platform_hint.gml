@@ -16,5 +16,5 @@ function input_string_platform_hint()
         return "keyboard";
     }
     
-    show_error("Input String: Failed to identify platform text source", true);
+    show_error("Input String Error: Failed to identify platform text source", true);
 }
