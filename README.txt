@@ -6,7 +6,6 @@ A robust alternative to inbuilt `keyboard_string` usage.
 
 input_string_get
   function: Serves managed text
-  argument: None
   returned: String
 
 input_string_set
