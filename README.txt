@@ -22,7 +22,7 @@ input_string_callback_set
   argument: Function (Optional)
 
 input_string_virtual_submit
-  function: Serves virtual keyboard submit state
+  function: Serves virtual keyboard submission
   requires: input_​string_​tick
   returned: Boolean
 
