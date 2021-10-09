@@ -11,6 +11,10 @@ input_string_get
 input_string_set
   function: Sets managed text
   argument: String (Optional)
+
+input_string_add
+  function: Adds to managed text
+  argument: String (Optional)
   
 input_string_callback_set
   function: Sets submission callback
