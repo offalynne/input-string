@@ -26,8 +26,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "input_string",
-    "path": "input_string.yyp",
+    "name": "test",
+    "path": "folders/test.yy",
   },
   "resourceVersion": "1.0",
   "name": "obj_input_string_example",

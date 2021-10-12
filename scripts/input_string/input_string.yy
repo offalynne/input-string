@@ -6,7 +6,7 @@
     "path": "folders/input string.yy",
   },
   "resourceVersion": "1.0",
-  "name": "input_string_platform_hint",
+  "name": "input_string",
   "tags": [],
   "resourceType": "GMScript",
 }

@@ -17,7 +17,7 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
         }
     }
     else
-    {
+    {   
         //Bottom row
         switch(_x == 0 ? 0 : _x div (room_width/3))
         {
