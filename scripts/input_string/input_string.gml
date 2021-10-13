@@ -30,7 +30,7 @@ function input_string_tick()
         var _string = keyboard_string;
         if ((_string == "") && (string_length(global.__input_string_prev) > 1))
         {
-            //Revert internal string overflow
+            //Revert internal string in overflow state
             _string = "";
         }
         
@@ -55,14 +55,15 @@ function input_string_tick()
         global.__input_string_virtual_submit = false;
         if (keyboard_virtual_status() != undefined)
         {
-            //Catch virtual keyboard submission
             if ((os_type == os_ios) || (os_type == os_tvos))
             {
+                //iOS virtual keyboard submission
                 global.__input_string_virtual_submit = ((keyboard_lastkey == 10) 
                                                      && (keyboard_lastkey != global.__input_string_lastkey));
             }
             else
             {
+                //Virtual keyboard submission
                 global.__input_string_virtual_submit = (keyboard_check_pressed(vk_enter));
             }
             
