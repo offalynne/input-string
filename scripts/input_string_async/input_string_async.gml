@@ -1,9 +1,8 @@
 function input_string_async_get(_prompt, _string = global.__input_string)
-{       
-    //Issue modal request when not awaiting response
+{
     if (global.__input_string_async_id != undefined)
     {
-        show_debug_message("Input String Warning: Dialog prompt refused: awaiting callback ID \"" + string(global.__input_string_async_id) + "\"");
+        show_debug_message("Input String Warning: Dialog prompt refused. Awaiting callback ID \"" + string(global.__input_string_async_id) + "\"");
         return false;
     }
     else
@@ -47,7 +46,7 @@ function input_string_dialog_async_event()
         {
             //Report results            
             var _result = string(async_load[? "result"]);            
-            if (!global.__input_string_allow_empty && ((_result == "undefined") || (_result == "")))
+            if ((_result == "undefined") || (!global.__input_string_allow_empty && (_result == "")))
             {
                 //Revert empty
                 _result = global.__input_string_predialogue;
