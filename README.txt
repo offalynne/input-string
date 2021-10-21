@@ -50,7 +50,7 @@ input_string_platform_hint
   returned: String (Hint)
   possible: "keyboard", "virtual", "async"
 
-Thanks to: Juju, Elf, Nik
+Thanks to: @JujuAdams, @tabularelf, @nkrapivin
 Community: discord.gg/8krYCqr
 
 @offalynne, 2021
