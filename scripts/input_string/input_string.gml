@@ -6,10 +6,10 @@ global.__input_string_allow_newline = true;   //Whether to allow newline charact
 global.__input_string_allow_empty   = false;  //Whether a blank field submission is treated as valid
 
 //Init
-global.__input_string_tick_last   = undefined;
-global.__input_string_async_id    = undefined;
-global.__input_string_callback    = undefined;
-global.__input_string_lastkey     = undefined;
+global.__input_string_tick_last = undefined;
+global.__input_string_async_id  = undefined;
+global.__input_string_callback  = undefined;
+global.__input_string_lastkey   = undefined;
 
 global.__input_string             = "";
 global.__input_string_prev        = "";
@@ -130,7 +130,7 @@ function input_string_set(_string = "")
 function input_string_platform_hint()
 {
     if (((os_type == os_switch) || (os_type == os_ps4) || (os_type == os_ps5) || (os_type == os_xboxone) || (os_type == os_xboxseriesxs))
-    || ((os_browser != browser_not_a_browser) && !((os_type == os_macosx) || (os_type == os_windows) || (os_type == os_linux))))
+    || ((os_browser != browser_not_a_browser) && !((os_type == os_macosx) || (os_type == os_windows) || (os_type == os_linux) || (os_type == os_operagx))))
     {
         //On console, or non-desktop web
         return "async";
