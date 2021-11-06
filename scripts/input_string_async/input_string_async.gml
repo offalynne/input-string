@@ -18,12 +18,16 @@ else if (((os_type == os_uwp) && uwp_device_touchscreen_available()) || (os_type
 else if (os_type == os_android)
 {
     var _map = os_get_info();
-    if !((_map != -1) && _map[? "PHYSICAL_KEYBOARD"])
+    if (!ds_exists(_map, ds_type_map))
     {
-        //Suggest virtual keyboard on Android in absence of physical
-        global.__input_string_platform_hint = "virtual";
+        if (_map[? "PHYSICAL_KEYBOARD"]))
+        {
+            //Suggest virtual keyboard on Android in absence of physical
+            global.__input_string_platform_hint = "virtual";
+        }
+        
+        ds_map_destroy(_map);
     }
-    ds_map_destroy(_map);
 }
 else
 {
