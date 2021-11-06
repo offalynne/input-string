@@ -13,6 +13,6 @@ draw_set_halign(fa_center);
 draw_text(room_width*.33, 200, "Show OSK"  );
 draw_text(room_width*.66, 200, "Hide OSK"  );
 
-draw_text(room_width*.25, 400, "Set String"  );
+draw_text(room_width*.25, 400, "Fill String" );
 draw_text(room_width*.50, 400, "Clear String");
 draw_text(room_width*.75, 400, "Set Async"   );

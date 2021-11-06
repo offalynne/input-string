@@ -1,8 +1,8 @@
 //Config
 global.__input_string_max_length    = 1000;   //Maximum text entry string length. Do not exceed 1024
 global.__input_string_autoclose_vkb = true;   //Whether the 'Return' key closes the virtual keyboard
-global.__input_string_use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
 global.__input_string_allow_newline = true;   //Whether to allow newline characters or swap to space
+global.__input_string_use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
 global.__input_string_allow_empty   = false;  //Whether a blank field submission is treated as valid
 
 //Init
@@ -20,7 +20,8 @@ global.__input_string_virtual_submit = false;
 
 global.__input_string_keyboard_supported = ((os_browser != browser_not_a_browser) || (os_type == os_operagx)
                                          || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
-                                         || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp));    
+                                         || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp));
+
 function input_string_tick()
 {
     if (!input_string_async_active()
@@ -126,29 +127,8 @@ function input_string_set(_string = "")
     }
 }
 
-
-function input_string_platform_hint()
-{
-    if (((os_type == os_switch) || (os_type == os_ps4) || (os_type == os_ps5) || (os_type == os_xboxone) || (os_type == os_xboxseriesxs))
-    || ((os_browser != browser_not_a_browser) && !((os_type == os_macosx) || (os_type == os_windows) || (os_type == os_linux) || (os_type == os_operagx))))
-    {
-        //On console, or non-desktop web
-        return "async";
-    }
-    else if (((os_type == os_uwp) && uwp_device_touchscreen_available()) || (os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos))
-    {
-        //Native mobile
-        return "virtual";
-    }
-    else
-    {
-        return "keyboard";
-    }
-    
-    show_error("Input String Error: Failed to identify platform text source", true);
-}
-
-function input_string_get()                               { return global.__input_string; }
-function input_string_virtual_submit()                    { return global.__input_string_virtual_submit; }
-function input_string_add(_string = "")                   { return input_string_set(global.__input_string + string(_string)); }
 function input_string_callback_set(_callback = undefined) { global.__input_string_callback = _callback; }
+
+function input_string_add(_string = "") { return input_string_set(global.__input_string + string(_string)); }
+function input_string_virtual_submit()  { return global.__input_string_virtual_submit; }
+function input_string_get()             { return global.__input_string;                }

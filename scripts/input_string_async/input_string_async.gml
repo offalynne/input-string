@@ -1,3 +1,38 @@
+//Set platform hint
+if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) || (os_type == os_switch) || (os_type == os_ps4) || (os_type == os_ps5))
+{
+    //Suggest 'async' (modal) on console
+    global.__input_string_platform_hint = "async";
+}
+else if ((os_browser != browser_not_a_browser)
+     && ((os_type != os_windows) && (os_type != os_macosx) && (os_type != os_linux) && (os_type != os_operagx)))
+{
+    //Suggest 'async' (modal) on non-desktop web
+    global.__input_string_platform_hint = "async";
+}
+else if (((os_type == os_uwp) && uwp_device_touchscreen_available()) || (os_type == os_ios) || (os_type == os_tvos))
+{
+    //Suggest virtual keyboard on iOS and UWP mobile
+    global.__input_string_platform_hint = "virtual";
+}
+else if (os_type == os_android)
+{
+    var _map = os_get_info();
+    if !((_map != -1) && _map[? "PHYSICAL_KEYBOARD"])
+    {
+        //Suggest virtual keyboard on Android in absence of physical
+        global.__input_string_platform_hint = "virtual";
+    }
+    ds_map_destroy(_map);
+}
+else
+{
+    global.__input_string_platform_hint = "keyboard";
+}
+
+function input_string_async_active()  { return (global.__input_string_async_id != undefined); }
+function input_string_platform_hint() { return  global.__input_string_platform_hint;          }
+
 function input_string_async_get(_prompt, _string = global.__input_string)
 {
     if (global.__input_string_async_id != undefined)
@@ -18,8 +53,8 @@ function input_string_async_get(_prompt, _string = global.__input_string)
             _string = string_copy(_string, 1, 500);
         }
         
-        global.__input_string_async_id    = get_string_async(_prompt, _string);
         global.__input_string_predialogue = input_string_get();
+        global.__input_string_async_id    = get_string_async(_prompt, _string);
         
         return true;
     }
@@ -59,5 +94,3 @@ function input_string_dialog_async_event()
         }
     }
 }
-
-function input_string_async_active(){ return (global.__input_string_async_id != undefined); }
