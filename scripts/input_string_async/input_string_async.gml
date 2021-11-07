@@ -20,7 +20,7 @@ else if (os_type == os_android)
     var _map = os_get_info();
     if (!ds_exists(_map, ds_type_map))
     {
-        if (_map[? "PHYSICAL_KEYBOARD"]))
+        if (_map[? "PHYSICAL_KEYBOARD"])
         {
             //Suggest virtual keyboard on Android in absence of physical
             global.__input_string_platform_hint = "virtual";
