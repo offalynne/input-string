@@ -3,7 +3,7 @@ global.__input_string_max_length = 1000;  //Maximum text entry string length. Do
 
 global.__input_string_use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
 global.__input_string_autoclose_vkb = true;   //Whether the 'Return' key closes the virtual keyboard
-global.__input_string_allow_newline = true;   //Whether to allow newline characters or swap to space
+global.__input_string_allow_newline = false;  //Whether to allow newline characters or swap to space
 global.__input_string_allow_empty   = false;  //Whether a blank field submission is treated as valid
 
 //Init
@@ -43,6 +43,13 @@ function input_string_tick()
             //Paste
             _string += clipboard_get_text();
         }
+        
+        if (_string != "" && !global.__input_string_allow_newline)
+        {
+            //Cull newlines
+            _string = string_replace_all(_string, chr(13), "");
+            _string = string_replace_all(_string, chr(10), " ");
+        }
       
         //Handle virtual keyboard submission
         global.__input_string_virtual_submit = false;
@@ -67,29 +74,24 @@ function input_string_tick()
                 keyboard_virtual_hide();
             }
         }
-        
-        if (_string != "" && !global.__input_string_allow_newline)
-        {
-            //Cull newlines
-            _string = string_replace_all(_string, chr(13), "");
-            _string = string_replace_all(_string, chr(10), " ");
-        }
-        
+
+        //Any string submission
         var _submit = (global.__input_string_async_submit || global.__input_string_virtual_submit
-                  || (global.__input_string_keyboard_supported && keyboard_check_pressed(vk_enter)));
-      
-        if (_submit && (string_char_at(_str, string_length(_str)) == chr(10)))
+                   || (global.__input_string_keyboard_supported && keyboard_check_pressed(vk_enter)));
+
+        if (_submit && (string_char_at(_string, string_length(_string)) == chr(10)))
         {
             //Trim trailing newline on submission
-            string_copy(_string, 1, string_length(_string) - 1));
+            _string = string_copy(_string, 1, string_length(_string) - 1);
         }
         
         //Set internal string
         input_string_set(_string, false);
         
-        if (_submit)
+        if (_submit && is_method(global.__input_string_callback)
+        && (_string != "" || global.__input_string_allow_empty))
         {
-            //Issue string submission callback
+            //Issue submission callback
             global.__input_string_callback();
         }
         
@@ -103,7 +105,7 @@ function input_string_set(_string = "", _vkb_close = true)
 {
     if (_vkb_close && (keyboard_virtual_status() != undefined))
     {
-        //Close virtual keyboard on string set
+        //Close virtual keyboard on setting string
         keyboard_virtual_hide();
     }
   
