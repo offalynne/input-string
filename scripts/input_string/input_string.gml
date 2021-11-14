@@ -1,10 +1,10 @@
 //Config
 global.__input_string_max_length = 1000;  //Maximum text entry string length. Do not exceed 1024
 
+global.__input_string_use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
 global.__input_string_autoclose_vkb = true;   //Whether the 'Return' key closes the virtual keyboard
 global.__input_string_allow_newline = true;   //Whether to allow newline characters or swap to space
 global.__input_string_allow_empty   = false;  //Whether a blank field submission is treated as valid
-global.__input_string_use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
 
 //Init
 global.__input_string_tick_last = undefined;
@@ -43,17 +43,8 @@ function input_string_tick()
             //Paste
             _string += clipboard_get_text();
         }
-        
-        if (!global.__input_string_allow_newline && (_string != ""))
-        {
-            //Cull newlines
-            _string = string_replace_all(_string, chr(13), "");
-            _string = string_replace_all(_string, chr(10), " ");
-        }
-        
-        //Set internal string
-        input_string_set(_string, false);
-
+      
+        //Handle virtual keyboard submission
         global.__input_string_virtual_submit = false;
         if (keyboard_virtual_status() != undefined)
         {
@@ -61,11 +52,11 @@ function input_string_tick()
             {
                 //iOS virtual keyboard submission
                 global.__input_string_virtual_submit = ((keyboard_lastkey == 10) 
-                                                     && (keyboard_lastkey != global.__input_string_lastkey));
+                                                     && (string_length(keyboard_string) > string_length(global.__input_string_prev)));
             }
             else
             {
-                //Virtual keyboard submission
+                //non-iOS keyboard submission
                 global.__input_string_virtual_submit = (keyboard_check_pressed(vk_enter));
             }
             
@@ -77,10 +68,26 @@ function input_string_tick()
             }
         }
         
-        if (is_method(global.__input_string_callback)
-        && (global.__input_string_allow_empty  || global.__input_string != "")
-        && (global.__input_string_async_submit || global.__input_string_virtual_submit
-        || (global.__input_string_keyboard_supported && keyboard_check_pressed(vk_enter))))
+        if (_string != "" && !global.__input_string_allow_newline)
+        {
+            //Cull newlines
+            _string = string_replace_all(_string, chr(13), "");
+            _string = string_replace_all(_string, chr(10), " ");
+        }
+        
+        var _submit = (global.__input_string_async_submit || global.__input_string_virtual_submit
+                  || (global.__input_string_keyboard_supported && keyboard_check_pressed(vk_enter)));
+      
+        if (_submit && (string_char_at(_str, string_length(_str)) == chr(10)))
+        {
+            //Trim trailing newline on submission
+            string_copy(_string, 1, string_length(_string) - 1));
+        }
+        
+        //Set internal string
+        input_string_set(_string, false);
+        
+        if (_submit)
         {
             //Issue string submission callback
             global.__input_string_callback();
