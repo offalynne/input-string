@@ -94,7 +94,7 @@ function input_string_tick()
 
 function input_string_set(_string = "", _vkb_close = true)
 {
-    if ((keyboard_virtual_status() != undefined) && _vkb_close)
+    if (_vkb_close && (keyboard_virtual_status() != undefined))
     {
         //Close virtual keyboard on string set
         keyboard_virtual_hide();
