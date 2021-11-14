@@ -121,7 +121,7 @@ function input_string_set(_string = "")
     //Set internal string
     global.__input_string = _string;
     
-    if (_trim && (os_type == os_android))
+    if ((os_type == os_android) && _trim)
     {
         //Trim leading space
         global.__input_string = string_delete(global.__input_string, 1, 1);
