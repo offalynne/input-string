@@ -52,7 +52,7 @@ function input_string_tick()
         }
         
         //Set internal string
-        input_string_set(_string);
+        input_string_set(_string, false);
 
         global.__input_string_virtual_submit = false;
         if (keyboard_virtual_status() != undefined)
@@ -92,8 +92,14 @@ function input_string_tick()
     }
 }
 
-function input_string_set(_string = "")
+function input_string_set(_string = "", _vkb_close = true)
 {
+    if ((keyboard_virtual_status() != undefined) && _vkb_close)
+    {
+        //Close virtual keyboard on string set
+        keyboard_virtual_hide();
+    }
+  
     _string = string(_string);
     var _trim = (string_char_at(_string, 1) == " ");
 
