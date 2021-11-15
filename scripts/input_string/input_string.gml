@@ -78,7 +78,7 @@ function input_string_tick()
 
         if (_submit && (string_char_at(_string, string_length(_string)) == chr(10)))
         {
-            //Trim trailing newline on submission
+            //Strip trailing newline on submission
             _string = string_copy(_string, 1, string_length(_string) - 1);
         }
         
