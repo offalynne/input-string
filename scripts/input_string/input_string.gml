@@ -13,7 +13,6 @@ global.__input_string_callback  = undefined;
 global.__input_string_lastkey   = undefined;
 
 global.__input_string_predialogue = "";
-global.__input_string_prev        = "";
 global.__input_string             = "";
 
 global.__input_string_virtual_submit = false;
@@ -30,7 +29,7 @@ function input_string_tick()
     {
         //Manage text input
         var _string = keyboard_string;
-        if ((_string == "") && (string_length(global.__input_string_prev) > 1))
+        if ((_string == "") && (string_length(global.__input_string) > 1))
         {
             //Revert internal string in overflow state
             _string = "";
@@ -59,7 +58,7 @@ function input_string_tick()
             {
                 //iOS virtual keyboard submission
                 global.__input_string_virtual_submit = ((keyboard_lastkey == 10) 
-                                                     && (string_length(keyboard_string) > string_length(global.__input_string_prev)));
+                                                     && (string_length(keyboard_string) > string_length(global.__input_string)));
             }
             else
             {
@@ -121,8 +120,6 @@ function input_string_set(_string = "")
         //Set inbuilt value if necessary
         keyboard_string = _string;
     }
-        
-    global.__input_string_prev = _string;
     
     //Set internal string
     global.__input_string = _string;
