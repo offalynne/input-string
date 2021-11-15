@@ -1,4 +1,5 @@
 //Set platform hint
+global.__input_string_platform_hint = "keyboard";
 if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) || (os_type == os_switch) || (os_type == os_ps4) || (os_type == os_ps5))
 {
     //Suggest 'async' (modal) on console
@@ -18,9 +19,9 @@ else if (((os_type == os_uwp) && uwp_device_touchscreen_available()) || (os_type
 else if (os_type == os_android)
 {
     var _map = os_get_info();
-    if (!ds_exists(_map, ds_type_map))
+    if (ds_exists(_map, ds_type_map))
     {
-        if (_map[? "PHYSICAL_KEYBOARD"])
+        if (!_map[? "PHYSICAL_KEYBOARD"])
         {
             //Suggest virtual keyboard on Android in absence of physical
             global.__input_string_platform_hint = "virtual";
@@ -28,10 +29,6 @@ else if (os_type == os_android)
         
         ds_map_destroy(_map);
     }
-}
-else
-{
-    global.__input_string_platform_hint = "keyboard";
 }
 
 function input_string_platform_hint() { return  global.__input_string_platform_hint; }
