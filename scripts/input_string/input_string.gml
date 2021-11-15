@@ -20,7 +20,6 @@ global.__input_string_keyboard_supported = ((os_type == os_operagx) || (os_brows
                                          || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
                                          || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
                                          || (os_type == os_tvos) || (os_type == os_ios));
-
 function input_string_tick()
 {
     if (!input_string_async_active() && (global.__input_string_keyboard_supported))
