@@ -1,3 +1,7 @@
+//Init
+global.__input_string_predialogue = "";
+global.__input_string_async_id  = undefined;
+
 //Set platform hint
 global.__input_string_platform_hint = "keyboard";
 if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) || (os_type == os_switch) || (os_type == os_ps4) || (os_type == os_ps5))
