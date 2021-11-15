@@ -86,7 +86,7 @@ function input_string_tick()
         }
         
         //Set internal string
-        input_string_set(_string, false);
+        input_string_set(_string);
         
         if (_submit && is_method(global.__input_string_callback)
         && (_string != "" || global.__input_string_allow_empty))
@@ -101,37 +101,28 @@ function input_string_tick()
     }
 }
 
-function input_string_set(_string = "", _vkb_close = true)
+function input_string_set(_string = "")
 {
-    if (_vkb_close && (keyboard_virtual_status() != undefined))
-    {
-        //Close virtual keyboard on setting string
-        keyboard_virtual_hide();
-    }
-  
     _string = string(_string);
+
+    //Enforce length limit
+    _string = string_copy(_string, 1, global.__input_string_max_length);
+
     var _trim = (string_char_at(_string, 1) == " ");
-
-    if (global.__input_string_keyboard_supported)
+    if ((os_type == os_android) && !_trim)
     {
-        //Enforce length limit
-        _string = string_copy(_string, 1, global.__input_string_max_length);
-
-        if ((os_type == os_android) && !_trim)
-        {
-            //Set leading space
-            _string = " " + _string;
-            _trim = true;
-        }
-        
-        if ((global.__input_string_tick_last != undefined) && (keyboard_string != _string))
-        {
-            //Set inbuilt value if necessary
-            keyboard_string = _string;
-        }
-        
-        global.__input_string_prev = _string;
+        //Set leading space
+        _string = " " + _string;
+        _trim = true;
     }
+        
+    if ((global.__input_string_tick_last != undefined) && (keyboard_string != _string))
+    {
+        //Set inbuilt value if necessary
+        keyboard_string = _string;
+    }
+        
+    global.__input_string_prev = _string;
     
     //Set internal string
     global.__input_string = _string;
