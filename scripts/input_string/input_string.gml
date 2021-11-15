@@ -1,8 +1,8 @@
 //Config
 global.__input_string_max_length = 1000;  //Maximum text entry string length. Do not exceed 1024
 
-global.__input_string_use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
 global.__input_string_autoclose_vkb = true;   //Whether the 'Return' key closes the virtual keyboard
+global.__input_string_use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
 global.__input_string_allow_newline = false;  //Whether to allow newline characters or swap to space
 global.__input_string_allow_empty   = false;  //Whether a blank field submission is treated as valid
 
