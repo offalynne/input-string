@@ -133,6 +133,5 @@ function input_string_set(_string = "")
 function input_string_callback_set(_callback = undefined) { global.__input_string_callback = _callback; }
 
 function input_string_add(_string = "") { return input_string_set(global.__input_string + string(_string)); }
-
-function input_string_virtual_submit() { return global.__input_string_virtual_submit; }
-function input_string_get()            { return global.__input_string; }
+function input_string_virtual_submit()  { return global.__input_string_virtual_submit; }
+function input_string_get()             { return global.__input_string; }
