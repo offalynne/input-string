@@ -20,12 +20,12 @@ global.__input_string_async_submit   = false;
 
 global.__input_string_keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
                                          || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
-                                         || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp));
+                                         || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
+                                         || (os_type == os_tvos) || (os_type == os_ios));
 
 function input_string_tick()
 {
-    if (!input_string_async_active()
-    && (global.__input_string_keyboard_supported || os_type == os_ios || os_type == os_tvos))
+    if (!input_string_async_active() && (global.__input_string_keyboard_supported))
     {
         //Manage text input
         var _string = keyboard_string;
