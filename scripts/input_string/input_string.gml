@@ -7,13 +7,11 @@ global.__input_string_allow_newline = false;  //Whether to allow newline charact
 global.__input_string_allow_empty   = false;  //Whether a blank field submission is treated as valid
 
 //Init
-global.__input_string_tick_last = undefined;
-global.__input_string_async_id  = undefined;
+global.__input_string = "";
+
+global.__input_string_tick_last = undefined;`
 global.__input_string_callback  = undefined;
 global.__input_string_lastkey   = undefined;
-
-global.__input_string_predialogue = "";
-global.__input_string             = "";
 
 global.__input_string_virtual_submit = false;
 global.__input_string_async_submit   = false;
