@@ -9,9 +9,8 @@ global.__input_string_allow_empty   = false;  //Whether a blank field submission
 //Init
 global.__input_string = "";
 
-global.__input_string_tick_last = undefined;`
+global.__input_string_tick_last = undefined;
 global.__input_string_callback  = undefined;
-global.__input_string_lastkey   = undefined;
 
 global.__input_string_virtual_submit = false;
 global.__input_string_async_submit   = false;
@@ -28,7 +27,7 @@ function input_string_tick()
         var _string = keyboard_string;
         if ((_string == "") && (string_length(global.__input_string) > 1))
         {
-            //Revert internal string in overflow state
+            //Revert internal string when in overflow state
             _string = "";
         }
         
@@ -40,10 +39,12 @@ function input_string_tick()
             _string += clipboard_get_text();
         }
         
+        //Filter carriage returns
+        _string = string_replace_all(_string, chr(13), "");
+        
         if (_string != "" && !global.__input_string_allow_newline)
         {
             //Cull newlines
-            _string = string_replace_all(_string, chr(13), "");
             _string = string_replace_all(_string, chr(10), " ");
         }
       
@@ -63,7 +64,6 @@ function input_string_tick()
                 global.__input_string_virtual_submit = (keyboard_check_pressed(vk_enter));
             }
             
-            global.__input_string_lastkey = keyboard_lastkey;
             if (global.__input_string_autoclose_vkb && global.__input_string_virtual_submit)
             {
                 //Close virtual keyboard on submission
@@ -99,11 +99,13 @@ function input_string_tick()
 
 function input_string_set(_string = "")
 {
+    //Stringify
     _string = string(_string);
 
-    //Enforce length limit
+    //Enforce max length
     _string = string_copy(_string, 1, global.__input_string_max_length);
 
+    //Left pad one space (fixes Android quirk on the first character)
     var _trim = (string_char_at(_string, 1) == " ");
     if ((os_type == os_android) && !_trim)
     {
