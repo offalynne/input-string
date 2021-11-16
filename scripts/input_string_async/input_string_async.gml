@@ -1,24 +1,19 @@
-//Init
-global.__input_string_predialogue = "";
-global.__input_string_async_id  = undefined;
-
 //Set platform hint
-global.__input_string_platform_hint = "keyboard";
 if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) || (os_type == os_switch) || (os_type == os_ps4) || (os_type == os_ps5))
 {
     //Suggest 'async' (modal) on console
-    global.__input_string_platform_hint = "async";
+    INPUT_STRING.platform_hint = "async";
 }
 else if ((os_browser != browser_not_a_browser)
      && ((os_type != os_windows) && (os_type != os_macosx) && (os_type != os_linux) && (os_type != os_operagx)))
 {
     //Suggest 'async' (modal) on non-desktop web
-    global.__input_string_platform_hint = "async";
+    INPUT_STRING.platform_hint = "async";
 }
 else if (((os_type == os_uwp) && uwp_device_touchscreen_available()) || (os_type == os_ios) || (os_type == os_tvos))
 {
     //Suggest virtual keyboard on iOS and UWP mobile
-    global.__input_string_platform_hint = "virtual";
+    INPUT_STRING.platform_hint = "virtual";
 }
 else if (os_type == os_android)
 {
@@ -28,21 +23,21 @@ else if (os_type == os_android)
         if (!_map[? "PHYSICAL_KEYBOARD"])
         {
             //Suggest virtual keyboard on Android in absence of physical
-            global.__input_string_platform_hint = "virtual";
+            INPUT_STRING.platform_hint = "virtual";
         }
         
         ds_map_destroy(_map);
     }
 }
 
-function input_string_platform_hint() { return  global.__input_string_platform_hint; }
-function input_string_async_active()  { return (global.__input_string_async_id != undefined); }
+function input_string_platform_hint() { return  INPUT_STRING.platform_hint; }
+function input_string_async_active()  { return (INPUT_STRING.async_id != undefined); }
 
-function input_string_async_get(_prompt, _string = global.__input_string)
+function input_string_async_get(_prompt, _string = INPUT_STRING.value)
 {
-    if (global.__input_string_async_id != undefined)
+    if (INPUT_STRING.async_id != undefined)
     {
-        show_debug_message("Input String Warning: Dialog prompt refused. Awaiting callback ID \"" + string(global.__input_string_async_id) + "\"");
+        show_debug_message("Input String Warning: Dialog prompt refused. Awaiting callback ID \"" + string(INPUT_STRING.async_id) + "\"");
         return false;
     }
     else
@@ -58,8 +53,8 @@ function input_string_async_get(_prompt, _string = global.__input_string)
             _string = string_copy(_string, 1, 500);
         }
         
-        global.__input_string_predialogue = input_string_get();
-        global.__input_string_async_id    = get_string_async(_prompt, _string);
+        INPUT_STRING.predialogue = input_string_get();
+        INPUT_STRING.async_id    = get_string_async(_prompt, _string);
         
         return true;
     }
@@ -82,20 +77,20 @@ function input_string_dialog_async_event()
     else
     {
         if (input_string_async_active() && (async_load != undefined)
-        && (async_load[? "id"] == global.__input_string_async_id) && (async_load[? "status"] != undefined))
+        && (async_load[? "id"] == INPUT_STRING.async_id) && (async_load[? "status"] != undefined))
         {
             //Report results            
             var _result = string(async_load[? "result"]);            
-            if (!global.__input_string_allow_empty && (_result == ""))
+            if (!INPUT_STRING.allow_empty && (_result == ""))
             {
                 //Revert empty
-                _result = global.__input_string_predialogue;
+                _result = INPUT_STRING.predialogue;
             }
             
-            input_string_set(_result);
+            INPUT_STRING.set(_result);
             
-            global.__input_string_async_submit = true;
-            global.__input_string_async_id = undefined;
+            INPUT_STRING.async_submit = true;
+            INPUT_STRING.async_id = undefined;
         }
     }
 }

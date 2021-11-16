@@ -22,8 +22,8 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
         switch(_x == 0 ? 0 : _x div (room_width/3))
         {
             case 0: input_string_set(long_string);          break;
-            case 1: input_string_set();                     break;            
-            case 2: input_string_async_get("Test Caption"); break;            
+            case 1: input_string_set();                     break;
+            case 2: input_string_async_get("Test Caption"); break;
         }
     }
-}
+}  
