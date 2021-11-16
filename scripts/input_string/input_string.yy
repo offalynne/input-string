@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "input string",
-    "path": "folders/input string.yy",
+    "name": "input_string",
+    "path": "input_string.yyp",
   },
   "resourceVersion": "1.0",
   "name": "input_string",

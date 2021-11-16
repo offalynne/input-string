@@ -2,8 +2,7 @@
   "resources": [
     {"id":{"name":"rm_input_string_example","path":"rooms/rm_input_string_example/rm_input_string_example.yy",},"order":1,},
     {"id":{"name":"obj_input_string_example","path":"objects/obj_input_string_example/obj_input_string_example.yy",},"order":0,},
-    {"id":{"name":"input_string_async","path":"scripts/input_string_async/input_string_async.yy",},"order":2,},
-    {"id":{"name":"input_string","path":"scripts/input_string/input_string.yy",},"order":1,},
+    {"id":{"name":"input_string","path":"scripts/input_string/input_string.yy",},"order":2,},
   ],
   "Options": [],
   "isDnDProject": false,
@@ -17,8 +16,7 @@
     {"roomId":{"name":"rm_input_string_example","path":"rooms/rm_input_string_example/rm_input_string_example.yy",},},
   ],
   "Folders": [
-    {"folderPath":"folders/input string.yy","order":4,"resourceVersion":"1.0","name":"input string","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/test.yy","order":7,"resourceVersion":"1.0","name":"test","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/test.yy","order":1,"resourceVersion":"1.0","name":"test","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},
@@ -28,7 +26,7 @@
   ],
   "IncludedFiles": [],
   "MetaData": {
-    "IDEVersion": "2.3.5.589",
+    "IDEVersion": "2.3.6.595",
   },
   "resourceVersion": "1.4",
   "name": "input_string",
