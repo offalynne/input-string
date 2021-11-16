@@ -26,8 +26,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "test",
-    "path": "folders/test.yy",
+    "name": "tests",
+    "path": "folders/tests.yy",
   },
   "resourceVersion": "1.0",
   "name": "obj_input_string_example",
