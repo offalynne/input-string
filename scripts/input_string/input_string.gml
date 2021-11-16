@@ -3,29 +3,29 @@
 ___INPUT_STRING = 
 {
     //Config
-	max_length : 1000,      //Maximum text entry string length. Do not exceed 1024
+    max_length : 1000,      //Maximum text entry string length. Do not exceed 1024
 
-	autoclose_vkb : true,   //Whether the 'Return' key closes the virtual keyboard
-	use_clipboard : false,  //Whether 'Control-V' pastes clipboard text on Windows
-	allow_newline : false,  //Whether to allow newline characters or swap to space
-	allow_empty   : false,  //Whether a blank field submission is treated as valid
+    autoclose_vkb : true,   //Whether the 'Return' key closes the virtual keyboard
+    use_clipboard : false,  //Whether 'Control-V' pastes clipboard text on Windows
+    allow_newline : false,  //Whether to allow newline characters or swap to space
+    allow_empty   : false,  //Whether a blank field submission is treated as valid
 
-	//Init
+    //Init
     platform_hint : "keyboard",
     predialogue   : "",
     value         : "",
     
-	tick_last : undefined,
-	callback  : undefined,
+    tick_last : undefined,
+    callback  : undefined,
     async_id  : undefined,
 
-	virtual_submit : false,
-	async_submit   : false,
+    virtual_submit : false,
+    async_submit   : false,
 
-	keyboard_supported : ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
-	                   || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
-	                   || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
-	                   || (os_type == os_tvos) || (os_type == os_ios)),
+    keyboard_supported : ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
+	               || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
+	               || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
+	               || (os_type == os_tvos) || (os_type == os_ios)),
                        
     set : function(_string = "")
     {
@@ -129,7 +129,8 @@ function input_string_tick()
         var _submit = (INPUT_STRING.async_submit || INPUT_STRING.virtual_submit
                    || (INPUT_STRING.keyboard_supported && keyboard_check_pressed(vk_enter)));
 
-        if (_submit && (string_char_at(_string, string_length(_string)) == chr(10)))
+        var _tail = string_char_at(_string, string_length(_string));
+        if (_submit && ((_tail == chr(10)) || (_tail == " ")))
         {
             //Strip trailing newline on submission
             _string = string_copy(_string, 1, string_length(_string) - 1);
