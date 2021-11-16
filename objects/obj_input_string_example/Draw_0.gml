@@ -13,9 +13,11 @@ draw_set_halign(fa_center);
 draw_text(room_width * .50, 10, submission_test);
 
 //Test button labels
+if (keyboard_virtual_status() == undefined) draw_set_color(c_gray);
 draw_text(room_width * .33, 200, "Show OSK");
 draw_text(room_width * .66, 200, "Hide OSK");
 
+draw_set_color(c_white);
 draw_text(room_width * .25, 400, "Fill String" );
 draw_text(room_width * .50, 400, "Clear String");
 draw_text(room_width * .75, 400, "Set Async"   );
