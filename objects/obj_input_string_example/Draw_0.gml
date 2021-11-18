@@ -1,13 +1,15 @@
 //Test readout
 draw_set_halign(fa_right);
-draw_text(room_width - 10, 10,  "\"" + INPUT_STRING.platform_hint_get()    +  "\" source hint");
+draw_text(room_width - 10, 10,  "\"" + input_string_platform_hint()    +  "\" source hint");
 draw_text(room_width - 10, 30,  string(string_length(keyboard_string)) + " string length" );
 
 draw_text(room_width - 10, 50,  "\"" + keyboard_string    + "\" keyboard_string"   );
-draw_text(room_width - 10, 70,  "\"" + INPUT_STRING.get() + "\" INPUT_STRING.get()");
+draw_text(room_width - 10, 70,  "\"" + input_string_get() + "\" input_string_get()");
 
 draw_text(room_width - 10, 90,  "\"" + string(keyboard_virtual_status()) + "\" keyboard_virtual_status()");
 draw_text(room_width - 10, 110, "\"" + string(keyboard_virtual_height()) + "\" keyboard_virtual_height()");
+
+draw_text(room_width - 10, 130, "\"" + string(input_string_virtual_submit()) + "\" input_string_virtual_submit()");
 
 draw_set_halign(fa_center);
 draw_text(room_width * .50, 10, submission_test);

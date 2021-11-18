@@ -1,1 +1,1 @@
-INPUT_STRING.dialog_async_event();
+input_string_dialog_async_event();
