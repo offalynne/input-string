@@ -14,7 +14,7 @@ input_string_set
 
 input_string_add
   function: Adds to managed text
-  argument: String (Optional)
+  argument: String
 
 input_string_callback_set
   function: Sets submission callback
