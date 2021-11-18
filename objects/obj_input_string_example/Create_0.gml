@@ -1,11 +1,13 @@
 submission_test = "";
-long_string = string_repeat("A", INPUT_STRING.max_length) + "Z";
+long_string = "";
 
-input_string_callback_set
+repeat(INPUT_STRING.max_length) long_string += chr(ord("A") + irandom(25));
+
+INPUT_STRING.callback_set
 (
     function()
     {
-        var _string = input_string_get();
+        var _string = INPUT_STRING.get();
         self.submission_test = "Callback test @" + string(current_time) + ": " + _string;
         //input_string_set();
     }
