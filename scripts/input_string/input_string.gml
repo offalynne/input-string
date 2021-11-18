@@ -9,6 +9,7 @@ ___INPUT_STRING =
     allow_newline : false,  //Whether to allow newline characters or swap to space
     allow_empty   : false,  //Whether a blank field submission is treated as valid
     submit_trim   : true,   //Whether submit trims leading and trailing whitespace
+    auto_submit   : true,   //Whether the 'Return' key fires a submission callback
 
     //Init    
     platform_hint : "keyboard",
@@ -195,7 +196,7 @@ function input_string_tick()
             ___set(_string);
                 
             //Handle submission
-            if (_submit)
+            if (auto_submit && _submit)
             {
                 ___submit();
             }
