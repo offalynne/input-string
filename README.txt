@@ -16,13 +16,13 @@ input_string_add
   function: Adds to managed text
   argument: String
 
+input_string_submit
+  function: Performs string submission
+
 input_string_callback_set
   function: Sets submission callback
   requires: input_​string_​tick
   argument: Function (Optional)
-
-input_string_submit
-  function: Performs string submission
 
 input_string_virtual_submit
   function: Serves virtual keyboard submission
