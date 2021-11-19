@@ -4,13 +4,14 @@ ___INPUT_STRING =
 {   
     max_length : 1000,      //Maximum text entry string length. Do not exceed 1024
 
-    autoclose_vkb : true,   //Whether the 'Return' key closes the virtual keyboard
-    use_clipboard : false,  //Whether 'Control-V' pastes clipboard text on Windows
-    allow_newline : false,  //Whether to allow newline characters or swap to space
-    allow_empty   : false,  //Whether a blank field submission is treated as valid
-    submit_trim   : true,   //Whether submit trims leading and trailing whitespace
+    auto_closevkb : true,   //Whether the 'Return' key closes the virtual keyboard
     auto_submit   : true,   //Whether the 'Return' key fires a submission callback
-
+    auto_trim     : true,   //Whether submit trims leading and trailing whitespace
+    
+    allow_empty   : false,  //Whether a blank field submission is treated as valid
+    allow_newline : false,  //Whether to allow newline characters or swap to space
+    use_clipboard : false,  //Whether 'Control-V' pastes clipboard text on Windows
+    
     //Init
     platform_hint : "keyboard",
     predialogue   : "",
@@ -108,13 +109,13 @@ ___INPUT_STRING =
         {
             _string = input_string_get();
             
-            if (submit_trim && (_string != ""))
+            if (auto_trim && (_string != ""))
             {
                 //Trim whitespace on submission
                 ___set(___trim(_string));
             }
             
-            if (is_method(callback) && (_string != "" || allow_empty))
+            if (is_method(callback) && (input_string_get() != "" || allow_empty))
             {
                 //Issue submission callback
                 callback();
@@ -198,7 +199,7 @@ function input_string_tick()
                     virtual_submit = (keyboard_check_pressed(vk_enter));
                 }
             
-                if (autoclose_vkb && virtual_submit)
+                if (auto_closevkb && virtual_submit)
                 {
                     //Close virtual keyboard on submission
                     keyboard_virtual_hide();
