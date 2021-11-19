@@ -11,7 +11,7 @@ ___INPUT_STRING =
     submit_trim   : true,   //Whether submit trims leading and trailing whitespace
     auto_submit   : true,   //Whether the 'Return' key fires a submission callback
 
-    //Init    
+    //Init
     platform_hint : "keyboard",
     predialogue   : "",
     value         : "",
@@ -24,12 +24,15 @@ ___INPUT_STRING =
     async_submit   : false,
 
     keyboard_supported : ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
-	               || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
-	               || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
-	               || (os_type == os_tvos) || (os_type == os_ios)),
+	                   || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
+	                   || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
+	                   || (os_type == os_tvos) || (os_type == os_ios)),
     //Utilites
     ___trim: function(_string = "")
     {
+        //Enforce type
+        _string = string(_string);
+        
         var _c = "";
         var _l = 1;
         var _r = string_length(_string);
@@ -38,7 +41,7 @@ ___INPUT_STRING =
         {
             //Offset left
             _c = ord(string_char_at(_string, _l));
-            if ((_c > 8) && (_c < 14) || (_c == 32)) _l += 1;
+            if ((_c > 8) && (_c < 14) || (_c == 32)) _l++;
             else break;
         }
         
@@ -46,7 +49,7 @@ ___INPUT_STRING =
         {
             //Offset right
             _c = ord(string_char_at(_string, _r));
-            if ((_c > 8) && (_c < 14) || (_c == 32)) _r -= 1;
+            if ((_c > 8) && (_c < 14) || (_c == 32)) _r--;
             else break;
         }
         
@@ -58,12 +61,14 @@ ___INPUT_STRING =
     {
         with INPUT_STRING
         {
-            //Stringify
+            //Enforce type
             _string = string(_string);
 
             //Enforce length
-            _string = string_copy(_string, 1, max_length);
-
+            var _max = max_length;
+            if (os_type == os_android) _max++;
+            _string = string_copy(_string, 1, _max);
+            
             //Left pad one space (fixes Android quirk on first character)
             var _trim = (string_char_at(_string, 1) == " ");
             if ((os_type == os_android) && !_trim)
@@ -75,6 +80,13 @@ ___INPUT_STRING =
         
             if ((tick_last != undefined) && (keyboard_string != _string))
             {
+                if (((os_type == os_ios) || (os_type == os_tvos))
+                  && (string_length(keyboard_string) > _max))
+                {
+                    //Close keyboard on overflow (fixes setting quirk on iOS)
+                    keyboard_virtual_hide();
+                }
+                
                 //Set inbuilt value if necessary
                 keyboard_string = _string;
             }
@@ -84,7 +96,7 @@ ___INPUT_STRING =
     
             if ((os_type == os_android) && _trim)
             {
-                //Trim leading space
+                //Trim Android placeholder
                 value = string_delete(value, 1, 1);
             }
         }
@@ -132,7 +144,6 @@ function input_string_add(_string) { return input_string_set(INPUT_STRING.value 
 function input_string_callback_set(_callback = undefined) { INPUT_STRING.callback = _callback; }
 
 function input_string_async_active() { return (INPUT_STRING.async_id != undefined); }
-
     
 function input_string_tick()
 {
@@ -149,31 +160,37 @@ function input_string_tick()
             }
         
             if (use_clipboard && (os_type == os_windows)
-                && keyboard_check_pressed(ord("V")) && keyboard_check(vk_control)
-                && clipboard_has_text())
+             && keyboard_check_pressed(ord("V")) && keyboard_check(vk_control)
+             && clipboard_has_text())
             {
                 //Paste
                 _string += clipboard_get_text();
             }
-        
-            //Filter carriage returns
-            _string = string_replace_all(_string, chr(13), "");
-        
-            if (_string != "" && !allow_newline)
+
+            if (_string != "")
             {
-                //Cull newlines
-                _string = string_replace_all(_string, chr(10), " ");
+                if ((os_type != os_windows) || !allow_newline)
+                {
+                    //Filter carriage returns
+                    _string = string_replace_all(_string, chr(13), "");
+                }
+        
+                if (!allow_newline)
+                {
+                    //Cull newlines
+                    _string = string_replace_all(_string, chr(10), " ");
+                }
             }
       
             //Handle virtual keyboard submission
             virtual_submit = false;
-            if (keyboard_virtual_status() != undefined)
+            if ((keyboard_virtual_status() != undefined) && !input_string_async_active())
             {
                 if ((os_type == os_ios) || (os_type == os_tvos))
                 {
                     //iOS virtual keyboard submission
                     virtual_submit = ((keyboard_lastkey == 10) 
-                                    && (string_length(keyboard_string) > string_length(value)));
+                                   && (string_length(keyboard_string) > string_length(value)));
                 }
                 else
                 {
@@ -190,14 +207,14 @@ function input_string_tick()
 
             //Any string submission
             var _submit = (async_submit || virtual_submit
-                        || (keyboard_supported && keyboard_check_pressed(vk_enter)));
+                       || (keyboard_supported && keyboard_check_pressed(vk_enter)));
         
             //Set internal string
             ___set(_string);
                 
-            //Handle submission
-            if (auto_submit && _submit)
+            if (_submit && auto_submit)
             {
+                //Handle submission
                 ___submit();
             }
         
@@ -219,14 +236,50 @@ function input_string_async_get(_prompt, _string = INPUT_STRING.value)
         }
         else
         {
+            //Note platform suitability
             var _source = input_string_platform_hint();
-            if (_source != "async"  ) show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
-            if (_source == "virtual") show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
-        
-            if (os_type == os_switch)
+            if (_source != "async"  )
             {
-                //Enforce Switch character limit
-                _string = string_copy(_string, 1, 500);
+                show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
+            }
+            
+            if (_source == "virtual")
+            {
+                show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
+            }
+            
+            if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos))
+            {
+                //Hide lingering overlay on dialogue prompt open (Fixes focus quirk)
+                keyboard_virtual_hide();
+            }
+            
+            if (_string != "")
+            {
+                //Enforce platform character limits
+                switch (os_type) {
+                    case os_switch:
+                        if (string_length(_string) > 500)
+                        {
+                            show_debug_message("Input String Warning: Switch dialog has a limit of 500 characters");
+                            _string = string_copy(_string, 1, 500);
+                        }
+                    break;
+                    case (os_ps4):
+                    case (os_ps5):
+                        if (string_length(_string) > 1024)
+                        {
+                            show_debug_message("Input String Warning: PlayStation dialog has a limit of 1024 characters");
+                            _string = string_copy(_string, 1, 1024);
+                        }
+                    break;
+                    default:
+                        if (string_length(_string) > max_length)
+                        {
+                            _string = string_copy(_string, 1, max_length);
+                        }
+                    break;
+                }
             }
         
             predialogue = input_string_get();
@@ -246,16 +299,20 @@ function input_string_dialog_async_event()
         if (event_number != (os_browser == browser_not_a_browser ? ev_dialog_async : 0))
         {
             //Use in async dialog event only
-            show_error("Input String Error: Async dialogue used in invalid event (" 
-                        + object_get_name(object_index) + ", " 
-                        + string(event_type) + ", " 
-                        + string(event_number) 
-                        + ")", true);
+            show_error
+            (
+                "Input String Error: Async dialogue used in invalid event (" 
+                + object_get_name(object_index) + ", " 
+                + string(event_type) + ", " 
+                + string(event_number) 
+                + ")",
+                true
+            );
         }
         else
         {
             if (input_string_async_active() && (async_load != undefined)
-                && (async_load[? "id"] == async_id) && (async_load[? "status"] != undefined))
+             && (async_load[? "id"] == async_id) && (async_load[? "status"] != undefined))
             {
                 var _result = string(async_load[? "result"]);       
                 if (!allow_empty && (_result == ""))
