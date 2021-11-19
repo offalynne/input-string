@@ -29,7 +29,7 @@ ___INPUT_STRING =
 	                   || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
 	                   || (os_type == os_tvos) || (os_type == os_ios)),
     //Utilites
-    ___trim: function(_string = "")
+    ___trim: function(_string)
     {
         //Enforce type
         _string = string(_string);
@@ -58,7 +58,7 @@ ___INPUT_STRING =
         return string_copy(_string, _l, _r - _l + 1);
     },
 
-    ___set: function(_string = "")
+    ___set: function(_string)
     {
         with INPUT_STRING
         {
@@ -84,7 +84,7 @@ ___INPUT_STRING =
                 if (((os_type == os_ios) || (os_type == os_tvos))
                   && (string_length(keyboard_string) > _max))
                 {
-                    //Close keyboard on overflow (fixes setting quirk on iOS)
+                    //Close keyboard on overflow (fixes iOS keyboard string setting quirk)
                     keyboard_virtual_hide();
                 }
                 
@@ -109,7 +109,7 @@ ___INPUT_STRING =
         {
             _string = input_string_get();
             
-            if (auto_trim && (_string != ""))
+            if (auto_trim)
             {
                 //Trim whitespace on submission
                 ___set(___trim(_string));
@@ -239,47 +239,35 @@ function input_string_async_get(_prompt, _string = INPUT_STRING.value)
         {
             //Note platform suitability
             var _source = input_string_platform_hint();
-            if (_source != "async"  )
-            {
-                show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
-            }
-            
-            if (_source == "virtual")
-            {
-                show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
-            }
+            if (_source != "async"  ) show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform"          );
+            if (_source == "virtual") show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
             
             if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos))
             {
-                //Hide lingering overlay on dialogue prompt open (Fixes focus quirk)
+                //Hide lingering overlay on dialogue prompt open (Fixes mobile keyboard focus quirk)
                 keyboard_virtual_hide();
             }
             
             if (_string != "")
             {
-                //Enforce platform character limits
-                switch (os_type) {
-                    case os_switch:
-                        if (string_length(_string) > 500)
-                        {
-                            show_debug_message("Input String Warning: Switch dialog has a limit of 500 characters");
-                            _string = string_copy(_string, 1, 500);
-                        }
-                    break;
-                    case (os_ps4):
-                    case (os_ps5):
-                        if (string_length(_string) > 1024)
-                        {
-                            show_debug_message("Input String Warning: PlayStation dialog has a limit of 1024 characters");
-                            _string = string_copy(_string, 1, 1024);
-                        }
-                    break;
-                    default:
-                        if (string_length(_string) > max_length)
-                        {
-                            _string = string_copy(_string, 1, max_length);
-                        }
-                    break;
+                if ((os_type == os_switch) && (string_length(_string) > 500))
+                {
+                    //Enforce Switch dialog character limit
+                    show_debug_message("Input String Warning: Switch dialog has a limit of 500 characters");
+                    _string = string_copy(_string, 1, 500);
+                }
+                
+                if (((os_type == os_ps4) || (os_type == os_ps5)) && (string_length(_string) > 1024))
+                {
+                        //Enforce PlayStation dialog character limit
+                        show_debug_message("Input String Warning: PlayStation dialog has a limit of 1024 characters");
+                        _string = string_copy(_string, 1, 1024);
+                }
+
+                if (string_length(_string) > max_length)
+                {
+                    //Enforce configured character limit
+                    _string = string_copy(_string, 1, max_length);
                 }
             }
         
@@ -362,7 +350,7 @@ with INPUT_STRING
         {
             if (!_map[? "PHYSICAL_KEYBOARD"])
             {
-                //Suggest virtual keyboard on Android in absence of physical
+                //Suggest virtual on Android in absence of physical keyboard
                 platform_hint = "virtual";
             }
         
