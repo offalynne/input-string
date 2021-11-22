@@ -150,7 +150,7 @@ function input_string_tick()
 {
     with INPUT_STRING
     {
-        if (!input_string_async_active() && (keyboard_supported))
+        if (!input_string_async_active() && keyboard_supported)
         {
             //Manage text input
             var _string = keyboard_string;
