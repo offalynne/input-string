@@ -1,4 +1,7 @@
-input_string_tick();
+if (tick)
+{
+    input_string_tick();
+}
 
 //Pointer buttons
 if (mouse_check_button_released(mb_any) && !input_string_async_active())
@@ -31,15 +34,21 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
 //Secondary tests
 if (input_string_platform_hint() == "keyboard")
 {
-    if (keyboard_check_pressed(vk_f2))
+    if (keyboard_check_pressed(vk_f1))
     {
         //Append
         input_string_add(" add test");
     }
     
-    if (keyboard_check_pressed(vk_f1))
+    if (keyboard_check_pressed(vk_f2))
     {
         //Manual submission
         input_string_submit();
     }    
+    
+    if (keyboard_check_pressed(vk_f3))
+    {
+        //Toggle tick
+        tick = !tick;
+    }
 }

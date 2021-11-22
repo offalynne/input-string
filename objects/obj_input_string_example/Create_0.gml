@@ -1,3 +1,4 @@
+tick = true;
 submission_test = "";
 long_string = "";
 

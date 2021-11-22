@@ -25,11 +25,11 @@ ___INPUT_STRING =
     async_submit   : false,
 
     keyboard_supported : ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
-	                   || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
-	                   || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
-	                   || (os_type == os_tvos) || (os_type == os_ios)),
+                       || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
+                       || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
+                       || (os_type == os_tvos) || (os_type == os_ios)),
     //Utilites
-    ___trim: function(_string)
+    ___trim : function(_string)
     {
         //Enforce type
         _string = string(_string);
@@ -58,7 +58,7 @@ ___INPUT_STRING =
         return string_copy(_string, _l, _r - _l + 1);
     },
 
-    ___set: function(_string)
+    ___set : function(_string)
     {
         with INPUT_STRING
         {
@@ -68,6 +68,7 @@ ___INPUT_STRING =
             //Enforce length
             var _max = max_length;
             if (os_type == os_android) _max++;
+                
             _string = string_copy(_string, 1, _max);
             
             //Left pad one space (fixes Android quirk on first character)
@@ -81,6 +82,7 @@ ___INPUT_STRING =
         
             if ((tick_last != undefined) && (keyboard_string != _string))
             {
+                //Set inbuilt value if necessary
                 if (((os_type == os_ios) || (os_type == os_tvos))
                   && (string_length(keyboard_string) > _max))
                 {
@@ -88,7 +90,6 @@ ___INPUT_STRING =
                     keyboard_virtual_hide();
                 }
                 
-                //Set inbuilt value if necessary
                 keyboard_string = _string;
             }
     
@@ -206,14 +207,11 @@ function input_string_tick()
                 }
             }
 
-            //Any string submission
-            var _submit = (async_submit || virtual_submit
-                       || (keyboard_supported && keyboard_check_pressed(vk_enter)));
-        
             //Set internal string
             ___set(_string);
                 
-            if (_submit && auto_submit)
+            if (auto_submit && !async_submit
+            && (virtual_submit || (keyboard_supported && keyboard_check_pressed(vk_enter))))
             {
                 //Handle submission
                 ___submit();
@@ -259,9 +257,9 @@ function input_string_async_get(_prompt, _string = INPUT_STRING.value)
                 
                 if (((os_type == os_ps4) || (os_type == os_ps5)) && (string_length(_string) > 1024))
                 {
-                        //Enforce PlayStation dialog character limit
-                        show_debug_message("Input String Warning: PlayStation dialog has a limit of 1024 characters");
-                        _string = string_copy(_string, 1, 1024);
+                    //Enforce PlayStation dialog character limit
+                    show_debug_message("Input String Warning: PlayStation dialog has a limit of 1024 characters");
+                    _string = string_copy(_string, 1, 1024);
                 }
 
                 if (string_length(_string) > max_length)
@@ -303,6 +301,7 @@ function input_string_dialog_async_event()
             if (input_string_async_active() && (async_load != undefined)
              && (async_load[? "id"] == async_id) && (async_load[? "status"] != undefined))
             {
+                //Confirm Async
                 var _result = string(async_load[? "result"]);       
                 if (!allow_empty && (_result == ""))
                 {
@@ -314,8 +313,13 @@ function input_string_dialog_async_event()
                     async_submit = true;
                 }
             
-                ___set(_result);            
+                ___set(_result);
                 async_id = undefined;
+                
+                if (async_submit)
+                {
+                    ___submit();
+                }
             }
         }
     }
