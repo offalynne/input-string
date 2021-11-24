@@ -13,7 +13,7 @@ function input_string_async_get(_prompt, _string = INPUT_STRING.value)
         {
             //Note platform suitability
             var _source = input_string_platform_hint();
-            if (_source != "async"  ) show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform"          );
+            if (_source != "async")   show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
             if (_source == "virtual") show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
             
             if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos))
