@@ -2,6 +2,7 @@
   "resources": [
     {"id":{"name":"rm_input_string_example","path":"rooms/rm_input_string_example/rm_input_string_example.yy",},"order":1,},
     {"id":{"name":"obj_input_string_example","path":"objects/obj_input_string_example/obj_input_string_example.yy",},"order":0,},
+    {"id":{"name":"input_string_async","path":"scripts/input_string_async/input_string_async.yy",},"order":3,},
     {"id":{"name":"input_string","path":"scripts/input_string/input_string.yy",},"order":2,},
   ],
   "Options": [],
