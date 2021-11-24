@@ -253,7 +253,9 @@ function input_string_tick()
                     virtual_submit = (keyboard_check_pressed(vk_enter));
                 }
             
-                if (auto_closevkb && virtual_submit)
+                if (auto_closevkb && virtual_submit
+                && (((os_type == os_uwp) && uwp_device_touchscreen_available()) 
+                ||   (os_type == os_ios) || (os_type == os_tvos)))
                 {
                     //Close virtual keyboard on submission
                     keyboard_virtual_hide();
