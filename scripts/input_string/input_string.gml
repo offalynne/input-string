@@ -272,8 +272,7 @@ function input_string_tick()
                 //Handle submission
                 __submit();
             }
-        
-            //Delta
+
             async_submit = false;
             tick_last = current_time;
         }
