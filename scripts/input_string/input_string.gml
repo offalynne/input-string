@@ -128,7 +128,7 @@ function ___input_string()
                 {
                     //Set inbuilt value if necessary
                     if (((os_type == os_ios) || (os_type == os_tvos))
-                      && (string_length(keyboard_string) > _max))
+                    && (string_length(keyboard_string) > _max))
                     {
                         //Close keyboard on overflow (fixes iOS keyboard string setting quirk)
                         keyboard_virtual_hide();
