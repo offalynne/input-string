@@ -1,5 +1,5 @@
 #macro INPUT_STRING (___input_string())
-function             ___input_string()
+function ___input_string()
 {
     static instance = new (function() constructor
     {
