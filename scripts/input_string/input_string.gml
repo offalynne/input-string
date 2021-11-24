@@ -30,7 +30,6 @@ function             ___input_string()
                            || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
                            || (os_type == os_tvos) || (os_type == os_ios));
         
-        
         //Set platform hint
         if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) 
          || (os_type == os_switch)  || (os_type == os_ps4) || (os_type == os_ps5))
