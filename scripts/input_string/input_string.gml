@@ -15,8 +15,8 @@ function             ___input_string()
         use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
 
         //Init
-        predialogue   = "";
-        value         = "";
+        predialogue = "";
+        value       = "";
     
         tick_last = undefined;
         callback  = undefined;
