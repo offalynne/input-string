@@ -1,174 +1,174 @@
 #macro INPUT_STRING (___input_string())
 function ___input_string()
 {
-    static instance = new (function() constructor
+    //Self initialize
+    static instance = new (function() constructor {
+        
+    //Config
+    max_length = 1000;      //Maximum text entry string length. Do not exceed 1024
+
+    auto_closevkb = true;   //Whether the 'Return' key closes the virtual keyboard
+    auto_submit   = true;   //Whether the 'Return' key fires a submission callback
+    auto_trim     = true;   //Whether submit trims leading and trailing whitespace
+
+    allow_empty   = false;  //Whether a blank field submission is treated as valid
+    allow_newline = false;  //Whether to allow newline characters or swap to space
+    use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
+
+    //Init
+    predialogue = "";
+    value       = "";
+
+    tick_last = undefined;
+    callback  = undefined;
+    async_id  = undefined;
+
+    virtual_submit = false;
+    async_submit   = false;
+
+    keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
+                       || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
+                       || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
+                       || (os_type == os_tvos) || (os_type == os_ios));
+
+    //Set platform hint
+    if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) 
+    ||  (os_type == os_switch)  || (os_type == os_ps4) || (os_type == os_ps5))
     {
-        //Config
-        max_length = 1000;      //Maximum text entry string length. Do not exceed 1024
+        //Suggest 'async' (modal) on console
+        platform_hint = "async";
+    }
+    else if ((os_browser != browser_not_a_browser)
+         && ((os_type != os_windows) && (os_type != os_macosx) 
+         &&  (os_type != os_operagx) && (os_type != os_linux)))
+    {
+        //Suggest 'async' (modal) on non-desktop web
+        platform_hint = "async";
+    }
+    else if (((os_type == os_uwp) && uwp_device_touchscreen_available()) 
+         ||   (os_type == os_ios) || (os_type == os_tvos))
+    {
+        //Suggest virtual keyboard on iOS and UWP mobile
+        platform_hint = "virtual";
+    }
+    else if (os_type == os_android)
+    {
+        var _ret = "virtual";
+        var _map = os_get_info();
 
-        auto_closevkb = true;   //Whether the 'Return' key closes the virtual keyboard
-        auto_submit   = true;   //Whether the 'Return' key fires a submission callback
-        auto_trim     = true;   //Whether submit trims leading and trailing whitespace
-    
-        allow_empty   = false;  //Whether a blank field submission is treated as valid
-        allow_newline = false;  //Whether to allow newline characters or swap to space
-        use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
-
-        //Init
-        predialogue = "";
-        value       = "";
-    
-        tick_last = undefined;
-        callback  = undefined;
-        async_id  = undefined;
-
-        virtual_submit = false;
-        async_submit   = false;
-
-        keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
-                           || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
-                           || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
-                           || (os_type == os_tvos) || (os_type == os_ios));
-        
-        //Set platform hint
-        if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) 
-        ||  (os_type == os_switch)  || (os_type == os_ps4) || (os_type == os_ps5))
+        if (ds_exists(_map, ds_type_map))
         {
-            //Suggest 'async' (modal) on console
-            platform_hint = "async";
-        }
-        else if ((os_browser != browser_not_a_browser)
-             && ((os_type != os_windows) && (os_type != os_macosx) 
-             &&  (os_type != os_operagx) && (os_type != os_linux)))
-        {
-            //Suggest 'async' (modal) on non-desktop web
-            platform_hint = "async";
-        }
-        else if (((os_type == os_uwp) && uwp_device_touchscreen_available()) 
-             ||   (os_type == os_ios) || (os_type == os_tvos))
-        {
-            //Suggest virtual keyboard on iOS and UWP mobile
-            platform_hint = "virtual";
-        }
-        else if (os_type == os_android)
-        {
-            var _ret = "virtual";
-            var _map = os_get_info();
-
-            if (ds_exists(_map, ds_type_map))
+            //Check for physical keyboard hint on Android
+            if (_map[? "PHYSICAL_KEYBOARD"])
             {
-                //Check for physical keyboard hint on Android
-                if (_map[? "PHYSICAL_KEYBOARD"])
-                {
-                    //Suggest virtual on Android in absence of physical keyboard
-                    _ret = "keyboard";
-                }
-            
-                ds_map_destroy(_map);            
+                //Suggest virtual on Android in absence of physical keyboard
+                _ret = "keyboard";
             }
-        
-            platform_hint = _ret;
-        }
-        else
-        {
-            platform_hint = "keyboard";
-        }
-        
-        //Utils
-        __trim = function(_string)
-        {        
-            var _c = "";
-            var _l = 1;
-            var _r = string_length(_string);
-        
-            repeat (_r)
-            {
-                //Offset left
-                _c = ord(string_char_at(_string, _l));
-                if ((_c > 8) && (_c < 14) || (_c == 32)) _l++;
-                else break;
-            }
-        
-            repeat (_r - _l)
-            {
-                //Offset right
-                _c = ord(string_char_at(_string, _r));
-                if ((_c > 8) && (_c < 14) || (_c == 32)) _r--;
-                else break;
-            }
-        
-            //Trim
-            return string_copy(_string, _l, _r - _l + 1);
-        };
-        
 
-        __set = function(_string)
-        {
-            with INPUT_STRING
-            {
-                //Enforce type
-                _string = string(_string);
+            ds_map_destroy(_map);            
+        }
 
-                //Enforce length
-                var _max = max_length;
-                if (os_type == os_android) _max++;
-                
-                _string = string_copy(_string, 1, _max);
-            
-                //Left pad one space (fixes Android quirk on first character)
-                var _trim = (string_char_at(_string, 1) == " ");
-                if ((os_type == os_android) && !_trim)
-                {
-                    //Set leading space
-                    _string = " " + _string;
-                    _trim = true;
-                }
-        
-                if ((tick_last != undefined) && (keyboard_string != _string))
-                {
-                    //Set inbuilt value if necessary
-                    if (((os_type == os_ios) || (os_type == os_tvos))
-                    && (string_length(keyboard_string) > _max))
-                    {
-                        //Close keyboard on overflow (fixes iOS keyboard string setting quirk)
-                        keyboard_virtual_hide();
-                    }
-                
-                    keyboard_string = _string;
-                }
-    
-                //Set internal string
-                value = _string;
-    
-                if ((os_type == os_android) && _trim)
-                {
-                    //Trim Android placeholder
-                    value = string_delete(value, 1, 1);
-                }
-            }
-        };
-    
-    
-        __submit = function()
+        platform_hint = _ret;
+    }
+    else
+    {
+        platform_hint = "keyboard";
+    }
+
+    //Utils
+    __trim = function(_string)
+    {        
+        var _c = "";
+        var _l = 1;
+        var _r = string_length(_string);
+
+        repeat (_r)
         {
-            with INPUT_STRING
+            //Offset left
+            _c = ord(string_char_at(_string, _l));
+            if ((_c > 8) && (_c < 14) || (_c == 32)) _l++;
+            else break;
+        }
+
+        repeat (_r - _l)
+        {
+            //Offset right
+            _c = ord(string_char_at(_string, _r));
+            if ((_c > 8) && (_c < 14) || (_c == 32)) _r--;
+            else break;
+        }
+
+        //Trim
+        return string_copy(_string, _l, _r - _l + 1);
+    };
+
+
+    __set = function(_string)
+    {
+        with INPUT_STRING
+        {
+            //Enforce type
+            _string = string(_string);
+
+            //Enforce length
+            var _max = max_length;
+            if (os_type == os_android) _max++;
+
+            _string = string_copy(_string, 1, _max);
+
+            //Left pad one space (fixes Android quirk on first character)
+            var _trim = (string_char_at(_string, 1) == " ");
+            if ((os_type == os_android) && !_trim)
             {
-                if (auto_trim)
-                {
-                    //Trim whitespace on submission
-                    __set(__trim(input_string_get()));
-                }
-            
-                if (is_method(callback) && (input_string_get() != "" || allow_empty))
-                {
-                    //Issue submission callback
-                    callback();
-                }
+                //Set leading space
+                _string = " " + _string;
+                _trim = true;
             }
-        };
+
+            if ((tick_last != undefined) && (keyboard_string != _string))
+            {
+                //Set inbuilt value if necessary
+                if (((os_type == os_ios) || (os_type == os_tvos))
+                && (string_length(keyboard_string) > _max))
+                {
+                    //Close keyboard on overflow (fixes iOS keyboard string setting quirk)
+                    keyboard_virtual_hide();
+                }
+
+                keyboard_string = _string;
+            }
+
+            //Set internal string
+            value = _string;
+
+            if ((os_type == os_android) && _trim)
+            {
+                //Trim Android placeholder
+                value = string_delete(value, 1, 1);
+            }
+        }
+    };
+
+
+    __submit = function()
+    {
+        with INPUT_STRING
+        {
+            if (auto_trim)
+            {
+                //Trim whitespace on submission
+                __set(__trim(input_string_get()));
+            }
+
+            if (is_method(callback) && (input_string_get() != "" || allow_empty))
+            {
+                //Issue submission callback
+                callback();
+            }
+        }
+    };
         
-    })();
-    return instance;
+    })(); return instance;
 }
 
 function input_string_virtual_submit() { return INPUT_STRING.virtual_submit; }
