@@ -107,13 +107,10 @@ function ___input_string()
     {
         with INPUT_STRING
         {
-            //Enforce type
             _string = string(_string);
 
             //Enforce length
-            var _max = max_length;
-            if (os_type == os_android) _max++;
-
+            var _max = max_length + ((os_type == os_android) ? 1 : 0);
             _string = string_copy(_string, 1, _max);
 
             //Left pad one space (fixes Android quirk on first character)
@@ -127,14 +124,14 @@ function ___input_string()
 
             if ((tick_last != undefined) && (keyboard_string != _string))
             {
-                //Set inbuilt value if necessary
                 if (((os_type == os_ios) || (os_type == os_tvos))
                 && (string_length(keyboard_string) > _max))
                 {
-                    //Close keyboard on overflow (fixes iOS keyboard string setting quirk)
+                    //Close keyboard on overflow (fixes iOS string setting quirk)
                     keyboard_virtual_hide();
                 }
 
+                //Set inbuilt value if necessary
                 keyboard_string = _string;
             }
 
@@ -215,8 +212,8 @@ function input_string_tick()
             }
         
             if (use_clipboard && (os_type == os_windows)
-             && keyboard_check_pressed(ord("V")) && keyboard_check(vk_control)
-             && clipboard_has_text())
+            && keyboard_check_pressed(ord("V")) && keyboard_check(vk_control)
+            && clipboard_has_text())
             {
                 //Paste
                 _string += clipboard_get_text();
