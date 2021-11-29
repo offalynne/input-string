@@ -30,7 +30,7 @@
     "path": "folders/tests.yy",
   },
   "resourceVersion": "1.0",
-  "name": "obj_input_string_example",
+  "name": "ob_input_string_example",
   "tags": [],
   "resourceType": "GMObject",
 }
