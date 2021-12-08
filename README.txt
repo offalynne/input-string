@@ -23,6 +23,11 @@ input_string_callback_set
 input_string_submit
   function: Performs string submission
 
+input_string_platform_hint
+  function: Serves entry method hint
+  returned: String (Hint)
+  possible: "keyboard", "virtual", "async"
+
 input_string_virtual_submit
   function: Serves virtual keyboard submission
   requires: input_​string_​tick
@@ -30,7 +35,7 @@ input_string_virtual_submit
 
 input_string_tick
   function: Manages state and `keyboard_string`
-  in event: Begin Step (Once, Optional)
+  in event: Step (Once, Optional)
 
 input_string_async_get
   function: Opens modal dialog
@@ -46,11 +51,6 @@ input_string_async_active
 input_string_dialog_async_event
   function: Dialog entry manager
   in event: Dialog Async (Once, Optional)
-
-input_string_platform_hint
-  function: Serves entry method hint
-  returned: String (Hint)
-  possible: "keyboard", "virtual", "async"
 
 Thanks to: @JujuAdams, @tabularelf, @nkrapivin
 Community: discord.gg/8krYCqr
