@@ -52,6 +52,8 @@ input_string_dialog_async_event
   function: Dialog entry manager
   in event: Dialog Async (Once, Optional)
 
+For configuration, see input_string.gml
+
 Thanks to: @JujuAdams, @tabularelf, @nkrapivin
 Community: discord.gg/8krYCqr
 
