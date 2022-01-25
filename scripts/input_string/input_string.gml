@@ -59,7 +59,7 @@ function ___input_string()
         if (ds_exists(_map, ds_type_map))
         {
             //Check for physical keyboard hint on Android
-            if (_map[? "PHYSICAL_KEYBOARD"])
+            if (_map[? "PHYSICAL_KEYBOARD"] && (_map[? "android_tv"] != 1))
             {
                 //Suggest virtual on Android in absence of physical keyboard
                 _ret = "keyboard";
