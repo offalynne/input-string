@@ -1,8 +1,13 @@
 input-string
 
 Multiplatform text entry utility for GameMaker Studio 2
+A robust alternative to inbuilt `keyboard_string` usage
 
-A robust alternative to inbuilt `keyboard_string` usage.
+Features
+- Hint for selecting from entry methods
+- Safer handling at string length limit
+- Prevents dropping any user keystrokes
+- Define a callback for user submission
 
 input_string_get
   function: Serves managed text
@@ -52,10 +57,20 @@ input_string_dialog_async_event
   function: Dialog entry manager
   in event: Dialog Async (Once, Optional)
 
-For configuration, see input_string.gml
+Configuration default TRUE
+  auto_closevkb: Submisson will close virtual keyboard
+  auto_submit:   Return key issues submission callback
+  auto_trim:     Trim extra whitespace upon submission
 
-Thanks to: @JujuAdams, @tabularelf, @nkrapivin
+Configuration default FALSE
+  use_clipboard: Ctrl-V pastes from Windows clipboard
+  allow_newline: Newline character is left unfiltered
+  allow_empty:   Blank submission is considered valid
+
+For setting configuration, see input_string.gml
+
+Thanks: @JujuAdams, @tabularelf, @nkrapivin
 Community: discord.gg/8krYCqr
 
-@offalynne, 2021
+@offalynne, 2022
 MIT licensed, use as you please
