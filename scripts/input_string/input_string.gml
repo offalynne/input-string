@@ -39,36 +39,17 @@ function ___input_string()
         platform_hint = "async";
     }
     else if ((os_browser != browser_not_a_browser)
-         && ((os_type != os_windows) && (os_type != os_macosx) 
-         &&  (os_type != os_operagx) && (os_type != os_linux)))
+    && ((os_type != os_windows) && (os_type != os_macosx) 
+    &&  (os_type != os_operagx) && (os_type != os_linux)))
     {
         //Suggest 'async' (modal) on non-desktop web
         platform_hint = "async";
     }
-    else if (((os_type == os_uwp) && uwp_device_touchscreen_available()) 
-         ||   (os_type == os_ios) || (os_type == os_tvos))
+    else if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos)
+    || (uwp_device_touchscreen_available() && (os_type == os_uwp)))
     {
-        //Suggest virtual keyboard on iOS and UWP mobile
+        //Suggest virtual keyboard on mobile
         platform_hint = "virtual";
-    }
-    else if (os_type == os_android)
-    {
-        var _ret = "virtual";
-        var _map = os_get_info();
-
-        if (ds_exists(_map, ds_type_map))
-        {
-            //Check for physical keyboard hint on Android
-            if (_map[? "PHYSICAL_KEYBOARD"] && (_map[? "android_tv"] != 1))
-            {
-                //Suggest virtual on Android in absence of physical keyboard
-                _ret = "keyboard";
-            }
-
-            ds_map_destroy(_map);            
-        }
-
-        platform_hint = _ret;
     }
     else
     {
@@ -240,15 +221,22 @@ function input_string_tick()
             {
                 if ((os_type == os_ios) || (os_type == os_tvos))
                 {
-                    //iOS virtual keyboard submission
+                    //Virtual keyboard submission
                     virtual_submit = ((keyboard_lastkey == 10) 
                                    && (string_length(keyboard_string) > string_length(value)));
                 }
                 else
                 {
-                    //non-iOS keyboard submission
+                    //Keyboard submission
                     virtual_submit = (keyboard_check_pressed(vk_enter));
                 }
+                
+                if (keyboard_check_pressed(10) && !virtual_submit && (os_type == os_android))
+                {
+                    //Android alternate key
+                    virtual_submit = true;
+                }
+                
             
                 if (auto_closevkb && virtual_submit
                 && (((os_type == os_uwp) && uwp_device_touchscreen_available()) 
