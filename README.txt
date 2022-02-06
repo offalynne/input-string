@@ -7,7 +7,8 @@ Features
 - Hint for selecting from entry methods
 - Safer handling at string length limit
 - Prevents dropping any user keystrokes
-- Define a callback for user submission
+- Prevents input falling through prompt
+- Defines a callback for text entry use
 
 input_string_get
   function: Serves managed text
