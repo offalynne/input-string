@@ -5,10 +5,11 @@ A robust alternative to inbuilt `keyboard_string` usage
 
 Features
 - Hint for selecting from entry methods
-- Safer handling at string length limit
-- Prevents dropping any user keystrokes
-- Prevents input falling through prompt
 - Defines a callback for text entry use
+- Safer handling at string length limit
+- Prevents input falling through prompt
+- Prevents dropping any user keystrokes
+- Prevents Android off-by-one text bugs
 
 input_string_get
   function: Serves managed text
