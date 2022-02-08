@@ -59,6 +59,8 @@ input_string_dialog_async_event
   function: Dialog entry manager
   in event: Dialog Async (Once, Optional)
 
+For setting configuration, see input_string.gml
+
 Configuration default TRUE
   auto_closevkb: Submisson will close virtual keyboard
   auto_submit:   Return key issues submission callback
@@ -68,8 +70,6 @@ Configuration default FALSE
   use_clipboard: Ctrl-V pastes from Windows clipboard
   allow_newline: Newline character is left unfiltered
   allow_empty:   Blank submission is considered valid
-
-For setting configuration, see input_string.gml
 
 Thanks: @JujuAdams, @tabularelf, @nkrapivin
 Community: discord.gg/8krYCqr
