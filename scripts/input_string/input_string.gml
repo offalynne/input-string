@@ -1,12 +1,9 @@
-#macro INPUT_STRING (___input_string())
 function ___input_string()
 {
     //Self initialize
     static instance = new (function() constructor {
         
     //Config
-    max_length = 1000;      //Maximum text entry string length. Do not exceed 1024
-
     auto_closevkb = true;   //Whether the 'Return' key closes the virtual keyboard
     auto_submit   = true;   //Whether the 'Return' key fires a submission callback
     auto_trim     = true;   //Whether submit trims leading and trailing whitespace
@@ -14,6 +11,8 @@ function ___input_string()
     allow_empty   = false;  //Whether a blank field submission is treated as valid
     allow_newline = false;  //Whether to allow newline characters or swap to space
     use_clipboard = false;  //Whether 'Control-V' pastes clipboard text on Windows
+
+    max_length = 1000;      //Maximum text entry string length. Do not exceed 1024
 
     //Init
     predialogue = "";
@@ -86,7 +85,7 @@ function ___input_string()
 
     __set = function(_string)
     {
-        with INPUT_STRING
+        with (___input_string())
         {
             _string = string(_string);
 
@@ -130,7 +129,7 @@ function ___input_string()
 
     __submit = function()
     {
-        with INPUT_STRING
+        with (___input_string())
         {
             if (auto_trim)
             {
@@ -149,10 +148,10 @@ function ___input_string()
     })(); return instance;
 }
 
-function input_string_virtual_submit() { return INPUT_STRING.virtual_submit; }
-function input_string_platform_hint()  { return INPUT_STRING.platform_hint;  }
-function input_string_submit()         { return INPUT_STRING.__submit();     }
-function input_string_get()            { return INPUT_STRING.value;          }
+function input_string_virtual_submit() { return (___input_string()).virtual_submit; }
+function input_string_platform_hint()  { return (___input_string()).platform_hint;  }
+function input_string_submit()         { return (___input_string()).__submit();     }
+function input_string_get()            { return (___input_string()).value;          }
 
 function input_string_set(_string = "")
 {    
@@ -162,25 +161,25 @@ function input_string_set(_string = "")
         keyboard_virtual_hide();
     }
     
-    INPUT_STRING.__set(_string);
+    (___input_string()).__set(_string);
 }
 
 
 function input_string_add(_string)
 {
-    return input_string_set(INPUT_STRING.value + string(_string));
+    return input_string_set((___input_string()).value + string(_string));
 }
 
 
 function input_string_callback_set(_callback = undefined)
 {
-    INPUT_STRING.callback = _callback;
+    (___input_string()).callback = _callback;
 }
 
 
 function input_string_tick()
 {
-    with INPUT_STRING
+    with (___input_string())
     {
         if (!input_string_async_active() && keyboard_supported)
         {

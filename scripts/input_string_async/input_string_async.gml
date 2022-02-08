@@ -1,8 +1,8 @@
-function input_string_async_active(){ return (INPUT_STRING.async_id != undefined); }
+function input_string_async_active(){ return ((___input_string()).async_id != undefined); }
 
-function input_string_async_get(_prompt, _string = INPUT_STRING.value)
+function input_string_async_get(_prompt, _string = (___input_string()).value)
 {
-    with INPUT_STRING
+    with (___input_string())
     {
         if (async_id != undefined)
         {
@@ -57,7 +57,7 @@ function input_string_async_get(_prompt, _string = INPUT_STRING.value)
     
 function input_string_dialog_async_event()
 {
-    with INPUT_STRING
+    with (___input_string())
     {
         if (event_number != (os_browser == browser_not_a_browser ? ev_dialog_async : 0))
         {
@@ -74,7 +74,7 @@ function input_string_dialog_async_event()
         }
         else
         {
-            if (input_string_async_active() && (async_load != undefined)
+            if (input_string_async_active()     && (async_load             != undefined)
             && (async_load[? "id"] == async_id) && (async_load[? "status"] != undefined))
             {
                 //Confirm Async
