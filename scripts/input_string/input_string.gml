@@ -234,8 +234,7 @@ function input_string_tick()
                 {
                     //Android alternate key
                     virtual_submit = true;
-                }
-                
+                }                
             
                 if (auto_closevkb && virtual_submit
                 && (((os_type == os_uwp) && uwp_device_touchscreen_available()) 
