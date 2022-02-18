@@ -74,8 +74,8 @@ function input_string_dialog_async_event()
         }
         else
         {
-            if (input_string_async_active()     && (async_load             != undefined)
-            && (async_load[? "id"] == async_id) && (async_load[? "status"] != undefined))
+            if ((input_string_async_active() && (async_load != "-1")
+            &&  (async_load[? "id"] == async_id) && (async_load[? "status"] != undefined))
             {
                 //Confirm Async
                 var _result = string(async_load[? "result"]);       
