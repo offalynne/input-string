@@ -78,7 +78,9 @@ function input_string_dialog_async_event()
             &&  (async_load[? "id"] == async_id) && (async_load[? "status"] != false))
             {
                 //Confirm Async
-                var _result = string(async_load[? "result"]);       
+                var _result = async_load[? "result"];   
+                _result = (is_undefined(_result) ? "" : string(_result));
+                
                 if (!allow_empty && (_result == ""))
                 {
                     //Revert empty
