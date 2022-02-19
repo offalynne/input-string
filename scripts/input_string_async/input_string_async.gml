@@ -64,10 +64,10 @@ function input_string_dialog_async_event()
             //Use in async dialog event only
             show_error
             (
-                "Input String Error: Async dialogue used in invalid event (" 
+                "Input String Error: Async dialogue used in invalid event " 
                  + object_get_name(object_index) + ", " 
-                 + string(event_type  )          + ", " 
-                 + string(event_number)          + ")",
+                 + "Event " + string(event_type) + ", " 
+                 + "No. " + string(event_number) + ") ",
                 true
             );
         }
