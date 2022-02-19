@@ -13,51 +13,64 @@ Features
 
 input_string_get
   function: Gets managed text
+  argument: None
   returned: String
 
 input_string_set
   function: Sets managed text
   argument: String (Optional)
+  returned: None
 
 input_string_add
   function: Adds to managed text
   argument: String
+  returned: None
   
 input_string_callback_set
   function: Sets submission callback
   argument: Function (Optional)
+  returned: None
 
 input_string_submit
-  function: Performs string submission
+  function: Submits managed text
+  argument: None
+  returned: None
 
 input_string_platform_hint
   function: Gets entry method hint
+  argument: None
   returned: String (Hint)
   possible: "keyboard", "virtual", "async"
 
 input_string_virtual_submit
   function: Gets virtual keyboard submission
   requires: input_​string_​tick
+  argument: None
   returned: Boolean
 
 input_string_tick
   function: Manages state and `keyboard_string`
   in event: Step (Once, Optional)
+  argument: None
+  returned: None
 
 input_string_async_get
   function: Opens modal dialog
   requires: input_​string_​dialog_​async_​event
   argument: Caption, Default String (Optional)
-  returned: Boolean
+  returned: Boolean (Success)
 
 input_string_async_active
   function: Gets dialog status
   requires: input_​string_​dialog_​async_​event
+  argument: None
   returned: Boolean
 
 input_string_dialog_async_event
   function: Dialog entry manager
   in event: Dialog Async (Once, Optional)
+  argument: None
+  returned: Boolean
 
 For setting configuration, see input_string.gml
 
