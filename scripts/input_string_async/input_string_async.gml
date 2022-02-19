@@ -59,7 +59,7 @@ function input_string_dialog_async_event()
 {
     with (___input_string())
     {
-        if (event_number != (os_browser == browser_not_a_browser ? ev_dialog_async : 0))
+        if (event_number != ((os_browser == browser_not_a_browser) ? ev_dialog_async : 0))
         {
             //Use in async dialog event only
             show_error
