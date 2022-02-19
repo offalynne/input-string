@@ -46,7 +46,7 @@ function input_string_async_get(_prompt, _string = (___input_string()).value)
             }
         
             predialogue = input_string_get();
-            async_id    = get_string_async(_prompt, _string);
+            async_id = get_string_async(_prompt, _string);
         
             return true;
         }
