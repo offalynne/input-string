@@ -75,9 +75,9 @@ Configuration default TRUE
   auto_trim:     Trim extra whitespace upon submission
 
 Configuration default FALSE
-  use_clipboard: Ctrl-V pastes from Windows clipboard
   allow_newline: Newline character is left unfiltered
   allow_empty:   Blank submission is considered valid
+  allow_paste:   Ctrl-V pastes from Windows clipboard
 
 Thanks: @JujuAdams, @tabularelf, @nkrapivin
 Community: discord.gg/8krYCqr
