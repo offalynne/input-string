@@ -67,7 +67,7 @@ function input_string_dialog_async_event()
                 "Input String Error: Async dialogue used in invalid event " 
                  + object_get_name(object_index) + ", " 
                  + "Event " + string(event_type) + ", " 
-                 + "No. " + string(event_number) + ") ",
+                 + "no. " + string(event_number) + ") ",
                 true
             );
         }
