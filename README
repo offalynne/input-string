@@ -12,7 +12,7 @@ Features
 - Prevents Android off-by-one text bugs
 
 input_string_get
-  function: Serves managed text
+  function: Gets managed text
   returned: String
 
 input_string_set
@@ -31,12 +31,12 @@ input_string_submit
   function: Performs string submission
 
 input_string_platform_hint
-  function: Serves entry method hint
+  function: Gets entry method hint
   returned: String (Hint)
   possible: "keyboard", "virtual", "async"
 
 input_string_virtual_submit
-  function: Serves virtual keyboard submission
+  function: Gets virtual keyboard submission
   requires: input_​string_​tick
   returned: Boolean
 
@@ -51,7 +51,7 @@ input_string_async_get
   returned: Boolean
 
 input_string_async_active
-  function: Serves dialog status
+  function: Gets dialog status
   requires: input_​string_​dialog_​async_​event
   returned: Boolean
 
