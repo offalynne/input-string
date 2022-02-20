@@ -13,8 +13,8 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
         {
             //Note platform suitability
             var _source = input_string_platform_hint();
-            if (_source != "async")   show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
-            if (_source == "virtual") show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
+            if (_source != "async")    show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
+            if (_source == "virtual")  show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
             
             if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos))
             {
@@ -58,9 +58,9 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
 function input_string_dialog_async_event()
 {
     with (__input_string())
-    {
+    {            
         if (event_number != ((os_browser == browser_not_a_browser) ? ev_dialog_async : 0))
-        {
+        {            
             //Use in async dialog event only
             show_error
             (
@@ -72,10 +72,10 @@ function input_string_dialog_async_event()
             );
         }
         else
-        {
+        {            
             if (input_string_async_active()
             && (async_load != -1) && (async_load[? "id"] == async_id))
-            {
+            {                
                 //Confirm Async
                 var _result = async_load[? "result"];
                 if ((async_load[? "status"] != true) || is_undefined(_result))
