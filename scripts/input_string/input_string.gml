@@ -102,11 +102,11 @@ function __input_string()
                 _trim = true;
             }
             
-            //if (string_pos(chr(0x7F), _string) > 0)
-            //{
-            //    //Filters out 'Delete' control char on Ctrl-Backspace
-            //    _string = string_replace_all(_string, chr(0x7F), "");
-            //}
+            if (string_pos(chr(0x7F), _string) > 0)
+            {
+                //Filter Delete character (fixes Windows and Mac quirks)
+                _string = string_replace_all(_string, chr(0x7F), "");
+            }
 
             if ((tick_last != undefined) && (keyboard_string != _string))
             {
@@ -156,7 +156,7 @@ function __input_string()
 
 function input_string_virtual_submit() { return (__input_string()).virtual_submit; }
 function input_string_platform_hint()  { return (__input_string()).platform_hint;  }
-function input_string_submit()         { return (__input_string()).submit();     }
+function input_string_submit()         { return (__input_string()).submit();       }
 function input_string_get()            { return (__input_string()).value;          }
 
 function input_string_set(_string = "")
@@ -184,7 +184,7 @@ function input_string_callback_set(_callback = undefined)
 
 
 function input_string_tick()
-{       
+{    
     with (__input_string())
     {
         if (!input_string_async_active() && keyboard_supported)
@@ -236,15 +236,15 @@ function input_string_tick()
                     virtual_submit = (keyboard_check_pressed(vk_enter));
                 }
                 
-                if (keyboard_check_pressed(10) && !virtual_submit && (os_type == os_android))
+                if (keyboard_check_pressed(10) && (os_type == os_android))
                 {
                     //Android alternate key
                     virtual_submit = true;
                 }                
             
                 if (auto_closevkb && virtual_submit
-                && (((os_type == os_uwp) && uwp_device_touchscreen_available()) 
-                ||   (os_type == os_ios) || (os_type == os_tvos)))
+                && (((os_type == os_uwp) && uwp_device_touchscreen_available())
+                ||   (os_type == os_ios) || (os_type == os_tvos) || (os_type == os_android)))
                 {
                     //Close virtual keyboard on submission
                     keyboard_virtual_hide();

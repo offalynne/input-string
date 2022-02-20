@@ -73,14 +73,22 @@ function input_string_dialog_async_event()
         }
         else
         {
-            if (input_string_async_active() && (async_load != -1)
-            && (async_load[? "id"] == async_id) && (async_load[? "status"] == true))
+            if (input_string_async_active()
+            && (async_load != -1) && (async_load[? "id"] == async_id))
             {
                 //Confirm Async
-                var _result = async_load[? "result"];   
-                _result = (is_undefined(_result) ? "" : string(_result));
+                var _result = async_load[? "result"];
+                if ((async_load[? "status"] != true) || is_undefined(_result))
+                {
+                    _result = "";
+                }
+                else
+                {
+                    _result = string(_result);
+                }
                 
-                if (!allow_empty && (_result == ""))
+                if ((async_load[? "status"] != true) 
+                ||  (!allow_empty && (_result == "")))
                 {
                     //Revert empty
                     _result = predialogue;
