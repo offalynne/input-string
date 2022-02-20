@@ -2,7 +2,7 @@ tick = true;
 submission_test = "";
 long_string = "";
 
-repeat((___input_string()).max_length) long_string += chr(ord("A") + irandom(25));
+repeat((__input_string()).max_length) long_string += chr(ord("A") + irandom(25));
 
 input_string_callback_set
 (

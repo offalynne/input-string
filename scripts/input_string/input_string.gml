@@ -1,4 +1,4 @@
-function ___input_string()
+function __input_string()
 {
     //Self initialize
     static instance = new (function() constructor {
@@ -56,7 +56,7 @@ function ___input_string()
     }
 
     //Utils
-    __trim = function(_string)
+    trim = function(_string)
     {        
         var _c = "";
         var _l = 1;
@@ -83,9 +83,9 @@ function ___input_string()
     };
 
 
-    __set = function(_string)
+    set = function(_string)
     {
-        with (___input_string())
+        with (__input_string())
         {
             _string = string(_string);
 
@@ -101,6 +101,12 @@ function ___input_string()
                 _string = " " + _string;
                 _trim = true;
             }
+            
+            //if (string_pos(chr(0x7F), _string) > 0)
+            //{
+            //    //Filters out 'Delete' control char on Ctrl-Backspace
+            //    _string = string_replace_all(_string, chr(0x7F), "");
+            //}
 
             if ((tick_last != undefined) && (keyboard_string != _string))
             {
@@ -127,14 +133,14 @@ function ___input_string()
     };
 
 
-    __submit = function()
+    submit = function()
     {
-        with (___input_string())
+        with (__input_string())
         {
             if (auto_trim)
             {
                 //Trim whitespace on submission
-                __set(__trim(input_string_get()));
+                set(trim(input_string_get()));
             }
 
             if (is_method(callback) && (input_string_get() != "" || allow_empty))
@@ -148,10 +154,10 @@ function ___input_string()
     })(); return instance;
 }
 
-function input_string_virtual_submit() { return (___input_string()).virtual_submit; }
-function input_string_platform_hint()  { return (___input_string()).platform_hint;  }
-function input_string_submit()         { return (___input_string()).__submit();     }
-function input_string_get()            { return (___input_string()).value;          }
+function input_string_virtual_submit() { return (__input_string()).virtual_submit; }
+function input_string_platform_hint()  { return (__input_string()).platform_hint;  }
+function input_string_submit()         { return (__input_string()).submit();     }
+function input_string_get()            { return (__input_string()).value;          }
 
 function input_string_set(_string = "")
 {    
@@ -161,25 +167,25 @@ function input_string_set(_string = "")
         keyboard_virtual_hide();
     }
     
-    (___input_string()).__set(_string);
+    (__input_string()).set(_string);
 }
 
 
 function input_string_add(_string)
 {
-    return input_string_set((___input_string()).value + string(_string));
+    return input_string_set((__input_string()).value + string(_string));
 }
 
 
 function input_string_callback_set(_callback = undefined)
 {
-    (___input_string()).callback = _callback;
+    (__input_string()).callback = _callback;
 }
 
 
 function input_string_tick()
-{
-    with (___input_string())
+{       
+    with (__input_string())
     {
         if (!input_string_async_active() && keyboard_supported)
         {
@@ -246,13 +252,13 @@ function input_string_tick()
             }
 
             //Set internal string
-            __set(_string);
+            set(_string);
                 
             if (auto_submit && !async_submit
             && (virtual_submit || (keyboard_supported && keyboard_check_pressed(vk_enter))))
             {
                 //Handle submission
-                __submit();
+                submit();
             }
 
             async_submit = false;

@@ -1,8 +1,8 @@
-function input_string_async_active(){ return ((___input_string()).async_id != undefined); }
+function input_string_async_active(){ return ((__input_string()).async_id != undefined); }
 
-function input_string_async_get(_prompt, _string = (___input_string()).value)
+function input_string_async_get(_prompt, _string = (__input_string()).value)
 {
-    with (___input_string())
+    with (__input_string())
     {
         if (async_id != undefined)
         {
@@ -57,7 +57,7 @@ function input_string_async_get(_prompt, _string = (___input_string()).value)
     
 function input_string_dialog_async_event()
 {
-    with (___input_string())
+    with (__input_string())
     {
         if (event_number != ((os_browser == browser_not_a_browser) ? ev_dialog_async : 0))
         {
@@ -90,12 +90,12 @@ function input_string_dialog_async_event()
                     async_submit = true;
                 }
             
-                __set(_result);
+                set(_result);
                 async_id = undefined;
                 
                 if (async_submit)
                 {
-                    __submit();
+                    submit();
                 }
             }
         }
