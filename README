@@ -3,10 +3,15 @@ input-string
 Multiplatform text entry utility for GameMaker Studio 2
 A robust alternative to inbuilt `keyboard_string` usage
 
-Features
+Frontend features
 - Hint for selecting from entry methods
-- Defines a callback for text entry use
+- Implements reliable getter and setter 
+- Define a callback for text submission
+
+Backend features
 - Safer handling at string length limit
+- Normalizes Backspace held key repeats
+- Filters errant keyboard control codes 
 - Prevents input falling through prompt
 - Prevents dropping any user keystrokes
 - Prevents Android off-by-one text bugs
@@ -27,7 +32,7 @@ input_string_callback_set
   returned: None
 
 input_string_submit
-  function: Submits managed text
+  function: Runs submission callback
   argument: None
   returned: None
 
@@ -48,12 +53,6 @@ input_string_tick
   in event: Step (Once, Optional)
   argument: None
   returned: None
-
-input_string_async_get
-  function: Opens modal dialog
-  requires: input_​string_​dialog_​async_​event
-  argument: Caption, Default String (Optional)
-  returned: Boolean (Success)
 
 input_string_async_active
   function: Gets dialog status
