@@ -111,36 +111,6 @@ function __input_string()
                 _string = string_replace_all(_string, chr(0x7F), "");
             }
 
-            //Backspace repeat (fixes lack-of on native Mac and Linux)
-            if ((os_browser == browser_not_a_browser) 
-            &&  (os_type == os_macosx) || (os_type == os_linux))
-            {
-                //Repeat on hold
-                if (backspace_hold_duration > 0)
-                {
-                    if (!keyboard_check(vk_backspace))
-                    {
-                        backspace_hold_duration = 0;
-                    }
-                    else 
-                    {
-                        var _repeat_rate = 33000;
-                        if ((backspace_hold_duration > 500000)
-                        && ((backspace_hold_duration mod _repeat_rate) > ((backspace_hold_duration + delta_time) mod _repeat_rate)))
-                        {
-                            _string = string_copy(_string, 1, string_length(_string) - 1);
-                        }
-                    }
-                }
-
-                if (keyboard_check(vk_backspace))
-                {
-                    backspace_hold_duration += delta_time;
-                }
-                
-                keyboard_string_delta = keyboard_string;    
-            }
-
             //Update internal value
             if ((tick_last != undefined) && (keyboard_string != _string))
             {
@@ -251,6 +221,33 @@ function input_string_tick()
                 {
                     //Cull newlines
                     _string = string_replace_all(_string, chr(10), " ");
+                }
+                
+                //Backspace key repeat (fixes lack-of on native Mac and Linux)
+                if ((os_browser == browser_not_a_browser) 
+                &&  (os_type == os_macosx) || (os_type == os_linux))
+                {
+                    //Repeat on hold (normalized against Windows)
+                    if (backspace_hold_duration > 0)
+                    {
+                        var _repeat_rate = 33000; //Microseconds
+                        if (!keyboard_check(vk_backspace))
+                        {
+                            backspace_hold_duration = 0;
+                        }
+                        else if ((backspace_hold_duration > 500000) //Microseconds
+                        && ((backspace_hold_duration mod _repeat_rate) > ((backspace_hold_duration + delta_time) mod _repeat_rate)))
+                        {
+                            _string = string_copy(_string, 1, string_length(_string) - 1);
+                        }
+                    }
+
+                    if (keyboard_check(vk_backspace))
+                    {
+                        backspace_hold_duration += delta_time;
+                    }
+                
+                    keyboard_string_delta = keyboard_string;    
                 }
             }
       
