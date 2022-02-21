@@ -17,6 +17,9 @@ function __input_string()
     //Init
     predialogue = "";
     value       = "";
+    
+    backspace_hold_duration = 0;
+    keyboard_string_delta   = "";
 
     tick_last = undefined;
     callback  = undefined;
@@ -102,12 +105,43 @@ function __input_string()
                 _trim = true;
             }
             
+            //Filter Delete character (fixes Windows and Mac quirks)
             if (string_pos(chr(0x7F), _string) > 0)
             {
-                //Filter Delete character (fixes Windows and Mac quirks)
                 _string = string_replace_all(_string, chr(0x7F), "");
             }
 
+            //Backspace repeat (fixes lack-of on native Mac and Linux)
+            if ((os_browser == browser_not_a_browser) 
+            &&  (os_type == os_macosx) || (os_type == os_linux))
+            {
+                //Repeat on hold
+                if (backspace_hold_duration > 0)
+                {
+                    if (!keyboard_check(vk_backspace))
+                    {
+                        backspace_hold_duration = 0;
+                    }
+                    else 
+                    {
+                        var _repeat_rate = 33000;
+                        if ((backspace_hold_duration > 500000)
+                        && ((backspace_hold_duration mod _repeat_rate) > ((backspace_hold_duration + delta_time) mod _repeat_rate)))
+                        {
+                            _string = string_copy(_string, 1, string_length(_string) - 1);
+                        }
+                    }
+                }
+
+                if (keyboard_check(vk_backspace))
+                {
+                    backspace_hold_duration += delta_time;
+                }
+                
+                keyboard_string_delta = keyboard_string;    
+            }
+
+            //Update internal value
             if ((tick_last != undefined) && (keyboard_string != _string))
             {
                 if (((os_type == os_ios) || (os_type == os_tvos))
@@ -124,9 +158,9 @@ function __input_string()
             //Set internal string
             value = _string;
 
+            //Trim Android placeholder
             if ((os_type == os_android) && _trim)
             {
-                //Trim Android placeholder
                 value = string_delete(value, 1, 1);
             }
         }

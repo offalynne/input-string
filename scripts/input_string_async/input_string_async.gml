@@ -6,6 +6,7 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
     {
         if (async_id != undefined)
         {
+            //Do not request the input modal when it is already open
             show_debug_message("Input String Warning: Dialog prompt refused. Awaiting callback ID \"" + string(async_id) + "\"");
             return false;
         }
