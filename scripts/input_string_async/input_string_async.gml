@@ -58,55 +58,54 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
     
 function input_string_dialog_async_event()
 {
-    with (__input_string())
+    //Use in async dialog event only
+    if (string_count("__YYInternalObject__", object_get_name(object_index)))
+    {
+        show_error("Input String Error: Async dialogue used in invalid context (outside an object async event)", true);
+    }
+    
+    if (event_number != ((os_browser == browser_not_a_browser) ? ev_dialog_async : 0))
     {            
-        if (event_number != ((os_browser == browser_not_a_browser) ? ev_dialog_async : 0))
-        {            
-            //Use in async dialog event only
-            show_error
-            (
-                "Input String Error: Async dialogue used in invalid event " 
-                 + object_get_name(object_index) + ", " 
-                 + "Event " + string(event_type) + ", " 
-                 + "no. " + string(event_number) + ") ",
-                true
-            );
-        }
-        else
-        {            
-            if (input_string_async_active()
-            && (async_load != -1) && (async_load[? "id"] == async_id))
-            {                
-                //Confirm Async
-                var _result = async_load[? "result"];
-                if ((async_load[? "status"] != true) || is_undefined(_result))
-                {
-                    _result = "";
-                }
-                else
-                {
-                    _result = string(_result);
-                }
-                
-                if ((async_load[? "status"] != true) 
-                ||  (!allow_empty && (_result == "")))
-                {
-                    //Revert empty
-                    _result = predialogue;
-                }
-                else
-                {
-                    async_submit = true;
-                }
             
-                set(_result);
-                async_id = undefined;
-                
-                if (async_submit)
-                {
-                    submit();
-                }
+        show_error
+        (
+            "Input String Error: Async dialogue used in invalid event " 
+                + object_get_name(object_index) + ", " 
+                + "Event " + string(event_type) + ", " 
+                + "no. " + string(event_number) + ") ",
+            true
+        );
+    }
+    
+    with (__input_string())
+    {
+        if (input_string_async_active() && (async_load != -1) && (async_load[? "id"] == async_id))
+        {                
+            //Confirm Async
+            var _result = async_load[? "result"];
+            if ((async_load[? "status"] != true) || is_undefined(_result))
+            {
+                _result = "";
             }
+            else
+            {
+                _result = string(_result);
+            }
+                
+            if ((async_load[? "status"] != true)  ||  (!allow_empty && (_result == "")))
+            {
+                //Revert empty
+                _result = predialogue;
+            }
+            else
+            {
+                async_submit = true;
+            }
+            
+            set(_result);
+            async_id = undefined;
+                
+            if (async_submit) submit();
         }
     }
 }
