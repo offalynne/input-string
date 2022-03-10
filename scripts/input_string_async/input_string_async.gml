@@ -58,12 +58,13 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
     
 function input_string_dialog_async_event()
 {
-    //Use in async dialog event only
+    //Object event only
     if (string_count("__YYInternalObject__", object_get_name(object_index)))
     {
         show_error("Input String Error: Async dialogue used in invalid context (outside an object async event)", true);
     }
     
+    //Async dialog event only
     if (event_number != ((os_browser == browser_not_a_browser) ? ev_dialog_async : 0))
     {
         show_error
