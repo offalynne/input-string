@@ -4,17 +4,17 @@ Multiplatform text entry utility for GameMaker Studio 2
 A robust alternative to inbuilt `keyboard_string` usage
 
 Frontend features
-- Hint for selecting from entry methods
-- Implements reliable getter and setter 
-- Define a callback for text submission
+- Platform entry method hint
+- Reliable getter and setter
+- Callback on submitted text
 
 Backend features
 - Safe handling at string length limit
-- Normalizes Backspace-held key repeat
-- Filter errant keyboard control codes 
-- Prevent input falling through prompt
-- Prevent dropping any user keystrokes
+- Filter errant keyboard control codes
+- Normalized Backspace-held key repeat
 - Prevent Android off-by-one text bugs
+- Prevent dropping any user keystrokes
+- Prevent input falling through prompt
 
 input_string_get
   function: Gets managed text
