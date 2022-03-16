@@ -9,12 +9,12 @@ Frontend features
 - Define a callback for text submission
 
 Backend features
-- Safer handling at string length limit
-- Normalizes Backspace held key repeats
-- Filters errant keyboard control codes 
-- Prevents input falling through prompt
-- Prevents dropping any user keystrokes
-- Prevents Android off-by-one text bugs
+- Safe handling at string length limit
+- Normalizes Backspace-held key repeat
+- Filter errant keyboard control codes 
+- Prevent input falling through prompt
+- Prevent dropping any user keystrokes
+- Prevent Android off-by-one text bugs
 
 input_string_get
   function: Gets managed text
