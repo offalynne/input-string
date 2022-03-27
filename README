@@ -66,17 +66,7 @@ input_string_dialog_async_event
   argument: None
   returned: None
 
-For setting configuration, see input_string.gml
-
-Configuration default TRUE
-  auto_closevkb: Submisson will close virtual keyboard
-  auto_submit:   Return key issues submission callback
-  auto_trim:     Trim extra whitespace upon submission
-
-Configuration default FALSE
-  allow_newline: Newline character is left unfiltered
-  allow_empty:   Blank submission is considered valid
-  allow_paste:   Ctrl-V pastes from Windows clipboard
+For configuration, see input_string script
 
 Thanks: @JujuAdams, @tabularelf, @nkrapivin
 Community: discord.gg/8krYCqr
