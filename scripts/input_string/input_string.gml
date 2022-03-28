@@ -41,14 +41,14 @@ function __input_string()
     if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) 
     ||  (os_type == os_switch)  || (os_type == os_ps4) || (os_type == os_ps5))
     {
-        //Suggest 'async' (modal) on console
+        //Suggest 'async' (dialog) on console
         platform_hint = "async";
     }
     else if ((os_browser != browser_not_a_browser)
     && ((os_type != os_windows) && (os_type != os_macosx) 
     &&  (os_type != os_operagx) && (os_type != os_linux)))
     {
-        //Suggest 'async' (modal) on non-desktop web
+        //Suggest 'async' (dialog) on non-desktop web
         platform_hint = "async";
     }
     else if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos)
