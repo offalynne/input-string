@@ -22,8 +22,7 @@ function __input_string()
     predialogue = "";
     value       = "";
     
-    backspace_hold_duration = 0;
-    keyboard_string_delta   = "";
+    backspace_hold_duration  = 0;
 
     tick_last = undefined;
     callback  = undefined;
@@ -225,9 +224,7 @@ function __input_string()
                     if (keyboard_check(vk_backspace))
                     {
                         backspace_hold_duration += delta_time;
-                    }
-                
-                    keyboard_string_delta = keyboard_string;    
+                    }   
                 }
             }
             
