@@ -61,7 +61,7 @@ input_string_async_active
   returned: Boolean
 
 input_string_dialog_async_event
-  function: Dialog entry manager
+  function: Dialog submission manager
   in event: Dialog Async (Once, Optional)
   argument: None
   returned: None
