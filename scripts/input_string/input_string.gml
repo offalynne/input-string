@@ -68,28 +68,40 @@ function __input_string()
     
     trim = function(_string)
     {        
-        var _c = "";
-        var _l = 1;
-        var _r = string_length(_string);
+        var _char  = "";
+        var _left  = 1;
+        var _right = string_length(_string);
 
-        repeat (_r)
+        repeat (_right)
         {
             //Offset left
-            _c = ord(string_char_at(_string, _l));
-            if ((_c > 8) && (_c < 14) || (_c == 32)) _l++;
-            else break;
+            _char = ord(string_char_at(_string, _left));
+            if ((_char > 8) && (_char < 14) || (_char == 32))
+            {
+                _left++;
+            }
+            else
+            {
+                break;
+            }
         }
 
-        repeat (_r - _l)
+        repeat (_right - _left)
         {
             //Offset right
-            _c = ord(string_char_at(_string, _r));
-            if ((_c > 8) && (_c < 14) || (_c == 32)) _r--;
-            else break;
+            _char = ord(string_char_at(_string, _right));
+            if ((_char > 8) && (_char < 14) || (_char == 32))
+            {
+                _right--;
+            }
+            else
+            {
+                break;
+            }
         }
 
         //Trim
-        return string_copy(_string, _l, _r - _l + 1);
+        return string_copy(_string, _left, _right - _left + 1);
     };
 
 
