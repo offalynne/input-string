@@ -11,7 +11,7 @@ Frontend features
 Backend features
 - Safe handling at string length limit
 - Filter errant keyboard control codes
-- Normalized Backspace-held key repeat
+- Normalized Backspace repeat behavior
 - Prevent Android off-by-one text bugs
 - Prevent dropping any user keystrokes
 - Prevent input falling through prompt
