@@ -3,7 +3,8 @@ function __input_string()
     //Self initialize
     static instance = new (function() constructor {
         
-    //Config
+    #region Configuration
+    
     auto_closevkb = true;   //Whether the 'Return' key closes the virtual keyboard
     auto_submit   = true;   //Whether the 'Return' key fires a submission callback
     auto_trim     = true;   //Whether submit trims leading and trailing whitespace
@@ -13,8 +14,11 @@ function __input_string()
     allow_paste   = false;  //Whether 'Control-V' pastes clipboard text on Windows
 
     max_length = 1000;      //Maximum text entry string length. Do not exceed 1024
+    
+    #endregion
 
-    //Init
+    #region Initialization
+    
     predialogue = "";
     value       = "";
     
@@ -57,8 +61,11 @@ function __input_string()
     {
         platform_hint = "keyboard";
     }
+    
+    #endregion
 
-    //Utils
+    #region Utilities
+    
     trim = function(_string)
     {        
         var _c = "";
@@ -88,110 +95,71 @@ function __input_string()
 
     set = function(_string)
     {
-        with (__input_string())
+        _string = string(_string);
+
+        //Enforce length
+        var _max = max_length + ((os_type == os_android) ? 1 : 0);
+        _string = string_copy(_string, 1, _max);
+
+        //Left pad one space (fixes Android quirk on first character)
+        var _trim = (string_char_at(_string, 1) == " ");
+        if ((os_type == os_android) && !_trim)
         {
-            _string = string(_string);
-
-            //Enforce length
-            var _max = max_length + ((os_type == os_android) ? 1 : 0);
-            _string = string_copy(_string, 1, _max);
-
-            //Left pad one space (fixes Android quirk on first character)
-            var _trim = (string_char_at(_string, 1) == " ");
-            if ((os_type == os_android) && !_trim)
-            {
-                //Set leading space
-                _string = " " + _string;
-                _trim = true;
-            }
+            //Set leading space
+            _string = " " + _string;
+            _trim = true;
+        }
             
-            //Filter Delete character (fixes Windows and Mac quirks)
-            if (string_pos(chr(0x7F), _string) > 0)
+        //Filter Delete character (fixes Windows and Mac quirks)
+        if (string_pos(chr(0x7F), _string) > 0)
+        {
+            _string = string_replace_all(_string, chr(0x7F), "");
+        }
+
+        //Update internal value
+        if ((tick_last != undefined) && (keyboard_string != _string))
+        {
+            if (((os_type == os_ios) || (os_type == os_tvos))
+            && (string_length(keyboard_string) > _max))
             {
-                _string = string_replace_all(_string, chr(0x7F), "");
+                //Close keyboard on overflow (fixes iOS string setting quirk)
+                keyboard_virtual_hide();
             }
 
-            //Update internal value
-            if ((tick_last != undefined) && (keyboard_string != _string))
-            {
-                if (((os_type == os_ios) || (os_type == os_tvos))
-                && (string_length(keyboard_string) > _max))
-                {
-                    //Close keyboard on overflow (fixes iOS string setting quirk)
-                    keyboard_virtual_hide();
-                }
+            //Set inbuilt value if necessary
+            keyboard_string = _string;
+        }
 
-                //Set inbuilt value if necessary
-                keyboard_string = _string;
-            }
+        //Set internal string
+        value = _string;
 
-            //Set internal string
-            value = _string;
-
-            //Trim Android placeholder
-            if ((os_type == os_android) && _trim)
-            {
-                value = string_delete(value, 1, 1);
-            }
+        //Trim Android placeholder
+        if ((os_type == os_android) && _trim)
+        {
+            value = string_delete(value, 1, 1);
         }
     };
 
 
     submit = function()
     {
-        with (__input_string())
+        if (auto_trim)
         {
-            if (auto_trim)
-            {
-                //Trim whitespace on submission
-                set(trim(input_string_get()));
-            }
+            //Trim whitespace on submission
+            set(trim(input_string_get()));
+        }
 
-            if (is_method(callback) && (input_string_get() != "" || allow_empty))
-            {
-                //Issue submission callback
-                callback();
-            }
+        if (is_method(callback) && (input_string_get() != "" || allow_empty))
+        {
+            //Issue submission callback
+            callback();
         }
     };
-        
-    })(); return instance;
-}
-
-function input_string_virtual_submit() { return (__input_string()).virtual_submit; }
-function input_string_platform_hint()  { return (__input_string()).platform_hint;  }
-function input_string_submit()         { return (__input_string()).submit();       }
-function input_string_get()            { return (__input_string()).value;          }
-
-function input_string_set(_string = "")
-{    
-    if ((os_type == os_ios) || (os_type == os_tvos))
-    {
-        //Close virtual keyboard if string is manually set (fixes iOS setting quirk)
-        keyboard_virtual_hide();
-    }
     
-    (__input_string()).set(_string);
-}
-
-
-function input_string_add(_string)
-{
-    return input_string_set((__input_string()).value + string(_string));
-}
-
-
-function input_string_callback_set(_callback = undefined)
-{
-    (__input_string()).callback = _callback;
-}
-
-
-function input_string_tick()
-{    
-    with (__input_string())
+    
+    tick = function()
     {
-        if (!input_string_async_active() && keyboard_supported)
+        if (keyboard_supported && (async_id == undefined))
         {
             //Manage text input
             var _string = keyboard_string;
@@ -250,50 +218,82 @@ function input_string_tick()
                     keyboard_string_delta = keyboard_string;    
                 }
             }
-      
-            //Handle virtual keyboard submission
-            virtual_submit = false;
-            if ((keyboard_virtual_status() != undefined) && !input_string_async_active())
-            {
-                if ((os_type == os_ios) || (os_type == os_tvos))
-                {
-                    //Virtual keyboard submission
-                    virtual_submit = ((keyboard_lastkey == 10) 
-                                   && (string_length(keyboard_string) > string_length(value)));
-                }
-                else
-                {
-                    //Keyboard submission
-                    virtual_submit = (keyboard_check_pressed(vk_enter));
-                }
-                
-                if (keyboard_check_pressed(10) && (os_type == os_android))
-                {
-                    //Android alternate key
-                    virtual_submit = true;
-                }                
             
-                if (auto_closevkb && virtual_submit
-                && (((os_type == os_uwp) && uwp_device_touchscreen_available())
-                ||   (os_type == os_ios) || (os_type == os_tvos) || (os_type == os_android)))
-                {
-                    //Close virtual keyboard on submission
-                    keyboard_virtual_hide();
-                }
-            }
-
             //Set internal string
             set(_string);
-                
-            if (auto_submit && !async_submit
-            && (virtual_submit || (keyboard_supported && keyboard_check_pressed(vk_enter))))
-            {
-                //Handle submission
-                submit();
-            }
-
-            async_submit = false;
-            tick_last = current_time;
         }
+      
+        //Handle virtual keyboard submission
+        virtual_submit = false;
+        if ((keyboard_virtual_status() != undefined) && !input_string_async_active())
+        {
+            if ((os_type == os_ios) || (os_type == os_tvos))
+            {
+                //Virtual keyboard submission
+                virtual_submit = ((keyboard_lastkey == 10) 
+                                && (string_length(keyboard_string) > string_length(value)));
+            }
+            else
+            {
+                //Keyboard submission
+                virtual_submit = (keyboard_check_pressed(vk_enter));
+            }
+                
+            if (keyboard_check_pressed(10) && (os_type == os_android))
+            {
+                //Android alternate key
+                virtual_submit = true;
+            }                
+            
+            if (auto_closevkb && virtual_submit
+            && (((os_type == os_uwp) && uwp_device_touchscreen_available())
+            ||   (os_type == os_ios) || (os_type == os_tvos) || (os_type == os_android)))
+            {
+                //Close virtual keyboard on submission
+                keyboard_virtual_hide();
+            }
+        }
+                
+        if (auto_submit && !async_submit
+        && (virtual_submit || (keyboard_supported && keyboard_check_pressed(vk_enter))))
+        {
+            //Handle submission
+            submit();
+        }
+
+        async_submit = false;
+        tick_last = current_time;
     }
+    
+    #endregion
+        
+    })(); return instance;
 }
+
+function input_string_virtual_submit() { return (__input_string()).virtual_submit; }
+function input_string_platform_hint()  { return (__input_string()).platform_hint;  }
+function input_string_submit()         { return (__input_string()).submit();       }
+function input_string_tick()           { return (__input_string()).tick();         }
+function input_string_get()            { return (__input_string()).value;          }
+
+function input_string_add(_string)
+{
+    return input_string_set((__input_string()).value + string(_string));
+}
+
+function input_string_callback_set(_callback = undefined)
+{
+    (__input_string()).callback = _callback;
+}
+
+function input_string_set(_string = "")
+{    
+    if ((os_type == os_ios) || (os_type == os_tvos))
+    {
+        //Close virtual keyboard if string is manually set (fixes iOS setting quirk)
+        keyboard_virtual_hide();
+    }
+    
+    (__input_string()).set(_string);
+}
+
