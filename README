@@ -1,7 +1,7 @@
 input-string
 
-Multiplatform text entry utility for GameMaker Studio 2
-A robust alternative to inbuilt `keyboard_string` usage
+Multiplatform text entry utility for GMS2
+Robust alternative to keyboard_string use
 
 Frontend features
 - Platform entry method hint
@@ -40,7 +40,7 @@ input_string_platform_hint
   function: Gets entry method hint
   argument: None
   returned: String (Hint)
-  possible: "keyboard", "virtual", "async"
+  possible: keyboard, virtual, async
 
 input_string_virtual_submit
   function: Gets virtual keyboard submission
@@ -49,7 +49,7 @@ input_string_virtual_submit
   returned: Boolean
 
 input_string_tick
-  function: Manages state and `keyboard_string`
+  function: Manages state and keyboard_string
   in event: Step (Once, Optional)
   argument: None
   returned: None
@@ -66,7 +66,7 @@ input_string_dialog_async_event
   argument: None
   returned: None
 
-For configuration, see input_string script
+For configuration see input_string script
 
 Thanks: @JujuAdams, @tabularelf, @nkrapivin
 Community: discord.gg/8krYCqr
