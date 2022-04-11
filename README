@@ -1,7 +1,7 @@
 input-string
 
-Multiplatform text entry utility for GMS2
-Robust alternative to keyboard_string use
+Multiplatform GMS2 text entry utility
+Robust alternative to keyboard_string
 
 Frontend features
 - Platform entry method hint
