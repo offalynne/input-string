@@ -85,6 +85,7 @@ function input_string_dialog_async_event()
             var _result = async_load[? "result"];
             if ((async_load[? "status"] != true) || is_undefined(_result))
             {
+                //Set empty
                 _result = "";
             }
             else
@@ -92,7 +93,7 @@ function input_string_dialog_async_event()
                 _result = string(_result);
             }
                 
-            if ((async_load[? "status"] != true)  ||  (!allow_empty && (_result == "")))
+            if ((async_load[? "status"] != true) || (!allow_empty && (_result == "")))
             {
                 //Revert empty
                 _result = predialogue;
@@ -104,8 +105,14 @@ function input_string_dialog_async_event()
             
             set(_result);
             async_id = undefined;
-                
+            
             if (async_submit) submit();
+            
+            if ((os_type == os_ios) || (os_type == os_tvos))
+            {
+                //Hide lingering overlay on dialogue prompt close
+                keyboard_virtual_hide();
+            }
         }
     }
 }
