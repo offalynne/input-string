@@ -83,7 +83,7 @@ function input_string_dialog_async_event()
         {                
             //Confirm Async
             var _result = async_load[? "result"];
-            if ((async_load[? "status"] != true) || is_undefined(_result))
+            if ((async_load[? "status"] != true) || (_result == undefined))
             {
                 //Set empty
                 _result = "";
