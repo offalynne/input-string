@@ -6,7 +6,7 @@ function __input_string()
     #region Configuration
     
     auto_closevkb = true;   //Whether the 'Return' key closes the virtual keyboard
-    auto_submit   = true;   //Whether the 'Return' key fires a submission callback
+    auto_submit   = true;   //Whether the 'Return' key runs the submission trigger
     auto_trim     = true;   //Whether submit trims leading and trailing whitespace
 
     allow_empty   = false;  //Whether a blank field submission is treated as valid
@@ -25,7 +25,7 @@ function __input_string()
     backspace_hold_duration  = 0;
 
     tick_last = undefined;
-    callback  = undefined;
+    trigger   = undefined;
     async_id  = undefined;
 
     virtual_submit = false;
@@ -160,10 +160,10 @@ function __input_string()
             set(trim(input_string_get()));
         }
 
-        if (is_method(callback) && (input_string_get() != "" || allow_empty))
+        if (is_method(trigger) && (input_string_get() != "" || allow_empty))
         {
-            //Issue submission callback
-            callback();
+            //Issue submission trigger
+            trigger();
         }
     };
     
@@ -290,9 +290,9 @@ function input_string_add(_string)
     return input_string_set((__input_string()).value + string(_string));
 }
 
-function input_string_callback_set(_callback = undefined)
+function input_string_trigger_set(_trigger = undefined)
 {
-    (__input_string()).callback = _callback;
+    (__input_string()).trigger = _trigger;
 }
 
 function input_string_set(_string = "")
