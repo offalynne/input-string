@@ -58,15 +58,15 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
     
 function input_string_dialog_async_event()
 {
-    //Object event only
     if (string_count("__YYInternalObject__", object_get_name(object_index)))
     {
+        //Object event only
         show_error("Input String Error: Async dialogue used in invalid context (outside an object async event)", true);
     }
     
-    //Async dialog event only
     if (event_number != ((os_browser == browser_not_a_browser) ? ev_dialog_async : 0))
     {
+        //Async dialog event only
         show_error
         (
             "Input String Error: Async dialogue used in invalid event " 
@@ -108,11 +108,8 @@ function input_string_dialog_async_event()
             
             if (async_submit) submit();
             
-            if ((os_type == os_ios) || (os_type == os_tvos))
-            {
-                //Hide lingering overlay on dialogue prompt close
-                keyboard_virtual_hide();
-            }
+            //Hide lingering overlay on dialogue prompt close
+            if ((os_type == os_ios) || (os_type == os_tvos)) keyboard_virtual_hide();
         }
     }
 }

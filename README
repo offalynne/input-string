@@ -6,7 +6,7 @@ Robust alternative to keyboard_string
 Frontend features
 - Platform entry method hint
 - Reliable getter and setter
-- Callback on submitted text
+- Trigger on text submission
 
 Backend features
 - Safe handling at string length limit
@@ -26,13 +26,13 @@ input_string_set
   argument: String (Optional)
   returned: None
   
-input_string_callback_set
-  function: Sets submission callback
+input_string_trigger_set
+  function: Sets submission trigger
   argument: Function (Optional)
   returned: None
 
 input_string_submit
-  function: Runs submission callback
+  function: Runs submission trigger
   argument: None
   returned: None
 
