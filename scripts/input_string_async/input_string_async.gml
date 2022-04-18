@@ -107,9 +107,6 @@ function input_string_dialog_async_event()
             async_id = undefined;
             
             if (async_submit) submit();
-            
-            //Hide lingering overlay on dialogue prompt close
-            if ((os_type == os_ios) || (os_type == os_tvos)) keyboard_virtual_hide();
         }
     }
 }
