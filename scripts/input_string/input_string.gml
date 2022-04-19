@@ -107,6 +107,19 @@ function __input_string()
     set = function(_string)
     {
         _string = string(_string);
+        
+        //Enfource newline allowance
+        if ((os_type != os_windows) || !allow_newline)
+        {
+            //Filter carriage returns
+            _string = string_replace_all(_string, chr(13), "");
+        }
+        
+        if (!allow_newline || ((os_type == os_ios) || (os_type == os_tvos)))
+        {
+            //Cull newlines
+            _string = string_replace_all(_string, chr(10), " ");
+        }
 
         //Enforce length
         var _max = max_length + ((os_type == os_android) ? 1 : 0);
@@ -179,6 +192,37 @@ function __input_string()
                 //Revert internal string when in overflow state
                 _string = "";
             }
+            
+            //Handle virtual keyboard submission
+            virtual_submit = false;
+            if ((keyboard_virtual_status() != undefined) && !input_string_async_active())
+            {
+                if ((os_type == os_ios) || (os_type == os_tvos))
+                {
+                    //Virtual keyboard submission
+                    virtual_submit = ((ord(keyboard_lastchar) == 10) 
+                                   && (string_length(keyboard_string) > string_length(value)));
+                }
+                else
+                {
+                    //Keyboard submission
+                    virtual_submit = (keyboard_check_pressed(vk_enter));
+                }
+                
+                if (keyboard_check_pressed(10) && (os_type == os_android))
+                {
+                    //Android alternate key
+                    virtual_submit = true;
+                }                
+            
+                if (auto_closevkb && virtual_submit
+                && (((os_type == os_uwp) && uwp_device_touchscreen_available())
+                ||   (os_type == os_ios) || (os_type == os_tvos) || (os_type == os_android)))
+                {
+                    //Close virtual keyboard on submission
+                    keyboard_virtual_hide();
+                }
+            }
         
             if (allow_paste && (os_type == os_windows)
             && keyboard_check_pressed(ord("V")) && keyboard_check(vk_control)
@@ -190,18 +234,6 @@ function __input_string()
 
             if (_string != "")
             {
-                if ((os_type != os_windows) || !allow_newline)
-                {
-                    //Filter carriage returns
-                    _string = string_replace_all(_string, chr(13), "");
-                }
-        
-                if (!allow_newline)
-                {
-                    //Cull newlines
-                    _string = string_replace_all(_string, chr(10), " ");
-                }
-                
                 //Backspace key repeat (fixes lack-of on native Mac and Linux)
                 if ((os_browser == browser_not_a_browser) 
                 &&  (os_type == os_macosx) || (os_type == os_linux))
@@ -230,37 +262,6 @@ function __input_string()
             
             //Set internal string
             set(_string);
-        }
-      
-        //Handle virtual keyboard submission
-        virtual_submit = false;
-        if ((keyboard_virtual_status() != undefined) && !input_string_async_active())
-        {
-            if ((os_type == os_ios) || (os_type == os_tvos))
-            {
-                //Virtual keyboard submission
-                virtual_submit = ((keyboard_lastkey == 10) 
-                                && (string_length(keyboard_string) > string_length(value)));
-            }
-            else
-            {
-                //Keyboard submission
-                virtual_submit = (keyboard_check_pressed(vk_enter));
-            }
-                
-            if (keyboard_check_pressed(10) && (os_type == os_android))
-            {
-                //Android alternate key
-                virtual_submit = true;
-            }                
-            
-            if (auto_closevkb && virtual_submit
-            && (((os_type == os_uwp) && uwp_device_touchscreen_available())
-            ||   (os_type == os_ios) || (os_type == os_tvos) || (os_type == os_android)))
-            {
-                //Close virtual keyboard on submission
-                keyboard_virtual_hide();
-            }
         }
                 
         if (auto_submit && !async_submit
