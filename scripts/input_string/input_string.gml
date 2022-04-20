@@ -13,7 +13,7 @@ function __input_string()
     allow_newline = false;  //Whether to allow newline characters or swap to space
     allow_paste   = false;  //Whether 'Control-V' pastes clipboard text on Windows
 
-    max_length = 1000;      //Maximum text entry string length. Do not exceed 1024
+    max_length = 1000;  //Maximum text entry string length. Do not exceed 1024
     
     #endregion
 
