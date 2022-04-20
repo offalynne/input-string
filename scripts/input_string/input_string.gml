@@ -199,21 +199,18 @@ function __input_string()
             {
                 if ((os_type == os_ios) || (os_type == os_tvos))
                 {
-                    //Virtual keyboard submission
                     virtual_submit = ((ord(keyboard_lastchar) == 10) 
                                    && (string_length(keyboard_string) > string_length(value)));
+                }
+                else if ((os_type == os_android) && keyboard_check_pressed(10))
+                {
+                    virtual_submit = true;
                 }
                 else
                 {
                     //Keyboard submission
                     virtual_submit = (keyboard_check_pressed(vk_enter));
-                }
-                
-                if (keyboard_check_pressed(10) && (os_type == os_android))
-                {
-                    //Android alternate key
-                    virtual_submit = true;
-                }                
+                }             
             
                 if (auto_closevkb && virtual_submit
                 && (((os_type == os_uwp) && uwp_device_touchscreen_available())
