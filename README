@@ -50,7 +50,7 @@ input_string_virtual_submit
 
 input_string_tick
   function: Manage state
-  in event: Step (Once, Optional)
+  in event: Begin Step (Once, Optional)
   argument: None
   returned: None
 
