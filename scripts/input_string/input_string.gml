@@ -141,10 +141,7 @@ function __input_string()
 
         value = _string;
 
-        if ((os_type == os_android) && _trim)
-        {
-            value = string_delete(value, 1, 1);
-        }
+        if ((os_type == os_android) && _trim) value = string_delete(value, 1, 1);
     };
 
 
@@ -176,10 +173,10 @@ function __input_string()
                 _string = "";
             }
             
-            //Handle virtual keyboard submission
             virtual_submit = false;
             if ((keyboard_virtual_status() != undefined) && !input_string_async_active())
-            {
+            {            
+                //Handle virtual keyboard submission
                 if ((os_type == os_ios) || (os_type == os_tvos))
                 {
                     virtual_submit = ((ord(keyboard_lastchar) == 10) 
@@ -214,10 +211,10 @@ function __input_string()
 
             if (_string != "")
             {
+                //Backspace key repeat (fixes lack-of on native Mac and Linux)
                 if ((os_browser == browser_not_a_browser) 
                 &&  (os_type == os_macosx) || (os_type == os_linux))
                 {
-                    //Backspace key repeat (fixes lack-of on native Mac and Linux)
                     if (backspace_hold_duration > 0)
                     {
                         //Repeat on hold (normalized against Windows)
@@ -232,11 +229,11 @@ function __input_string()
                             _string = string_copy(_string, 1, string_length(_string) - 1);
                         }
                     }
-
+                    
                     if (keyboard_check(vk_backspace))
                     {
                         backspace_hold_duration += delta_time;
-                    }   
+                    }
                 }
             }
             
