@@ -108,17 +108,22 @@ function __input_string()
     {
         _string = string(_string);
         
-        //Enfource newline allowance
         if ((os_type != os_windows) || !allow_newline)
         {
             //Filter carriage returns
             _string = string_replace_all(_string, chr(13), "");
         }
         
-        if (!allow_newline || ((os_type == os_ios) || (os_type == os_tvos)))
+        if (((os_type == os_ios) || (os_type == os_tvos)) || !allow_newline)
         {
             //Cull newlines
             _string = string_replace_all(_string, chr(10), " ");
+        }
+        
+        if (string_pos(chr(0x7F), _string) > 0)
+        {
+            //Filter delete character (fixes Windows and Mac quirk)
+            _string = string_replace_all(_string, chr(0x7F), "");
         }
 
         //Enforce length
@@ -132,12 +137,6 @@ function __input_string()
             //Set leading space
             _string = " " + _string;
             _trim = true;
-        }
-            
-        //Filter Delete character (fixes Windows and Mac quirks)
-        if (string_pos(chr(0x7F), _string) > 0)
-        {
-            _string = string_replace_all(_string, chr(0x7F), "");
         }
 
         //Update internal value
@@ -173,7 +172,7 @@ function __input_string()
             set(trim(input_string_get()));
         }
 
-        if (is_method(trigger) && (input_string_get() != "" || allow_empty))
+        if (is_method(trigger) && ((input_string_get() != "") || allow_empty))
         {
             //Issue submission trigger
             trigger();
@@ -231,13 +230,13 @@ function __input_string()
 
             if (_string != "")
             {
-                //Backspace key repeat (fixes lack-of on native Mac and Linux)
                 if ((os_browser == browser_not_a_browser) 
                 &&  (os_type == os_macosx) || (os_type == os_linux))
                 {
-                    //Repeat on hold (normalized against Windows)
+                    //Backspace key repeat (fixes lack-of on native Mac and Linux)
                     if (backspace_hold_duration > 0)
                     {
+                        //Repeat on hold (normalized against Windows)
                         var _repeat_rate = 33000; //Microseconds
                         if (!keyboard_check(vk_backspace))
                         {
@@ -257,14 +256,12 @@ function __input_string()
                 }
             }
             
-            //Set internal string
             set(_string);
         }
                 
         if (auto_submit && !async_submit
         && (virtual_submit || (keyboard_supported && keyboard_check_pressed(vk_enter))))
         {
-            //Handle submission
             submit();
         }
 
@@ -303,4 +300,3 @@ function input_string_set(_string = "")
     
     (__input_string()).set(_string);
 }
-
