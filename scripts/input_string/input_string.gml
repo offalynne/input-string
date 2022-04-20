@@ -148,13 +148,11 @@ function __input_string()
     {
         if (auto_trim)
         {
-            //Trim whitespace on submission
             set(trim(input_string_get()));
         }
 
         if (is_method(trigger) && ((input_string_get() != "") || allow_empty))
         {
-            //Issue submission trigger
             trigger();
         }
     };
