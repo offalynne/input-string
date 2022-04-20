@@ -85,7 +85,6 @@ function __input_string()
             if ((_char > 8) && (_char < 14) || (_char == 32)) _right--; else break;
         }
 
-        //Trim
         return string_copy(_string, _left, _right - _left + 1);
     };
 
