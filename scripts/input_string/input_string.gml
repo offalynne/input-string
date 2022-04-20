@@ -274,11 +274,16 @@ function __input_string()
     })(); return instance;
 }
 
-function input_string_virtual_submit() { return (__input_string()).virtual_submit; }
-function input_string_platform_hint()  { return (__input_string()).platform_hint;  }
-function input_string_submit()         { return (__input_string()).submit();       }
-function input_string_tick()           { return (__input_string()).tick();         }
-function input_string_get()            { return (__input_string()).value;          }
+function input_string_set(_string = "")
+{    
+    if ((os_type == os_ios) || (os_type == os_tvos))
+    {
+        //Close virtual keyboard if string is manually set (fixes iOS setting quirk)
+        keyboard_virtual_hide();
+    }
+    
+    (__input_string()).set(_string);
+}
 
 function input_string_add(_string)
 {
@@ -290,13 +295,8 @@ function input_string_trigger_set(_trigger = undefined)
     (__input_string()).trigger = _trigger;
 }
 
-function input_string_set(_string = "")
-{    
-    if ((os_type == os_ios) || (os_type == os_tvos))
-    {
-        //Close virtual keyboard if string is manually set (fixes iOS setting quirk)
-        keyboard_virtual_hide();
-    }
-    
-    (__input_string()).set(_string);
-}
+function input_string_virtual_submit() { return (__input_string()).virtual_submit; }
+function input_string_platform_hint()  { return (__input_string()).platform_hint;  }
+function input_string_submit()         { return (__input_string()).submit();       }
+function input_string_tick()           { return (__input_string()).tick();         }
+function input_string_get()            { return (__input_string()).value;          }
