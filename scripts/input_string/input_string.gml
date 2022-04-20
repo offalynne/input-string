@@ -75,28 +75,14 @@ function __input_string()
         {
             //Offset left
             _char = ord(string_char_at(_string, _left));
-            if ((_char > 8) && (_char < 14) || (_char == 32))
-            {
-                _left++;
-            }
-            else
-            {
-                break;
-            }
+            if ((_char > 8) && (_char < 14) || (_char == 32)) _left++; else break;
         }
 
         repeat (_right - _left)
         {
             //Offset right
             _char = ord(string_char_at(_string, _right));
-            if ((_char > 8) && (_char < 14) || (_char == 32))
-            {
-                _right--;
-            }
-            else
-            {
-                break;
-            }
+            if ((_char > 8) && (_char < 14) || (_char == 32)) _right--; else break;
         }
 
         //Trim
@@ -116,7 +102,7 @@ function __input_string()
         
         if (((os_type == os_ios) || (os_type == os_tvos)) || !allow_newline)
         {
-            //Cull newlines
+            //Filter newlines
             _string = string_replace_all(_string, chr(10), " ");
         }
         
@@ -153,10 +139,8 @@ function __input_string()
             keyboard_string = _string;
         }
 
-        //Set internal string
         value = _string;
 
-        //Trim Android placeholder
         if ((os_type == os_android) && _trim)
         {
             value = string_delete(value, 1, 1);
