@@ -1,5 +1,3 @@
-function input_string_async_active(){ return ((__input_string()).async_id != undefined); }
-
 function input_string_async_get(_prompt, _string = (__input_string()).value)
 {
     with (__input_string())
@@ -110,3 +108,5 @@ function input_string_dialog_async_event()
         }
     }
 }
+
+function input_string_async_active(){ return ((__input_string()).async_id != undefined); }
