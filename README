@@ -17,45 +17,45 @@ Backend features
 - Prevent input falling through dialog
 
 input_string_get
-  function: Gets managed text
+  function: Get managed text
   argument: None
   returned: String
 
 input_string_set
-  function: Sets managed text
+  function: Set managed text
   argument: String (Optional)
   returned: None
   
 input_string_trigger_set
-  function: Sets submission trigger
+  function: Set submission trigger
   argument: Function (Optional)
   returned: None
 
 input_string_submit
-  function: Runs submission trigger
+  function: Run submission trigger
   argument: None
   returned: None
 
 input_string_platform_hint
-  function: Gets entry method hint
+  function: Get entry method hint
   argument: None
   returned: String (Hint)
   possible: keyboard, virtual, async
 
 input_string_virtual_submit
-  function: Gets virtual keyboard submission
+  function: Get virtual keyboard submission
   requires: input_​string_​tick
   argument: None
   returned: Boolean
 
 input_string_tick
-  function: Manages state and keyboard_string
+  function: Manage state and keyboard_string
   in event: Step (Once, Optional)
   argument: None
   returned: None
 
 input_string_async_active
-  function: Gets dialog status
+  function: Get dialog status
   requires: input_​string_​dialog_​async_​event
   argument: None
   returned: Boolean
