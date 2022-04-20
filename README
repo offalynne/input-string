@@ -49,7 +49,7 @@ input_string_virtual_submit
   returned: Boolean
 
 input_string_tick
-  function: Manage state and keyboard_string
+  function: Manage state
   in event: Step (Once, Optional)
   argument: None
   returned: None
@@ -61,7 +61,7 @@ input_string_async_active
   returned: Boolean
 
 input_string_dialog_async_event
-  function: Dialog submission manager
+  function: Manage dialog submission
   in event: Dialog Async (Once, Optional)
   argument: None
   returned: None
