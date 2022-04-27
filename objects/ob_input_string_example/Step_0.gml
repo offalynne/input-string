@@ -9,24 +9,24 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
     var _x = device_mouse_x(0);
     if (device_mouse_y(0) < 300)
     {
-        // Top row
         if (_x < (room_width/2))
         {
+            // "Show OSK"
             keyboard_virtual_show(kbv_type_default, kbv_returnkey_default, kbv_autocapitalize_none, false);
         }
         else
         {
+            // "Hide OSK"
             keyboard_virtual_hide();
         }
     }
     else
-    {   
-        // Bottom row
+    {
         switch(_x <= 0 ? 0 : _x div (room_width/3))
         {
-            case 0: input_string_set(long_string);          break;
-            case 1: input_string_set();                     break;
-            case 2: input_string_async_get("Test Caption"); break;
+            case 0: input_string_set(long_string);          break; // "Fill String"
+            case 1: input_string_set();                     break; // "Clear String"
+            case 2: input_string_async_get("Test Caption"); break; // "Set Async"
         }
     }
 }
@@ -50,5 +50,6 @@ if (input_string_platform_hint() == "keyboard")
     {
         // Toggle tick
         tick = !tick;
+        with (__input_string()) tick_last = undefined; // Yuck
     }
 }
