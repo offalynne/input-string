@@ -1,19 +1,19 @@
 function __input_string()
 {
-    //Self initialize
+    // Self initialize
     static instance = new (function() constructor {
         
     #region Configuration
     
-    auto_closevkb = true;   //Whether the 'Return' key closes the virtual keyboard
-    auto_submit   = true;   //Whether the 'Return' key runs the submission trigger
-    auto_trim     = true;   //Whether submit trims leading and trailing whitespace
+    auto_closevkb = true;   // Whether the 'Return' key closes the virtual keyboard
+    auto_submit   = true;   // Whether the 'Return' key runs the submission trigger
+    auto_trim     = true;   // Whether submit trims leading and trailing whitespace
 
-    allow_empty   = false;  //Whether a blank field submission is treated as valid
-    allow_newline = false;  //Whether to allow newline characters or swap to space
-    allow_paste   = false;  //Whether 'Control-V' pastes clipboard text on Windows
+    allow_empty   = false;  // Whether a blank field submission is treated as valid
+    allow_newline = false;  // Whether to allow newline characters or swap to space
+    allow_paste   = false;  // Whether 'Control-V' pastes clipboard text on Windows
 
-    max_length = 1000;  //Maximum text entry string length. Do not exceed 1024
+    max_length = 1000;  // Maximum text entry string length. Do not exceed 1024
     
     #endregion
 
@@ -36,24 +36,24 @@ function __input_string()
                        || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
                        || (os_type == os_tvos) || (os_type == os_ios));
 
-    //Set platform hint
+    // Set platform hint
     if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) 
     ||  (os_type == os_switch)  || (os_type == os_ps4) || (os_type == os_ps5))
     {
-        //Suggest 'async' (dialog) on console
+        // Suggest 'async' (dialog) on console
         platform_hint = "async";
     }
     else if ((os_browser != browser_not_a_browser)
     && ((os_type != os_windows) && (os_type != os_macosx) 
     &&  (os_type != os_operagx) && (os_type != os_linux)))
     {
-        //Suggest 'async' (dialog) on non-desktop web
+        // Suggest 'async' (dialog) on non-desktop web
         platform_hint = "async";
     }
     else if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos)
     || (uwp_device_touchscreen_available() && (os_type == os_uwp)))
     {
-        //Suggest virtual keyboard on mobile
+        // Suggest virtual keyboard on mobile
         platform_hint = "virtual";
     }
     else
@@ -73,14 +73,14 @@ function __input_string()
 
         repeat (_right)
         {
-            //Offset left
+            // Offset left
             _char = ord(string_char_at(_string, _left));
             if ((_char > 8) && (_char < 14) || (_char == 32)) _left++; else break;
         }
 
         repeat (_right - _left)
         {
-            //Offset right
+            // Offset right
             _char = ord(string_char_at(_string, _right));
             if ((_char > 8) && (_char < 14) || (_char == 32)) _right--; else break;
         }
@@ -95,46 +95,46 @@ function __input_string()
         
         if ((os_type != os_windows) || !allow_newline)
         {
-            //Filter carriage returns
+            // Filter carriage returns
             _string = string_replace_all(_string, chr(13), "");
         }
         
         if (((os_type == os_ios) || (os_type == os_tvos)) || !allow_newline)
         {
-            //Filter newlines
+            // Filter newlines
             _string = string_replace_all(_string, chr(10), " ");
         }
         
         if (string_pos(chr(0x7F), _string) > 0)
         {
-            //Filter delete character (fixes Windows and Mac quirk)
+            // Filter delete character (fixes Windows and Mac quirk)
             _string = string_replace_all(_string, chr(0x7F), "");
         }
 
-        //Enforce length
+        // Enforce length
         var _max = max_length + ((os_type == os_android) ? 1 : 0);
         _string = string_copy(_string, 1, _max);
 
-        //Left pad one space (fixes Android quirk on first character)
+        // Left pad one space (fixes Android quirk on first character)
         var _trim = (string_char_at(_string, 1) == " ");
         if ((os_type == os_android) && !_trim)
         {
-            //Set leading space
+            // Set leading space
             _string = " " + _string;
             _trim = true;
         }
 
-        //Update internal value
+        // Update internal value
         if ((tick_last != undefined) && (keyboard_string != _string))
         {
             if (((os_type == os_ios) || (os_type == os_tvos))
             && (string_length(keyboard_string) > _max))
             {
-                //Close keyboard on overflow (fixes iOS string setting quirk)
+                // Close keyboard on overflow (fixes iOS string setting quirk)
                 keyboard_virtual_hide();
             }
 
-            //Set inbuilt value if necessary
+            // Set inbuilt value if necessary
             keyboard_string = _string;
         }
 
@@ -162,18 +162,18 @@ function __input_string()
     {
         if (keyboard_supported && (async_id == undefined))
         {
-            //Manage text input
+            // Manage text input
             var _string = keyboard_string;
             if ((_string == "") && (string_length(value) > 1))
             {
-                //Revert internal string when in overflow state
+                // Revert internal string when in overflow state
                 _string = "";
             }
             
             virtual_submit = false;
             if ((keyboard_virtual_status() != undefined) && !input_string_async_active())
             {            
-                //Handle virtual keyboard submission
+                // Handle virtual keyboard submission
                 if ((os_type == os_ios) || (os_type == os_tvos))
                 {
                     virtual_submit = ((ord(keyboard_lastchar) == 10) 
@@ -185,7 +185,7 @@ function __input_string()
                 }
                 else
                 {
-                    //Keyboard submission
+                    // Keyboard submission
                     virtual_submit = (keyboard_check_pressed(vk_enter));
                 }             
             
@@ -193,7 +193,7 @@ function __input_string()
                 && (((os_type == os_uwp) && uwp_device_touchscreen_available())
                 ||   (os_type == os_ios) || (os_type == os_tvos) || (os_type == os_android)))
                 {
-                    //Close virtual keyboard on submission
+                    // Close virtual keyboard on submission
                     keyboard_virtual_hide();
                 }
             }
@@ -202,25 +202,25 @@ function __input_string()
             && keyboard_check_pressed(ord("V")) && keyboard_check(vk_control)
             && clipboard_has_text())
             {
-                //Paste
+                // Paste
                 _string += clipboard_get_text();
             }
 
             if (_string != "")
             {
-                //Backspace key repeat (fixes lack-of on native Mac and Linux)
+                // Backspace key repeat (fixes lack-of on native Mac and Linux)
                 if ((os_browser == browser_not_a_browser) 
                 &&  (os_type == os_macosx) || (os_type == os_linux))
                 {
                     if (backspace_hold_duration > 0)
                     {
-                        //Repeat on hold (normalized against Windows)
-                        var _repeat_rate = 33000; //Microseconds
+                        // Repeat on hold, normalized against Windows. Timed in microseconds
+                        var _repeat_rate = 33000;
                         if (!keyboard_check(vk_backspace))
                         {
                             backspace_hold_duration = 0;
                         }
-                        else if ((backspace_hold_duration > 500000) //Microseconds
+                        else if ((backspace_hold_duration > 500000)
                         && ((backspace_hold_duration mod _repeat_rate) > ((backspace_hold_duration + delta_time) mod _repeat_rate)))
                         {
                             _string = string_copy(_string, 1, string_length(_string) - 1);
@@ -256,7 +256,7 @@ function input_string_set(_string = "")
 {    
     if ((os_type == os_ios) || (os_type == os_tvos))
     {
-        //Close virtual keyboard if string is manually set (fixes iOS setting quirk)
+        // Close virtual keyboard if string is manually set (fixes iOS setting quirk)
         keyboard_virtual_hide();
     }
     

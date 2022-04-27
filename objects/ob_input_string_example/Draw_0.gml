@@ -1,4 +1,4 @@
-//Test readout
+// Test readout
 draw_set_halign(fa_left);
 draw_text(10, 30, "GM version " + GM_runtime_version);
 draw_text(10, 10, "Last built " + date_time_string(GM_build_date));
@@ -19,7 +19,7 @@ draw_set_halign(fa_center);
 draw_text(room_width * .50, 10, "Tick " + (tick ? "On" : "Off"));
 draw_text(room_width * .50, 30, submission_test);
 
-//Test button labels
+// Test button labels
 if (keyboard_virtual_status() == undefined) draw_set_color(c_gray);
 draw_text(room_width * .33, 200, "Show OSK");
 draw_text(room_width * .66, 200, "Hide OSK");

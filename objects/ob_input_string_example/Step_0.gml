@@ -3,13 +3,13 @@ if (tick)
     input_string_tick();
 }
 
-//Pointer buttons
+// Pointer buttons
 if (mouse_check_button_released(mb_any) && !input_string_async_active())
 {
     var _x = device_mouse_x(0);
     if (device_mouse_y(0) < 300)
     {
-        //Top row
+        // Top row
         if (_x < (room_width/2))
         {
             keyboard_virtual_show(kbv_type_default, kbv_returnkey_default, kbv_autocapitalize_none, false);
@@ -21,7 +21,7 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
     }
     else
     {   
-        //Bottom row
+        // Bottom row
         switch(_x <= 0 ? 0 : _x div (room_width/3))
         {
             case 0: input_string_set(long_string);          break;
@@ -31,24 +31,24 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
     }
 }
 
-//Secondary tests
+// Secondary tests
 if (input_string_platform_hint() == "keyboard")
 {
     if (keyboard_check_pressed(vk_f1))
     {
-        //Append
+        // Append
         input_string_add(" add test");
     }
     
     if (keyboard_check_pressed(vk_f2))
     {
-        //Manual submission
+        // Manual submission
         input_string_submit();
     }    
     
     if (keyboard_check_pressed(vk_f3))
     {
-        //Toggle tick
+        // Toggle tick
         tick = !tick;
     }
 }
