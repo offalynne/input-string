@@ -11,7 +11,6 @@ function __input_string()
 
     allow_empty   = false;  // Whether a blank field submission is treated as valid
     allow_newline = false;  // Whether to allow newline characters or swap to space
-    allow_paste   = false;  // Whether 'Control-V' pastes clipboard text on Windows
 
     max_length = 1000;  // Maximum text entry string length. Do not exceed 1024
     
@@ -201,14 +200,6 @@ function __input_string()
                     // Close virtual keyboard on submission
                     keyboard_virtual_hide();
                 }
-            }
-        
-            if (allow_paste && (os_type == os_windows)
-            && keyboard_check_pressed(ord("V")) && keyboard_check(vk_control)
-            && clipboard_has_text())
-            {
-                // Paste
-                _string += clipboard_get_text();
             }
 
             if (_string != "")
