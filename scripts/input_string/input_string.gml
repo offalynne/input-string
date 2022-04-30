@@ -154,8 +154,9 @@ function __input_string()
         {
             set(trim(input_string_get()));
         }
-
-        if (is_method(trigger) && ((input_string_get() != "") || allow_empty))
+        
+        if ((is_method(trigger) || is_numeric(trigger))
+        && ((input_string_get() != "") || allow_empty))
         {
             trigger();
         }
@@ -261,16 +262,29 @@ function input_string_set(_string = "")
     (__input_string()).set(_string);
 }
 
+function input_string_trigger_set(_trigger = undefined)
+{
+    gml_pragma("forceinline");
+    
+    if (!is_undefined(_trigger) && !is_method(_trigger)
+    && (!is_numeric(_trigger) || !script_exists(_trigger)))
+    {
+        show_error
+        (
+            "Input String Error: Invalid value provided as trigger: \"" 
+                + string(_trigger) 
+                + "\". Expected a function or method.",
+            true
+        );
+    }
+    
+    (__input_string()).trigger = _trigger;
+}
+
 function input_string_add(_string)
 {
     gml_pragma("forceinline"); 
     return input_string_set((__input_string()).value + string(_string));
-}
-
-function input_string_trigger_set(_trigger = undefined)
-{
-    gml_pragma("forceinline"); 
-    (__input_string()).trigger = _trigger;
 }
 
 function input_string_virtual_submit() { gml_pragma("forceinline"); return (__input_string()).virtual_submit; }

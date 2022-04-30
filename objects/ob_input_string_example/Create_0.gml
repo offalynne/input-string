@@ -10,6 +10,6 @@ input_string_trigger_set
     {
         var _string = input_string_get();
         self.submission_test = "Trigger test @" + string(current_time) + ": " + _string;
-        //input_string_set();
+        //input_string_set(); // Clear on return
     }
 );
