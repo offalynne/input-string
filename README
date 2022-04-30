@@ -25,9 +25,9 @@ input_string_set([string])
   argument: String (Optional)
   returned: None
   
-input_string_trigger_set([method])
+input_string_trigger_set([function])
   function: Set submission trigger
-  argument: Method (Optional)
+  argument: Function (Optional)
   returned: None
 
 input_string_submit()
