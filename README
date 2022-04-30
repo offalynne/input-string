@@ -31,7 +31,7 @@ input_string_trigger_set([method])
   returned: None
 
 input_string_submit()
-  function: Force submission trigger
+  function: Issue submission trigger
   returned: None
 
 input_string_platform_hint()
@@ -40,7 +40,7 @@ input_string_platform_hint()
   possible: keyboard, virtual, async
 
 input_string_virtual_submit()
-  function: Get virtual keyboard submission
+  function: Get virtual return status
   requires: input_​string_​tick
   returned: Boolean
 
@@ -51,10 +51,15 @@ input_string_tick()
 
 input_string_async_active()
   function: Get dialog status
-  requires: input_​string_​dialog_​async_​event
   returned: Boolean
 
-input_string_dialog_async_event()
+input_string_async_get([caption]);
+  function: Issue dialog prompt
+  requires: input_​string_​async_​event
+  argument: Caption (String, Optional)
+  returned: None
+
+input_string_async_event()
   function: Manage dialog submission
   in event: Dialog Async (Once, Optional)
   returned: None
