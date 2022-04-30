@@ -11,7 +11,7 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
     {
         if (_x < (room_width/2))
         {
-            // "Show OSK"
+            // Show OSK
             keyboard_virtual_show(kbv_type_default, kbv_returnkey_default, kbv_autocapitalize_none, false);
         }
         else
@@ -24,9 +24,9 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
     {
         switch(_x <= 0 ? 0 : _x div (room_width/3))
         {
-            case 0: input_string_set(long_string);          break; // "Fill String"
-            case 1: input_string_set();                     break; // "Clear String"
-            case 2: input_string_async_get("Test Caption"); break; // "Set Async"
+            case 0: input_string_set(long_string);          break; // Fill String
+            case 1: input_string_set();                     break; // Clear String
+            case 2: input_string_async_get("Test Caption"); break; // Set Async
         }
     }
 }
