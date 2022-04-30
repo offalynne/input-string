@@ -16,7 +16,7 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
         }
         else
         {
-            // "Hide OSK"
+            // Hide OSK
             keyboard_virtual_hide();
         }
     }
