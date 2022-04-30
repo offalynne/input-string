@@ -18,8 +18,8 @@ function __input_string()
 
     #region Initialization
     
-    predialogue = "";
-    value       = "";
+    predialog = "";
+    value     = "";
     
     backspace_hold_duration  = 0;
     tick_last                = 0;
