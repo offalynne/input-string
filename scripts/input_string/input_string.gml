@@ -23,8 +23,8 @@ function __input_string()
     value       = "";
     
     backspace_hold_duration  = 0;
-
-    tick_last = undefined;
+    tick_last                = 0;
+    
     trigger   = undefined;
     async_id  = undefined;
 
@@ -124,8 +124,9 @@ function __input_string()
             _trim = true;
         }
 
-        // Update internal value
-        if ((tick_last != undefined) && (keyboard_string != _string))
+        //Update internal value
+        if ((tick_last > (current_time - (delta_time div 1000) - 2))
+        &&  (keyboard_string != _string))
         {
             if (((os_type == os_ios) || (os_type == os_tvos))
             && (string_length(keyboard_string) > _max))
@@ -140,7 +141,11 @@ function __input_string()
 
         value = _string;
 
-        if ((os_type == os_android) && _trim) value = string_delete(value, 1, 1);
+        if ((os_type == os_android) && _trim)
+        {
+            //Strip leading space
+            value = string_delete(value, 1, 1);
+        }
     };
 
 
@@ -253,7 +258,9 @@ function __input_string()
 }
 
 function input_string_set(_string = "")
-{    
+{
+    gml_pragma("forceinline"); 
+    
     if ((os_type == os_ios) || (os_type == os_tvos))
     {
         // Close virtual keyboard if string is manually set (fixes iOS setting quirk)
@@ -265,16 +272,18 @@ function input_string_set(_string = "")
 
 function input_string_add(_string)
 {
+    gml_pragma("forceinline"); 
     return input_string_set((__input_string()).value + string(_string));
 }
 
 function input_string_trigger_set(_trigger = undefined)
 {
+    gml_pragma("forceinline"); 
     (__input_string()).trigger = _trigger;
 }
 
-function input_string_virtual_submit() { return (__input_string()).virtual_submit; }
-function input_string_platform_hint()  { return (__input_string()).platform_hint;  }
-function input_string_submit()         { return (__input_string()).submit();       }
-function input_string_tick()           { return (__input_string()).tick();         }
-function input_string_get()            { return (__input_string()).value;          }
+function input_string_virtual_submit() { gml_pragma("forceinline"); return (__input_string()).virtual_submit; }
+function input_string_platform_hint()  { gml_pragma("forceinline"); return (__input_string()).platform_hint;  }
+function input_string_submit()         { gml_pragma("forceinline"); return (__input_string()).submit();       }
+function input_string_tick()           { gml_pragma("forceinline"); return (__input_string()).tick();         }
+function input_string_get()            { gml_pragma("forceinline"); return (__input_string()).value;          }

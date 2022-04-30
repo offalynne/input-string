@@ -109,4 +109,8 @@ function input_string_dialog_async_event()
     }
 }
 
-function input_string_async_active(){ return ((__input_string()).async_id != undefined); }
+function input_string_async_active()
+{
+    gml_pragma("forceinline");
+    return ((__input_string()).async_id != undefined);
+}

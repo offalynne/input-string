@@ -50,6 +50,5 @@ if (input_string_platform_hint() == "keyboard")
     {
         // Toggle tick
         tick = !tick;
-        with (__input_string()) tick_last = undefined; // Yuck
     }
 }
