@@ -259,7 +259,7 @@ function input_string_set(_string = "")
         keyboard_virtual_hide();
     }
     
-    (__input_string()).set(_string);
+    (__input_string()).set(string(_string));
 }
 
 function input_string_trigger_set(_trigger = undefined)
