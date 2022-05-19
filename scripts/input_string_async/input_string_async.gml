@@ -53,7 +53,7 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
         show_error("Input String Error: Failed to issue async dialog", true);
     }
 }
-    
+
 function input_string_dialog_async_event()
 {
     if (string_count("__YYInternalObject__", object_get_name(object_index)))
