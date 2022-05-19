@@ -36,7 +36,7 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
                     show_debug_message("Input String Warning: PlayStation dialog has a limit of 1024 characters");
                     _string = string_copy(_string, 1, 1024);
                 }
-
+                
                 if (string_length(_string) > max_length)
                 {
                     // Enforce configured character limit
