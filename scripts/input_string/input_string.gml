@@ -8,14 +8,14 @@ function __input_string()
     auto_closevkb = true;   // Whether the 'Return' key closes the virtual keyboard
     auto_submit   = true;   // Whether the 'Return' key runs the submission trigger
     auto_trim     = true;   // Whether submit trims leading and trailing whitespace
-
+    
     allow_empty   = false;  // Whether a blank field submission is treated as valid
     allow_newline = false;  // Whether to allow newline characters or swap to space
-
+    
     max_length = 1000;  // Maximum text entry string length. Do not exceed 1024
     
     #endregion
-
+    
     #region Initialization
     
     predialog = "";
@@ -26,15 +26,15 @@ function __input_string()
     
     trigger   = undefined;
     async_id  = undefined;
-
+    
     virtual_submit = false;
     async_submit   = false;
-
+    
     keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
                        || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
                        || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
                        || (os_type == os_tvos) || (os_type == os_ios));
-
+    
     // Set platform hint
     if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) 
     ||  (os_type == os_switch)  || (os_type == os_ps4) || (os_type == os_ps5))
@@ -61,7 +61,7 @@ function __input_string()
     }
     
     #endregion
-
+    
     #region Utilities
     
     trim = function(_string)
@@ -69,25 +69,25 @@ function __input_string()
         var _char  = "";
         var _left  = 1;
         var _right = string_length(_string);
-
+        
         repeat (_right)
         {
             // Offset left
             _char = ord(string_char_at(_string, _left));
             if ((_char > 8) && (_char < 14) || (_char == 32)) _left++; else break;
         }
-
+        
         repeat (_right - _left)
         {
             // Offset right
             _char = ord(string_char_at(_string, _right));
             if ((_char > 8) && (_char < 14) || (_char == 32)) _right--; else break;
         }
-
+        
         return string_copy(_string, _left, _right - _left + 1);
     };
-
-
+    
+    
     set = function(_string)
     {
         _string = string(_string);
@@ -109,11 +109,11 @@ function __input_string()
             // Filter delete character (fixes Windows and Mac quirk)
             _string = string_replace_all(_string, chr(0x7F), "");
         }
-
+        
         // Enforce length
         var _max = max_length + ((os_type == os_android) ? 1 : 0);
         _string = string_copy(_string, 1, _max);
-
+        
         // Left pad one space (fixes Android quirk on first character)
         var _trim = (string_char_at(_string, 1) == " ");
         if ((os_type == os_android) && !_trim)
@@ -122,7 +122,7 @@ function __input_string()
             _string = " " + _string;
             _trim = true;
         }
-
+        
         //Update internal value
         if ((tick_last > (current_time - (delta_time div 1000) - 2))
         &&  (keyboard_string != _string))
@@ -133,21 +133,21 @@ function __input_string()
                 // Close keyboard on overflow (fixes iOS string setting quirk)
                 keyboard_virtual_hide();
             }
-
+            
             // Set inbuilt value if necessary
             keyboard_string = _string;
         }
-
+        
         value = _string;
-
+        
         if ((os_type == os_android) && _trim)
         {
             //Strip leading space
             value = string_delete(value, 1, 1);
         }
     };
-
-
+    
+    
     submit = function()
     {
         if (auto_trim)
@@ -202,7 +202,7 @@ function __input_string()
                     keyboard_virtual_hide();
                 }
             }
-
+            
             if (_string != "")
             {
                 // Backspace key repeat (fixes lack-of on native Mac and Linux)
@@ -239,7 +239,7 @@ function __input_string()
         {
             submit();
         }
-
+        
         async_submit = false;
         tick_last = current_time;
     }
