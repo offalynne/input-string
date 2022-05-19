@@ -49,7 +49,7 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
         
             return true;
         }
-    
+        
         show_error("Input String Error: Failed to issue async dialog", true);
     }
 }
