@@ -3,12 +3,12 @@ input-string
 Multiplatform GMS2 text entry utility
 Robust alternative to keyboard_string
 
-Frontend features
+Frontend
 - Platform entry method hint
 - Reliable getter and setter
 - Trigger on text submission
 
-Backend features
+Backend
 - Safe handling at string length limit
 - Filter errant keyboard control codes
 - Normalized Backspace repeat behavior
