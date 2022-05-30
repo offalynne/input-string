@@ -16,7 +16,7 @@ draw_text(room_width - 10, 110, "\"" + string(keyboard_virtual_height()) + "\" k
 draw_text(room_width - 10, 130, "\"" + string(input_string_virtual_submit()) + "\" input_string_virtual_submit()");
 
 draw_set_halign(fa_center);
-draw_text(room_width * .50, 10, "Tick " + (tick ? "On" : "Off"));
+draw_text(room_width * .50, 10, "Tick " + (ticking? "On" : "Off"));
 draw_text(room_width * .50, 30, submission_test);
 
 // Test button labels
