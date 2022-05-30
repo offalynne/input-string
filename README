@@ -24,10 +24,15 @@ input_string_set([string])
   function: Set managed text
   argument: String (Optional)
   returned: None
-  
+
 input_string_trigger_set([function])
   function: Set submission trigger
   argument: Function (Optional)
+  returned: None
+
+input_string_max_length_set(value)
+  function: Set string limit
+  argument: Value (Integer)
   returned: None
 
 input_string_submit()
