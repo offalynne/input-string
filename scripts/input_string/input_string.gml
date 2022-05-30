@@ -137,7 +137,7 @@ function __input_string()
             }
             
             // Set inbuilt value if necessary
-            keyboard_string = _string;            
+            keyboard_string = _string;
         }
         
         just_ticked = false;
