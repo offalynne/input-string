@@ -262,13 +262,15 @@ function __input_string()
 function input_string_max_length_set(_max_length)
 {
     gml_pragma("forceinline");    
-    if (!is_numeric(_max_length) || _max_length < 0 || _max_length > 1024)
+    if (!is_numeric(_max_length) || _max_length < 0
+    || (_max_length > (__input_string()).max_length))
     {
         show_error
         (
             "Input String Error: Invalid value provided for max length: \"" 
                 + string(_max_length) 
-                + "\". Expected a value between 0 and 1024.",
+                + "\". Expected a value between 0 and "
+                + string((__input_string()).max_length),
             true
         );
     }
