@@ -30,13 +30,13 @@ input_string_trigger_set([function])
   argument: Function (Optional)
   returned: None
 
+input_string_submit()
+  function: Issue submission trigger
+  returned: None
+
 input_string_max_length_set(value)
   function: Set string limit
   argument: Value (Integer)
-  returned: None
-
-input_string_submit()
-  function: Issue submission trigger
   returned: None
 
 input_string_platform_hint()
