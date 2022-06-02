@@ -29,8 +29,8 @@ function __input_string()
     
     virtual_submit = false;
     async_submit   = false;
-    just_ticked     = false;
-    just_set        = false;
+    just_ticked    = false;
+    just_set       = false;
     
     keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
                        || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
@@ -174,7 +174,7 @@ function __input_string()
             set(value);
         }
         
-        if (keyboard_supported && (async_id == undefined) && (!just_set))
+        if (keyboard_supported && (async_id == undefined) && !just_set)
         {
             // Manage text input
             var _string = keyboard_string;
