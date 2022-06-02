@@ -285,7 +285,7 @@ function input_string_trigger_set(_trigger = undefined)
     gml_pragma("forceinline");
     
     if (!is_undefined(_trigger) && !is_method(_trigger)
-    && (!is_numeric(_trigger)   || !script_exists(_trigger)))
+    && (!is_numeric(_trigger) || !script_exists(_trigger)))
     {
         show_error
         (
