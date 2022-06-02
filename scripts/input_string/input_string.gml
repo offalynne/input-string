@@ -302,7 +302,6 @@ function input_string_trigger_set(_trigger = undefined)
 function input_string_set(_string = "")
 {
     gml_pragma("forceinline");
-    
     if ((os_type == os_ios) || (os_type == os_tvos))
     {
         // Close virtual keyboard if string is manually set (fixes iOS setting quirk)
