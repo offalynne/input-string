@@ -141,7 +141,7 @@ function __input_string()
         }
         
         just_ticked = false;
-        value       = _string;
+        value = _string;
         
         if ((os_type == os_android) && _trim)
         {
