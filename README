@@ -50,8 +50,8 @@ input_string_virtual_submit()
   returned: Boolean
 
 input_string_tick()
-  function: Manage state
-  in event: Begin Step (Once, Optional)
+  function: Update state
+  in event: Begin Step
   returned: None
 
 input_string_async_active()
@@ -66,12 +66,12 @@ input_string_async_get([caption]);
 
 input_string_async_event()
   function: Manage dialog submission
-  in event: Dialog Async (Once, Optional)
+  in event: Dialog Async (Optional)
   returned: None
 
 For configuration see input_string script
 
-Thanks: @JujuAdams @tabularelf @nkrapivin
+s/o @JujuAdams @tabularelf @nkrapivin
 Community: discord.gg/8krYCqr
 
 @offalynne, 2022
