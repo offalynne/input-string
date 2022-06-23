@@ -1,4 +1,4 @@
-ticking         = false;
+ticking         = true;
 submission_test = "";
 long_string     = "";
 
