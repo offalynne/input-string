@@ -4,10 +4,10 @@ draw_text(10, 30, "GM version " + GM_runtime_version);
 draw_text(10, 10, "Last built " + date_time_string(GM_build_date));
 
 draw_set_halign(fa_right);
-draw_text(room_width - 10, 10,  "\"" + input_string_platform_hint()    +  "\" source hint");
-draw_text(room_width - 10, 30,  string(string_length(keyboard_string)) + " string length" );
+draw_text(room_width - 10, 10,  "\"" + input_string_platform_hint()    +  "\"    source hint");
+draw_text(room_width - 10, 30,  string(string_length(keyboard_string)) +     " string length");
 
-draw_text(room_width - 10, 50,  "\"" + keyboard_string    + "\" keyboard_string"   );
+draw_text(room_width - 10, 50,  "\"" + keyboard_string    + "\"    keyboard_string");
 draw_text(room_width - 10, 70,  "\"" + input_string_get() + "\" input_string_get()");
 
 draw_text(room_width - 10, 90,  "\"" + string(keyboard_virtual_status()) + "\" keyboard_virtual_status()");
