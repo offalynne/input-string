@@ -19,7 +19,7 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
     {
         switch((_x <= 0)? 0 : _x div (room_width/3))
         {
-            // Primary Tests
+            // Primary tests
             case 0: input_string_set(long_string);          break; // Fill String
             case 1: input_string_set();                     break; // Clear String
             case 2: input_string_async_get("Test Caption"); break; // Set Async
