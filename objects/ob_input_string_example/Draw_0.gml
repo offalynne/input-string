@@ -1,4 +1,5 @@
-// Test readout
+/// @description Test readout
+
 draw_set_halign(fa_left);
 draw_text(10, 30, "GM version " + GM_runtime_version);
 draw_text(10, 10, "Last built " + date_time_string(GM_build_date));
