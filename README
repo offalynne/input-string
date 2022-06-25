@@ -3,25 +3,6 @@ input-string
 Multiplatform GMS2 text entry utility
 Robust alternative to keyboard_string
 
-Frontend Features
-- Platform entry method hint
-- Reliable getter and setter
-- Trigger on text submission
-
-Backend Features
-- Safe handling at string length limit
-- Filter errant keyboard control codes
-- Normalized Backspace repeat behavior
-- Prevent Android off-by-one text bugs
-- Prevent dropping any user keystrokes
-- Prevent input falling through dialog
-
-Quick Start
-1 input_string_trigger_set(submitFunc)
-2 Upon focus, input_string_set(oldVal)
-2 Focused, newVal = input_string_get()
-4 Once a frame, do input_string_tick()
-
 input_string_get()
   function: Get managed text
   returned: String
@@ -75,7 +56,27 @@ input_string_async_event()
   in event: Dialog Async (Optional)
   returned: None
 
-For configuration see input_string script
+Frontend Features
+- Platform entry method hint
+- Reliable getter and setter
+- Trigger on text submission
+- Easy async dialog handling
+
+Backend Features
+- Safe handling at string length limit
+- Filter errant keyboard control codes
+- Normalized Backspace repeat behavior
+- Prevent Android off-by-one text bugs
+- Prevent dropping any user keystrokes
+- Prevent input falling through dialog
+
+Quick Start
+1 input_string_trigger_set(submitFunc)
+2 Upon focus, input_string_set(oldVal)
+2 Focused, newVal = input_string_get()
+4 Once a frame, do input_string_tick()
+
+For configuration options, see scripts
 
 s/o @JujuAdams @tabularelf @nkrapivin
 Community: discord.gg/8krYCqr
