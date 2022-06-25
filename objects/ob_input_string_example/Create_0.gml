@@ -1,4 +1,3 @@
-ticking         = true;
 submission_test = "";
 long_string     = "";
 
@@ -13,3 +12,7 @@ input_string_trigger_set
         //input_string_set(); // Clear on return
     }
 );
+
+// Initial ticking state. Set to true for user ease,
+// but suggest testing at false to be comprehensive.
+ticking = true;
