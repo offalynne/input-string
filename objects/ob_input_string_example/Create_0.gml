@@ -1,3 +1,5 @@
+/// @description Test setup
+
 long_string = "";
 repeat((__input_string()).max_length)
 {
