@@ -1,6 +1,6 @@
-// Pointer buttons
 if (mouse_check_button_released(mb_any) && !input_string_async_active())
 {
+    // Pointer buttons
     var _x = device_mouse_x(0);
     if (device_mouse_y(0) < 300)
     {
@@ -27,9 +27,9 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
     }
 }
 
-// Secondary tests
 if (input_string_platform_hint() == "keyboard")
 {
+    // Secondary tests
     if (keyboard_check_pressed(vk_f1))
     {
         // Append, force tick
