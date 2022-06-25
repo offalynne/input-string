@@ -1,5 +1,5 @@
 submission_test = "";
-long_string     = "";
+long_string = "";
 
 repeat((__input_string()).max_length) long_string += chr(ord("A") + irandom(25));
 
