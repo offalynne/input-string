@@ -68,7 +68,7 @@ function __input_string()
     
     trim = function(_string)
     {        
-        var _char  = "";
+        var _char  = 0;
         var _right = string_length(_string);
         var _left  = 1;
         
