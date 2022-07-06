@@ -261,7 +261,7 @@ function __input_string()
 
 function input_string_max_length_set(_max_length)
 {
-    gml_pragma("forceinline");    
+    gml_pragma("forceinline");
     if (!is_numeric(_max_length) || _max_length < 0
     || (_max_length > (__input_string()).max_length))
     {
