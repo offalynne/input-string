@@ -12,8 +12,8 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
         {
             // Note platform suitability
             var _source = input_string_platform_hint();
-            if (_source != "async")    show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
-            if (_source == "virtual")  show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
+            if      (_source != "async")    show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
+            else if (_source == "virtual")  show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
             
             if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos))
             {
@@ -23,23 +23,22 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
             
             if (_string != "")
             {
-                if ((os_type == os_switch) && (string_length(_string) > 500))
-                {
-                    // Enforce Switch dialog character limit
-                    show_debug_message("Input String Warning: Switch dialog has a limit of 500 characters");
-                    _string = string_copy(_string, 1, 500);
-                }
+                // Enforce dialog character limit per platform
+                var _console_limit = 0;
+                if      ((os_type == os_xboxone) || (os_type == os_xboxseriesxs))  _console_limit = 256;
+                else if (os_type == os_switch)                                     _console_limit = 500;
+                else if ((os_type == os_ps4) || (os_type == os_ps5))               _console_limit = 1024;
                 
-                if (((os_type == os_ps4) || (os_type == os_ps5)) && (string_length(_string) > 1024))
+                if (_console_limit > 0)
                 {
-                    // Enforce PlayStation dialog character limit
-                    show_debug_message("Input String Warning: PlayStation dialog has a limit of 1024 characters");
-                    _string = string_copy(_string, 1, 1024);
+                    show_debug_message("Input String Warning: Platform dialog has a limit of " + string(_console_limit) + " characters");
+                    _string = string_copy(_string, 1, _console_limit);
                 }
                 
                 if (string_length(_string) > max_length)
                 {
                     // Enforce configured character limit
+                    show_debug_message("Input String Warning: Truncating string to " + string(max_length) + " characters");
                     _string = string_copy(_string, 1, max_length);
                 }
             }
