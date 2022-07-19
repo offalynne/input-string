@@ -94,16 +94,19 @@ function __input_string()
     {
         _string = string(_string);
         
-        if ((os_type != os_windows) || !allow_newline)
+        if (!allow_newline)
         {
-            // Filter carriage returns
-            _string = string_replace_all(_string, chr(13), "");
-        }
-        
-        if (((os_type == os_ios) || (os_type == os_tvos)) || !allow_newline)
-        {
-            // Filter newlines
-            _string = string_replace_all(_string, chr(10), " ");
+            if (os_type != os_windows)
+            {
+                // Filter carriage returns
+                _string = string_replace_all(_string, chr(13), "");
+            }
+            
+            if ((os_type == os_ios) || (os_type == os_tvos))
+            {
+                // Filter newlines
+                _string = string_replace_all(_string, chr(10), " ");
+            }
         }
         
         if (string_pos(chr(0x7F), _string) > 0)
