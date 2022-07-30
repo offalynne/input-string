@@ -161,7 +161,7 @@ function __input_string()
             set(trim(input_string_get()));
         }
         
-        if (trigger != undefined)
+        if ((trigger != undefined)
         && ((input_string_get() != "") || allow_empty))
         {
             if (is_method(trigger))
