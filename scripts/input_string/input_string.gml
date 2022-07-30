@@ -172,8 +172,10 @@ function __input_string()
             {
                 script_execute(trigger);
             }
-            
-            show_error("trigger set to an illegal value (typeof=" + typeof(trigger) + ")", false);
+			else
+			{
+				show_error("trigger set to an illegal value (typeof=" + typeof(trigger) + ")", false);
+			}
         }
     };
     
