@@ -161,10 +161,19 @@ function __input_string()
             set(trim(input_string_get()));
         }
         
-        if ((is_method(trigger) || is_numeric(trigger))
+        if (trigger != undefined)
         && ((input_string_get() != "") || allow_empty))
         {
-            trigger();
+            if (is_method(trigger))
+            {
+                trigger();
+            }
+            else if (is_numeric(trigger) && script_exists(trigger))
+            {
+                script_execute(trigger);
+            }
+            
+            show_error("trigger set to an illegal value (typeof=" + typeof(trigger) + ")", false);
         }
     };
     
