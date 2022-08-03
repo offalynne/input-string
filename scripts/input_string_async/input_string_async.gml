@@ -25,8 +25,8 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
             {
                 // Enforce dialog character limit per platform
                 var _console_limit = 0;
-                if      ((os_type == os_xboxone) || (os_type == os_xboxseriesxs))  _console_limit = 256;
-                else if  (os_type == os_switch)                                     _console_limit = 500;
+                if      ((os_type == os_xboxone) || (os_type == os_xboxseriesxs))  _console_limit =  256;
+                else if  (os_type == os_switch)                                    _console_limit =  500;
                 else if ((os_type == os_ps4) || (os_type == os_ps5))               _console_limit = 1024;
                 
                 if (_console_limit > 0)
