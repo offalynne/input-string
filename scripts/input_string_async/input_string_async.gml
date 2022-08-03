@@ -23,11 +23,14 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
             
             if (_string != "")
             {
-                // Enforce dialog character limit per platform
                 var _console_limit = 0;
-                if      ((os_type == os_xboxone) || (os_type == os_xboxseriesxs)) _console_limit =  256;
-                else if  (os_type == os_switch)                                   _console_limit =  500;
-                else if ((os_type == os_ps4) || (os_type == os_ps5))              _console_limit = 1024;
+                switch(os_type)
+                {
+                    // Enforce dialog character limit per platform
+                    case os_xboxone: case os_xboxseriesxs: _console_limit =  256; break;
+                    case os_switch:                        _console_limit =  500; break;
+                    case os_ps4: case os_ps5:              _console_limit = 1024; break;
+                }
                 
                 if (_console_limit > 0)
                 {
