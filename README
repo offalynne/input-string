@@ -4,10 +4,9 @@ Multiplatform GMS2 text entry utility
 Robust alternative to keyboard_string
 
 Frontend Features
-- Platform entry method hint
-- Reliable getter and setter
-- Trigger on text submission
-- Easy async dialog handling
+- Reliable getters and setters
+- Callback for text submission
+- Easier async dialog handling
 
 Backend Features
 - Safe handling at string length limit
@@ -18,7 +17,7 @@ Backend Features
 - Prevent input falling through dialog
 
 Quick Start
-1 input_string_trigger_set(submitFunc)
+1 input_string_callback_set(aFunction)
 2 Upon focus, input_string_set(oldVal)
 2 Focused, newVal = input_string_get()
 4 Once a frame, do input_string_tick()
@@ -32,13 +31,13 @@ input_string_set([string])
   argument: String (Optional)
   returned: None
 
-input_string_trigger_set([function])
-  function: Set submission trigger
+input_string_callback_set([function])
+  function: Set submission callback
   argument: Function (Optional)
   returned: None
 
 input_string_submit()
-  function: Issue submission trigger
+  function: Issue submission callback
   returned: None
 
 input_string_max_length_set(value)
