@@ -8,12 +8,12 @@ repeat((__input_string()).max_length)
 }
 
 submission_test = "";
-input_string_trigger_set
+input_string_callback_set
 (
     function()
     {
         var _string = input_string_get();
-        self.submission_test = "Trigger test @" + string(current_time) + ": " + _string;
+        self.submission_test = "Callback test @" + string(current_time) + ": " + _string;
         
         //input_string_set(); // Clear on return
     }
