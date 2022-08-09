@@ -6,7 +6,7 @@ function __input_string()
     #region Configuration
     
     auto_closevkb = true;   // Whether the 'Return' key closes the virtual keyboard
-    auto_submit   = true;   // Whether the 'Return' key runs the submission trigger
+    auto_submit   = true;   // Whether the 'Return' key fires a submission callback
     auto_trim     = true;   // Whether submit trims leading and trailing whitespace
     
     allow_empty   = false;  // Whether a blank field submission is treated as valid
@@ -24,7 +24,7 @@ function __input_string()
     backspace_hold_duration  = 0;
     tick_last                = 0;
     
-    trigger   = undefined;
+    callback  = undefined;
     async_id  = undefined;
     
     virtual_submit = false;
@@ -161,20 +161,20 @@ function __input_string()
             set(trim(input_string_get()));
         }
         
-        if ((trigger != undefined)
+        if ((callback != undefined)
         && ((input_string_get() != "") || allow_empty))
         {
-            if (is_method(trigger))
+            if (is_method(callback))
             {
-                trigger();
+                callback();
             }
-            else if (is_numeric(trigger) && script_exists(trigger))
+            else if (is_numeric(callback) && script_exists(callback))
             {
-                script_execute(trigger);
+                script_execute(callback);
             }
 			else
 			{
-				show_error("trigger set to an illegal value (typeof=" + typeof(trigger) + ")", false);
+				show_error("callback set to an illegal value (typeof=" + typeof(callback) + ")", false);
 			}
         }
     };
@@ -296,23 +296,23 @@ function input_string_max_length_set(_max_length)
     }
 }
 
-function input_string_trigger_set(_trigger = undefined)
+function input_string_callback_set(_callback = undefined)
 {
     gml_pragma("forceinline");
     
-    if (!is_undefined(_trigger) && !is_method(_trigger)
-    && (!is_numeric(_trigger) || !script_exists(_trigger)))
+    if (!is_undefined(_callback) && !is_method(_callback)
+    && (!is_numeric(_callback) || !script_exists(_callback)))
     {
         show_error
         (
-            "Input String Error: Invalid value provided as trigger: \"" 
-                + string(_trigger) 
+            "Input String Error: Invalid value provided as callback: \"" 
+                + string(_callback) 
                 + "\". Expected a function or method.",
             true
         );
     }
     
-    with (__input_string()) trigger = _trigger;
+    with (__input_string()) callback = _callback;
 }
 
 function input_string_set(_string = "")
