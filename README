@@ -18,9 +18,9 @@ Backend Features
 
 Quick Start
 1 input_string_callback_set(aFunction)
-2 Upon focus, input_string_set(oldVal)
+2 Once a frame, do input_string_tick()
+3 Upon focus, input_string_set(oldVal)
 2 Focused, newVal = input_string_get()
-4 Once a frame, do input_string_tick()
 
 input_string_get()
   function: Get managed text
