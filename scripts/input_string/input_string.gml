@@ -18,55 +18,70 @@ function __input_string()
     
     #region Initialization
     
-    predialog = "";
-    value     = "";
+    __predialog = "";
+    __value     = "";
     
-    backspace_hold_duration  = 0;
-    tick_last                = 0;
+    __backspace_hold_duration  = 0;
+    __tick_last                = 0;
     
-    callback  = undefined;
-    async_id  = undefined;
+    __callback  = undefined;
+    __async_id  = undefined;
     
-    virtual_submit = false;
-    async_submit   = false;
-    just_ticked    = false;
-    just_set       = false;
+    __virtual_submit = false;
+    __async_submit   = false;
+    __just_ticked    = false;
+    __use_steam      = false;
+    __just_set       = false;
     
-    keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
-                       || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
-                       || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
-                       || (os_type == os_tvos) || (os_type == os_ios));
+    __keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
+                         || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
+                         || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
+                         || (os_type == os_tvos) || (os_type == os_ios));
+                         
+    // Steamworks
+    try
+    {
+        // Try Steam setup
+        steam_dismiss_floating_gamepad_text_input();
+        __use_steam = true;
+        show_debug_message("Input String: Using Steamworks extension")
+    }
+    catch(_error)
+    {
+        // In absence of Steam extension
+        show_debug_message("Input String: Not using Steamworks extension")
+    }
     
     // Set platform hint
     if ((os_type == os_xboxone) || (os_type == os_xboxseriesxs) 
     ||  (os_type == os_switch)  || (os_type == os_ps4) || (os_type == os_ps5))
     {
         // Suggest 'async' (dialog) on console
-        platform_hint = "async";
+        __platform_hint = "async";
     }
     else if ((os_browser != browser_not_a_browser)
     && ((os_type != os_windows) && (os_type != os_macosx) 
     &&  (os_type != os_operagx) && (os_type != os_linux)))
     {
         // Suggest 'async' (dialog) on non-desktop web
-        platform_hint = "async";
+        __platform_hint = "async";
     }
     else if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos)
     || (uwp_device_touchscreen_available() && (os_type == os_uwp)))
     {
         // Suggest virtual keyboard on mobile
-        platform_hint = "virtual";
+        __platform_hint = "virtual";
     }
     else
     {
-        platform_hint = "keyboard";
+        __platform_hint = "keyboard";
     }
     
     #endregion
     
     #region Utilities
     
-    trim = function(_string)
+    __trim = function(_string)
     {        
         var _char  = 0;
         var _right = string_length(_string);
@@ -90,7 +105,7 @@ function __input_string()
     };
     
     
-    set = function(_string)
+    __set = function(_string)
     {
         _string = string(_string);
         
@@ -130,7 +145,7 @@ function __input_string()
         
         //Update internal value
         if ((keyboard_string != _string) 
-        && ((tick_last > (current_time - (delta_time div 1000) - 2)) || just_ticked))
+        && ((__tick_last > (current_time - (delta_time div 1000) - 2)) || __just_ticked))
         {
             if (((os_type == os_ios) || (os_type == os_tvos))
             && (string_length(keyboard_string) > _max))
@@ -143,86 +158,83 @@ function __input_string()
             keyboard_string = _string;
         }
         
-        just_ticked = false;
-        value = _string;
+        __just_ticked = false;
+        __value = _string;
         
         if ((os_type == os_android) && _trim)
         {
             //Strip leading space
-            value = string_delete(value, 1, 1);
+            __value = string_delete(__value, 1, 1);
         }
     };
     
     
-    submit = function()
+    __submit = function()
     {
         if (auto_trim)
         {
-            set(trim(input_string_get()));
+            __set(__trim(input_string_get()));
         }
         
-        if ((callback != undefined)
-        && ((input_string_get() != "") || allow_empty))
+        if ((__callback != undefined) && ((input_string_get() != "") || allow_empty))
         {
-            if (is_method(callback))
+            if (is_method(__callback))
             {
-                callback();
+                __callback();
             }
-            else if (is_numeric(callback) && script_exists(callback))
+            else if (is_numeric(__callback) && script_exists(__callback))
             {
-                script_execute(callback);
+                script_execute(__callback);
             }
-			else
-			{
-				show_error("callback set to an illegal value (typeof=" + typeof(callback) + ")", false);
-			}
+            else
+            {
+                show_error("callback set to an illegal value (typeof=" + typeof(__callback) + ")", false);
+            }
         }
     };
     
     
-    tick = function()
+    __tick = function()
     {
-        if (tick_last <= (current_time - (delta_time div 1000) - 2))
+        if (__tick_last <= (current_time - (delta_time div 1000) - 2))
         {
-            just_ticked = true;
-            set(value);
+            __just_ticked = true;
+            __set(__value);
         }
         
-        if (keyboard_supported && (async_id == undefined) && !just_set)
+        if (__keyboard_supported && !__just_set && (__async_id == undefined))
         {
             // Manage text input
             var _string = keyboard_string;
-            if ((_string == "") && (string_length(value) > 1))
+            if ((_string == "") && (string_length(__value) > 1))
             {
                 // Revert internal string when in overflow state
                 _string = "";
             }
             
-            virtual_submit = false;
-            if ((keyboard_virtual_status() != undefined) && !input_string_async_active())
+            __virtual_submit = false;
+            if (!input_string_async_active())
             {            
                 // Handle virtual keyboard submission
                 if ((os_type == os_ios) || (os_type == os_tvos))
                 {
-                    virtual_submit = ((ord(keyboard_lastchar) == 10) 
-                                   && (string_length(keyboard_string) > string_length(value)));
+                    __virtual_submit = ((ord(keyboard_lastchar) == 10) 
+                                     && (string_length(keyboard_string) > string_length(value)));
                 }
                 else if ((os_type == os_android) && keyboard_check_pressed(10))
                 {
-                    virtual_submit = true;
+                    __virtual_submit = true;
                 }
                 else
                 {
                     // Keyboard submission
-                    virtual_submit = (keyboard_check_pressed(vk_enter));
+                    __virtual_submit = keyboard_check_pressed(vk_enter);
                 }             
             
-                if (auto_closevkb && virtual_submit
-                && (((os_type == os_uwp) && uwp_device_touchscreen_available())
-                ||   (os_type == os_ios) || (os_type == os_tvos) || (os_type == os_android)))
+                if (auto_closevkb && __virtual_submit)
                 {
                     // Close virtual keyboard on submission
-                    keyboard_virtual_hide();
+                    input_string_keyboard_hide();
                 }
             }
             
@@ -254,18 +266,18 @@ function __input_string()
                 }
             }
             
-            set(_string);
+            __set(_string);
         }
-        just_set = false;
+        __just_set = false;
                 
-        if (auto_submit && !async_submit
-        && (virtual_submit || (keyboard_supported && keyboard_check_pressed(vk_enter))))
+        if (auto_submit && !__async_submit
+        && (__virtual_submit || (__keyboard_supported && keyboard_check_pressed(vk_enter))))
         {
-            submit();
+            __submit();
         }
         
-        async_submit = false;
-        tick_last = current_time;
+        __async_submit = false;
+        __tick_last = current_time;
     }
     
     #endregion
@@ -275,7 +287,6 @@ function __input_string()
 
 function input_string_max_length_set(_max_length)
 {
-    gml_pragma("forceinline");
     if (!is_numeric(_max_length) || _max_length < 0
     || (_max_length > (__input_string()).max_length))
     {
@@ -291,15 +302,13 @@ function input_string_max_length_set(_max_length)
     
     with (__input_string())
     {
-        max_length = _max_length;
-        set(string_copy(value, 0, _max_length));
+        __max_length = _max_length;
+        set(string_copy(__value, 0, _max_length));
     }
 }
 
 function input_string_callback_set(_callback = undefined)
-{
-    gml_pragma("forceinline");
-    
+{    
     if (!is_undefined(_callback) && !is_method(_callback)
     && (!is_numeric(_callback) || !script_exists(_callback)))
     {
@@ -312,12 +321,11 @@ function input_string_callback_set(_callback = undefined)
         );
     }
     
-    with (__input_string()) callback = _callback;
+    with (__input_string()) __callback = _callback;
 }
 
 function input_string_set(_string = "")
 {
-    gml_pragma("forceinline");
     if ((os_type == os_ios) || (os_type == os_tvos))
     {
         // Close virtual keyboard if string is manually set (fixes iOS setting quirk)
@@ -326,19 +334,65 @@ function input_string_set(_string = "")
     
     with (__input_string())
     {
-        just_set = true;
-        set(_string);
+        __just_set = true;
+        __set(_string);
     }
 }
 
 function input_string_add(_string)
 {
-    gml_pragma("forceinline"); 
     input_string_set((__input_string()).value + string(_string));
 }
 
-function input_string_virtual_submit() { gml_pragma("forceinline"); return (__input_string()).virtual_submit; }
-function input_string_platform_hint()  { gml_pragma("forceinline"); return (__input_string()).platform_hint;  }
-function input_string_submit()         { gml_pragma("forceinline"); return (__input_string()).submit();       }
-function input_string_tick()           { gml_pragma("forceinline"); return (__input_string()).tick();         }
-function input_string_get()            { gml_pragma("forceinline"); return (__input_string()).value;          }
+function input_string_keyboard_show(_keyboard_type = kbv_type_default)
+{
+    var _steam = (__input_string()).__use_steam;
+    
+    // Note platform suitability
+    var _source = input_string_platform_hint();
+    if ((_source != "virtual") && !_steam) show_debug_message("Input String Warning: Onscreen keyboard is not suitable for use on the current platform");
+    if  (_source == "async")               show_debug_message("Input String Warning: Consider using async dialog for modal text input instead");
+    
+    if ((keyboard_virtual_show != undefined) && script_exists(keyboard_virtual_show) && ((os_type == os_android) || !keyboard_virtual_status()))
+    {
+        keyboard_virtual_show(_keyboard_type, kbv_returnkey_default, kbv_autocapitalize_sentences, false);
+    }
+    else if (_steam)
+    {
+        switch (_keyboard_type)
+        {
+            case kbv_type_email:   _keyboard_type = steam_floating_gamepad_text_input_mode_email;       break;
+            case kbv_type_numbers: _keyboard_type = steam_floating_gamepad_text_input_mode_numeric;     break;
+            default:               _keyboard_type = steam_floating_gamepad_text_input_mode_single_line; break;
+        }
+        
+        return steam_show_floating_gamepad_text_input(_keyboard_type, display_get_width(), 0, 0, 0);
+    }
+    else
+    {
+         show_debug_message("Input String Warning: Onscreen keyboard not supported on the current platform");
+    }
+    
+    return undefined;
+}
+   
+function input_string_keyboard_hide()
+{
+    var _steam = (__input_string()).__use_steam;    
+    if ((keyboard_virtual_show != undefined) && script_exists(keyboard_virtual_show) && ((os_type == os_android) || keyboard_virtual_status()))
+    {
+        keyboard_virtual_hide();
+    }
+    else if (_steam)
+    {        
+        return steam_dismiss_floating_gamepad_text_input();
+    }
+    
+    return undefined;
+}
+
+function input_string_virtual_submit() { gml_pragma("forceinline"); return (__input_string()).__virtual_submit; }
+function input_string_platform_hint()  { gml_pragma("forceinline"); return (__input_string()).__platform_hint;  }
+function input_string_submit()         { gml_pragma("forceinline"); return (__input_string()).__submit();       }
+function input_string_tick()           { gml_pragma("forceinline"); return (__input_string()).__tick();         }
+function input_string_get()            { gml_pragma("forceinline"); return (__input_string()).__value;          }

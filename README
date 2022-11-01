@@ -7,6 +7,7 @@ Frontend Features
 - Reliable getters and setters
 - Callback for text submission
 - Easier async dialog handling
+- Steamworks extension support
 
 Backend Features
 - Safe handling at string length limit
@@ -54,6 +55,11 @@ input_string_virtual_submit()
   function: Get virtual return status
   requires: input_​string_​tick
   returned: Boolean
+  
+input_string_show_keyboard([type])
+  function: Show virtual keyboard
+  argument: Keyboard type (Optional)
+  returned: Boolean
 
 input_string_tick()
   function: Update state
@@ -64,7 +70,7 @@ input_string_async_active()
   function: Get dialog status
   returned: Boolean
 
-input_string_async_get([caption]);
+input_string_async_get([caption])
   function: Issue dialog prompt
   requires: input_​string_​async_​event
   argument: Caption (String, Optional)

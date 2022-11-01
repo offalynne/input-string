@@ -29,6 +29,16 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
     }
 }
 
+if (gamepad_button_check_pressed(0, gp_face1))
+{
+    input_string_keyboard_show(kbv_type_email);
+}
+
+if (keyboard_check_pressed(vk_tab))
+{
+    input_string_keyboard_hide();
+}
+
 if (input_string_platform_hint() == "keyboard")
 {
     // Secondary tests

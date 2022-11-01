@@ -1,11 +1,11 @@
-function input_string_async_get(_prompt, _string = (__input_string()).value)
+function input_string_async_get(_prompt, _string = (__input_string()).__value)
 {
     with (__input_string())
     {
-        if (async_id != undefined)
+        if (__async_id != undefined)
         {
             // Do not request the input modal when it is already open
-            show_debug_message("Input String Warning: Dialog prompt refused. Awaiting callback ID \"" + string(async_id) + "\"");
+            show_debug_message("Input String Warning: Dialog prompt refused. Awaiting callback ID \"" + string(__async_id) + "\"");
             return false;
         }
         else
@@ -46,8 +46,8 @@ function input_string_async_get(_prompt, _string = (__input_string()).value)
                 }
             }
         
-            predialog = input_string_get();
-            async_id  = get_string_async(_prompt, _string);
+            __predialog = input_string_get();
+            __async_id  = get_string_async(_prompt, _string);
         
             return true;
         }
@@ -79,7 +79,7 @@ function input_string_dialog_async_event()
     
     with (__input_string())
     {
-        if (input_string_async_active() && (async_load != -1) && (async_load[? "id"] == async_id))
+        if (input_string_async_active() && (async_load != -1) && (async_load[? "id"] == __async_id))
         {                
             // Confirm Async
             var _result = async_load[? "result"];
@@ -96,17 +96,17 @@ function input_string_dialog_async_event()
             if ((async_load[? "status"] != true) || (!allow_empty && (_result == "")))
             {
                 // Revert empty
-                _result = predialog;
+                _result = __predialog;
             }
             else
             {
-                async_submit = true;
+                __async_submit = true;
             }
             
-            set(_result);
-            async_id = undefined;
+            __set(_result);
+            __async_id = undefined;
             
-            if (async_submit) submit();
+            if (__async_submit) __submit();
         }
     }
 }
@@ -114,5 +114,5 @@ function input_string_dialog_async_event()
 function input_string_async_active()
 {
     gml_pragma("forceinline");
-    return ((__input_string()).async_id != undefined);
+    return ((__input_string()).__async_id != undefined);
 }
