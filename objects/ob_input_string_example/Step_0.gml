@@ -9,12 +9,12 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
         if (_x < (room_width/2))
         {
             // Show OSK
-            keyboard_virtual_show(kbv_type_default, kbv_returnkey_default, kbv_autocapitalize_none, false);
+            input_string_keyboard_show();
         }
         else
         {
             // Hide OSK
-            keyboard_virtual_hide();
+            input_string_keyboard_hide();
         }
     }
     else
@@ -27,16 +27,6 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
             case 2: input_string_async_get("Test Caption"); break; // Set Async
         }
     }
-}
-
-if (gamepad_button_check_pressed(0, gp_face1))
-{
-    input_string_keyboard_show(kbv_type_email);
-}
-
-if (keyboard_check_pressed(vk_tab))
-{
-    input_string_keyboard_hide();
 }
 
 if (input_string_platform_hint() == "keyboard")
