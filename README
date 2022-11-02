@@ -56,10 +56,14 @@ input_string_virtual_submit()
   requires: input_​string_​tick
   returned: Boolean
   
-input_string_show_keyboard([type])
+input_string_keyboard_show([type])
   function: Show virtual keyboard
   argument: Keyboard type (Optional)
-  returned: Boolean
+  returned: Undefined or Boolean
+  
+input_string_keyboard_hide([type])
+  function: Hide virtual keyboard
+  returned: None
 
 input_string_tick()
   function: Update state
