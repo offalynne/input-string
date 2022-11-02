@@ -9,12 +9,12 @@ if (mouse_check_button_released(mb_any) && !input_string_async_active())
         if (_x < (room_width/2))
         {
             // Show OSK
-            keyboard_virtual_show(kbv_type_default, kbv_returnkey_default, kbv_autocapitalize_none, false);
+            input_string_keyboard_show();
         }
         else
         {
             // Hide OSK
-            keyboard_virtual_hide();
+            input_string_keyboard_hide();
         }
     }
     else
