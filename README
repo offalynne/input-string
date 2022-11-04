@@ -23,6 +23,14 @@ Quick Start
 3 Upon focus, input_string_set(oldVal)
 4 Focused, newVal = input_string_get()
 
+Configuration
+auto_closevkb: Return closes keyboard
+auto_submit:   Return fires submission
+auto_trim:     Submit trims whitespace
+allow_empty:   Blank submit is allowed
+allow_newline: Allow newline character
+max_length:    Maximum length (< 1025)
+
 input_string_get()
   function: Get managed text
   returned: String
