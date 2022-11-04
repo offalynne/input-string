@@ -16,7 +16,7 @@ Backend Features
 - Prevent Android off-by-one text bugs
 - Prevent dropping any user keystrokes
 - Prevent input falling through dialog
-- Maintains value for keyboard_string
+- Maintained value for keyboard_string
 
 Quick Start
 1 input_string_callback_set(aFunction)
