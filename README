@@ -25,11 +25,11 @@ Quick Start
 
 Configuration
 auto_closevkb: Return closes keyboard
-auto_submit:   Return fires submission
-auto_trim:     Submit trims whitespace
-allow_empty:   Blank submit is allowed
-allow_newline: Allow newline character
-max_length:    Maximum length (< 1025)
+auto_submit:   Return fire submission
+auto_trim:     Submit trim whitespace
+allow_empty:   Empty submission works
+allow_newline: Allow return character
+max_length:    Maximum length (<1025)
 
 input_string_get()
   function: Get managed text
