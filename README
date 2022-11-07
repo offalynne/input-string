@@ -7,7 +7,6 @@ Frontend Features
 - Reliable getters and setters
 - Callback for text submission
 - Easier async dialog handling
-- Steamworks extension support
 
 Backend Features
 - Safe handling at string length limit
@@ -17,6 +16,7 @@ Backend Features
 - Prevent dropping any user keystrokes
 - Prevent input falling through dialog
 - Maintained value for keyboard_string
+- Steamworks virtual onscreen keyboard
 
 Quick Start
 1 input_string_callback_set(aFunction)
