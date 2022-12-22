@@ -302,7 +302,7 @@ function input_string_max_length_set(_max_length)
     
     with (__input_string())
     {
-        __max_length = _max_length;
+        max_length = _max_length;
         set(string_copy(__value, 0, _max_length));
     }
 }
