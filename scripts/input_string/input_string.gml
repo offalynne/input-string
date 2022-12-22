@@ -244,16 +244,16 @@ function __input_string()
                 if ((os_browser == browser_not_a_browser) 
                 &&  (os_type == os_macosx) || (os_type == os_linux))
                 {
-                    if (backspace_hold_duration > 0)
+                    if (__backspace_hold_duration > 0)
                     {
                         // Repeat on hold, normalized against Windows. Timed in microseconds
                         var _repeat_rate = 33000;
                         if (!keyboard_check(vk_backspace))
                         {
-                            backspace_hold_duration = 0;
+                            __backspace_hold_duration = 0;
                         }
                         else if ((backspace_hold_duration > 500000)
-                        && ((backspace_hold_duration mod _repeat_rate) > ((backspace_hold_duration + delta_time) mod _repeat_rate)))
+                        && ((__backspace_hold_duration mod _repeat_rate) > ((__backspace_hold_duration + delta_time) mod _repeat_rate)))
                         {
                             _string = string_copy(_string, 1, string_length(_string) - 1);
                         }
@@ -261,7 +261,7 @@ function __input_string()
                     
                     if (keyboard_check(vk_backspace))
                     {
-                        backspace_hold_duration += delta_time;
+                        __backspace_hold_duration += delta_time;
                     }
                 }
             }
