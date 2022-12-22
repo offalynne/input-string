@@ -252,7 +252,7 @@ function __input_string()
                         {
                             __backspace_hold_duration = 0;
                         }
-                        else if ((backspace_hold_duration > 500000)
+                        else if ((__backspace_hold_duration > 500000)
                         && ((__backspace_hold_duration mod _repeat_rate) > ((__backspace_hold_duration + delta_time) mod _repeat_rate)))
                         {
                             _string = string_copy(_string, 1, string_length(_string) - 1);
