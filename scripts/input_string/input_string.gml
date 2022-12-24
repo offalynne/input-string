@@ -189,7 +189,7 @@ function __input_string()
             }
             else
             {
-                show_error("callback set to an illegal value (typeof=" + typeof(__callback) + ")", false);
+                show_error("Input String Error: Callback set to an illegal value (typeof=" + typeof(__callback) + ")", false);
             }
         }
     };
@@ -320,6 +320,8 @@ function input_string_callback_set(_callback = undefined)
                 + "\". Expected a function or method.",
             true
         );
+        
+        return;
     }
     
     with (__input_string()) __callback = _callback;
