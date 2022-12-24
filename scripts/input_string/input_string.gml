@@ -145,7 +145,7 @@ function __input_string()
         
         //Update internal value
         if ((keyboard_string != _string) 
-        &&  ((__tick_last > (current_time - (delta_time div 1000) - 2)) || __just_ticked))
+        && ((__tick_last > (current_time - (delta_time div 1000) - 2)) || __just_ticked))
         {
             if (((os_type == os_ios) || (os_type == os_tvos))
             &&  (string_length(keyboard_string) > _max))
