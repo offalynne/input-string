@@ -397,8 +397,8 @@ function input_string_keyboard_hide()
     return undefined;
 }
 
-function input_string_virtual_submit() { gml_pragma("forceinline"); return (__input_string()).__virtual_submit; }
-function input_string_platform_hint()  { gml_pragma("forceinline"); return (__input_string()).__platform_hint;  }
-function input_string_submit()         { gml_pragma("forceinline"); return (__input_string()).__submit();       }
-function input_string_tick()           { gml_pragma("forceinline"); return (__input_string()).__tick();         }
-function input_string_get()            { gml_pragma("forceinline"); return (__input_string()).__value;          }
+function input_string_virtual_submit() { return (__input_string()).__virtual_submit; }
+function input_string_platform_hint()  { return (__input_string()).__platform_hint;  }
+function input_string_submit()         { return (__input_string()).__submit();       }
+function input_string_tick()           { return (__input_string()).__tick();         }
+function input_string_get()            { return (__input_string()).__value;          }
