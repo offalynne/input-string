@@ -60,14 +60,14 @@ function __input_string()
         __platform_hint = "async";
     }
     else if ((os_browser != browser_not_a_browser)
-    && ((os_type != os_windows) && (os_type != os_macosx) 
-    &&  (os_type != os_operagx) && (os_type != os_linux)))
+         &&  ((os_type != os_windows) && (os_type != os_macosx) 
+         &&   (os_type != os_operagx) && (os_type != os_linux)))
     {
         // Suggest 'async' (dialog) on non-desktop web
         __platform_hint = "async";
     }
     else if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos)
-    || (uwp_device_touchscreen_available() && (os_type == os_uwp)))
+         ||  (uwp_device_touchscreen_available() && (os_type == os_uwp)))
     {
         // Suggest virtual keyboard on mobile
         __platform_hint = "virtual";
@@ -145,10 +145,10 @@ function __input_string()
         
         //Update internal value
         if ((keyboard_string != _string) 
-        && ((__tick_last > (current_time - (delta_time div 1000) - 2)) || __just_ticked))
+        &&  ((__tick_last > (current_time - (delta_time div 1000) - 2)) || __just_ticked))
         {
             if (((os_type == os_ios) || (os_type == os_tvos))
-            && (string_length(keyboard_string) > _max))
+            &&  (string_length(keyboard_string) > _max))
             {
                 // Close keyboard on overflow (fixes iOS string setting quirk)
                 keyboard_virtual_hide();
@@ -176,7 +176,8 @@ function __input_string()
             __set(__trim(input_string_get()));
         }
         
-        if ((__callback != undefined) && ((input_string_get() != "") || allow_empty))
+        if ((__callback != undefined) 
+        && ((input_string_get() != "") || allow_empty))
         {
             if (is_method(__callback))
             {
@@ -253,7 +254,7 @@ function __input_string()
                             __backspace_hold_duration = 0;
                         }
                         else if ((__backspace_hold_duration > 500000)
-                        && ((__backspace_hold_duration mod _repeat_rate) > ((__backspace_hold_duration + delta_time) mod _repeat_rate)))
+                             && ((__backspace_hold_duration mod _repeat_rate) > ((__backspace_hold_duration + delta_time) mod _repeat_rate)))
                         {
                             _string = string_copy(_string, 1, string_length(_string) - 1);
                         }
@@ -353,7 +354,8 @@ function input_string_keyboard_show(_keyboard_type = kbv_type_default)
     if ((_source != "virtual") && !_steam) show_debug_message("Input String Warning: Onscreen keyboard is not suitable for use on the current platform");
     if  (_source == "async")               show_debug_message("Input String Warning: Consider using async dialog for modal text input instead");
     
-    if ((keyboard_virtual_show != undefined) && script_exists(keyboard_virtual_show) && ((os_type == os_android) || !keyboard_virtual_status()))
+    if ((keyboard_virtual_show != undefined) && script_exists(keyboard_virtual_show) 
+    && ((os_type == os_android) || !keyboard_virtual_status()))
     {
         keyboard_virtual_show(_keyboard_type, kbv_returnkey_default, kbv_autocapitalize_sentences, false);
     }
@@ -379,7 +381,9 @@ function input_string_keyboard_show(_keyboard_type = kbv_type_default)
 function input_string_keyboard_hide()
 {
     var _steam = (__input_string()).__use_steam;    
-    if ((keyboard_virtual_show != undefined) && script_exists(keyboard_virtual_show) && ((os_type == os_android) || keyboard_virtual_status()))
+    if ((keyboard_virtual_show != undefined)
+    && ((os_type == os_android) || keyboard_virtual_status())
+    &&   script_exists(keyboard_virtual_show))
     {
         keyboard_virtual_hide();
     }
