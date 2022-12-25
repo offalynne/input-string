@@ -12,7 +12,7 @@ function __input_string()
     allow_empty   = false;  // Whether a blank field submission is treated as valid
     allow_newline = false;  // Whether to allow newline characters or swap to space
     
-    max_length = 1000;  // Maximum text entry string length. Do not exceed 1024
+    max_length = 1000;      // Maximum text entry string length. Do not exceed 1024
     
     #endregion
     
@@ -382,14 +382,13 @@ function input_string_keyboard_show(_keyboard_type = kbv_type_default)
    
 function input_string_keyboard_hide()
 {
-    var _steam = (__input_string()).__use_steam;    
     if ((keyboard_virtual_show != undefined)
     && ((os_type == os_android) || keyboard_virtual_status())
     &&   script_exists(keyboard_virtual_show))
     {
         keyboard_virtual_hide();
     }
-    else if (_steam)
+    else if ((__input_string()).__use_steam)
     {        
         return steam_dismiss_floating_gamepad_text_input();
     }
