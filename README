@@ -39,7 +39,7 @@ input_string_callback_set([function])
   returned: None
 
 input_string_submit()
-  function: Issue submission callback
+  function: Force submission callback
   returned: None
 
 input_string_max_length_set(value)
