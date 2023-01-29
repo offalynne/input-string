@@ -75,6 +75,8 @@ function input_string_dialog_async_event()
                 + "no. " + string(event_number) + ") ",
             true
         );
+        
+        return;
     }
     
     with (__input_string())
