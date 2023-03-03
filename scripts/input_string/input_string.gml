@@ -124,10 +124,10 @@ function __input_string()
             }
         }
         
-        if (string_pos(chr(0x7F), _string) > 0)
+        if (string_pos(chr(127), _string) > 0)
         {
             // Filter delete character (fixes Windows and Mac quirk)
-            _string = string_replace_all(_string, chr(0x7F), "");
+            _string = string_replace_all(_string, chr(127), "");
         }
         
         // Enforce length
