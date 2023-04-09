@@ -247,6 +247,13 @@ function __input_string()
                 {
                     if (__backspace_hold_duration > 0)
                     {
+                        if (keyboard_check_pressed(vk_control)
+                        ||  keyboard_check_pressed(vk_shift)
+                        ||  keyboard_check_pressed(vk_alt)
+                        {
+                            keyboard_clear(vk_backspace);
+                        }
+                        
                         // Repeat on hold, normalized against Windows. Timed in microseconds
                         var _repeat_rate = 33000;
                         if (!keyboard_check(vk_backspace))
