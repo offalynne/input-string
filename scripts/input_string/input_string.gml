@@ -35,8 +35,7 @@ function __input_string()
     
     __keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
                          || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
-                         || (os_type == os_android) || (os_type == os_switch) || (os_type == os_uwp)
-                         || (os_type == os_tvos) || (os_type == os_ios));
+                         || (os_type == os_android) || (os_type == os_switch) || (os_type == os_tvos) || (os_type == os_ios));
                          
     // Steamworks
     try
@@ -66,8 +65,7 @@ function __input_string()
         // Suggest 'async' (dialog) on non-desktop web
         __platform_hint = "async";
     }
-    else if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos)
-         ||  (uwp_device_touchscreen_available() && (os_type == os_uwp)))
+    else if ((os_type == os_android) || (os_type == os_ios) || (os_type == os_tvos))
     {
         // Suggest virtual keyboard on mobile
         __platform_hint = "virtual";
@@ -247,9 +245,7 @@ function __input_string()
                 {
                     if (__backspace_hold_duration > 0)
                     {
-                        if (keyboard_check_pressed(vk_control)
-                        ||  keyboard_check_pressed(vk_shift)
-                        ||  keyboard_check_pressed(vk_alt)
+                        if (keyboard_check_pressed(vk_control) || keyboard_check_pressed(vk_shift) || keyboard_check_pressed(vk_alt))
                         {
                             keyboard_clear(vk_backspace);
                         }
