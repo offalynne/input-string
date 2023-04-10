@@ -183,6 +183,7 @@ function __input_string()
             }
             else if (is_numeric(__callback) && script_exists(__callback))
             {
+                // feather ignore once all
                 script_execute(__callback);
             }
             else
@@ -195,6 +196,7 @@ function __input_string()
     
     __tick = function()
     {
+        // feather disable all
         if (__tick_last <= (current_time - (delta_time div 1000) - 2))
         {
             __just_ticked = true;
@@ -310,10 +312,9 @@ function input_string_max_length_set(_max_length)
     }
 }
 
-function input_string_callback_set(_callback = undefined)
-{    
-    if (!is_undefined(_callback) && !is_method(_callback)
-    && (!is_numeric(_callback) || !script_exists(_callback)))
+function input_string_callback_set(_callback)
+{
+    if not (is_undefined(_callback) || is_method(_callback) || (is_numeric(_callback) && !script_exists(_callback)))
     {
         show_error
         (
@@ -331,6 +332,7 @@ function input_string_callback_set(_callback = undefined)
 
 function input_string_set(_string = "")
 {
+    // feather disable all
     if ((os_type == os_ios) || (os_type == os_tvos))
     {
         // Close virtual keyboard if string is manually set (fixes iOS setting quirk)
@@ -351,6 +353,7 @@ function input_string_add(_string)
 
 function input_string_keyboard_show(_keyboard_type = kbv_type_default)
 {
+    // feather disable all
     var _steam = (__input_string()).__use_steam;
     
     // Note platform suitability
@@ -384,6 +387,7 @@ function input_string_keyboard_show(_keyboard_type = kbv_type_default)
    
 function input_string_keyboard_hide()
 {
+    // feather disable all
     if ((keyboard_virtual_show != undefined) && script_exists(keyboard_virtual_show) 
     && ((os_type == os_android) || keyboard_virtual_status())
     )
