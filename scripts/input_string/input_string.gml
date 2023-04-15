@@ -183,7 +183,7 @@ function __input_string()
             }
             else if (is_numeric(__callback) && script_exists(__callback))
             {
-                // feather ignore once all
+                // feather disable once all
                 script_execute(__callback);
             }
             else
