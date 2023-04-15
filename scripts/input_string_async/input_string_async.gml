@@ -58,7 +58,7 @@ function input_string_async_get(_prompt, _string = undefined)
 
 function input_string_dialog_async_event()
 {
-    // feather disable all
+    // input-string feather disable once all
     if (string_pos("__YYInternalObject__", object_get_name(object_index)) > 0)
     {
         // Object event only
