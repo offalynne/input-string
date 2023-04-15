@@ -219,6 +219,7 @@ function __input_string()
                 // Handle virtual keyboard submission
                 if ((os_type == os_ios) || (os_type == os_tvos))
                 {
+                    // input-string feather disable once all
                     __virtual_submit = ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > string_length(value)));
                 }
                 else if ((os_type == os_android) && keyboard_check_pressed(10))
@@ -361,6 +362,7 @@ function input_string_keyboard_show(_keyboard_type = kbv_type_default)
     if ((_source != "virtual") && !_steam) show_debug_message("Input String Warning: Onscreen keyboard is not suitable for use on the current platform");
     if  (_source == "async")               show_debug_message("Input String Warning: Consider using async dialog for modal text input instead");
     
+    // input-string feather disable once all
     if ((keyboard_virtual_show != undefined) && script_exists(keyboard_virtual_show) 
     && ((os_type == os_android) || !keyboard_virtual_status()))
     {

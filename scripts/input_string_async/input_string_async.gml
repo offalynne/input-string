@@ -65,6 +65,7 @@ function input_string_dialog_async_event()
         show_error("Input String Error: Async dialog used in invalid context (outside an object async event)", true);
     }
     
+    // input-string feather disable once all
     if (event_number != ((os_browser == browser_not_a_browser)? ev_dialog_async : 0))
     {
         // Async dialog event only

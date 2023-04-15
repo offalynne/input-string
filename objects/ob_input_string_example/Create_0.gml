@@ -11,7 +11,7 @@ callback = function()
 {
     var _string = input_string_get();
     self.submission_test = "Callback test @" + string(current_time) + ": " + _string;        
-    //input_string_set(); // Clear on submission
+    // input_string_set(); // Clear on submission
 };
 
 submission_test = "";
