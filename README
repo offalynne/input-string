@@ -52,7 +52,7 @@ input_string_platform_hint()
   returned: String (Hint)
   possible: keyboard, virtual, async
 
-input_string_virtual_submit()
+input_string_virtual_submit_get()
   function: Get virtual return status
   requires: input_​string_​tick
   returned: Boolean
