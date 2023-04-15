@@ -405,7 +405,7 @@ function input_string_keyboard_hide()
 }
 
 function input_string_virtual_submit_get() { return (__input_string()).__virtual_submit; }
-function input_string_platform_hint()  { return (__input_string()).__platform_hint;  }
-function input_string_submit()         { return (__input_string()).__submit();       }
-function input_string_tick()           { return (__input_string()).__tick();         }
-function input_string_get()            { return (__input_string()).__value;          }
+function input_string_platform_hint()      { return (__input_string()).__platform_hint;  }
+function input_string_submit()             { return (__input_string()).__submit();       }
+function input_string_tick()               { return (__input_string()).__tick();         }
+function input_string_get()                { return (__input_string()).__value;          }
