@@ -1,3 +1,5 @@
+// feather disable all
+
 function input_string_async_get(_prompt, _string = undefined)
 {
     _string = _string ?? (__input_string()).__value;
@@ -58,14 +60,12 @@ function input_string_async_get(_prompt, _string = undefined)
 
 function input_string_dialog_async_event()
 {
-    // input-string feather disable once all
     if (string_pos("__YYInternalObject__", object_get_name(object_index)) > 0)
     {
         // Object event only
         show_error("Input String Error: Async dialog used in invalid context (outside an object async event)", true);
     }
     
-    // input-string feather disable once all
     if (event_number != ((os_browser == browser_not_a_browser)? ev_dialog_async : 0))
     {
         // Async dialog event only
