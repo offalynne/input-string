@@ -77,8 +77,3 @@ if (ticking)
 {
     input_string_tick();
 }
-
-if keyboard_check_pressed(vk_tab)
-{
-    show_debug_message(input_string_search_results());
-}

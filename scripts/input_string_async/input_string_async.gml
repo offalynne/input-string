@@ -42,11 +42,11 @@ function input_string_async_get(_prompt, _string = undefined)
                     _string = string_copy(_string, 1, _console_limit);
                 }
                 
-                if (string_length(_string) > MAX_LENGTH)
+                if (string_length(_string) > max_length)
                 {
                     // Enforce configured character limit
-                    show_debug_message("Input String Warning: Truncating string to " + string(MAX_LENGTH) + " characters");
-                    _string = string_copy(_string, 1, MAX_LENGTH);
+                    show_debug_message("Input String Warning: Truncating string to " + string(max_length) + " characters");
+                    _string = string_copy(_string, 1, max_length);
                 }
             }
         
@@ -99,7 +99,7 @@ function input_string_dialog_async_event()
                 _result = string(_result);
             }
                 
-            if ((async_load[? "status"] != true) || (!ALLOW_EMPTY && (_result == "")))
+            if ((async_load[? "status"] != true) || (!allow_empty && (_result == "")))
             {
                 // Revert empty
                 _result = __predialog;
