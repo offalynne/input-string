@@ -7,6 +7,7 @@ Frontend Features
 - Reliable getters and setters
 - Callback for text submission
 - Easier async dialog handling
+- Realtime string array filter
 
 Backend Features
 - Safe handling at string length limit
@@ -38,7 +39,16 @@ input_string_callback_set([function])
   argument: Function (Optional)
   returned: None
 
-input_string_submit()
+input_string_search_set()
+  function: Set search corpus
+  argument: Array (Optional)
+  returned: None
+
+input_string_search_results()
+  function: Get search results
+  returned: Array of integers
+
+input_string_force_submit()
   function: Force submission callback
   returned: None
 
@@ -52,8 +62,8 @@ input_string_platform_hint()
   returned: String (Hint)
   possible: keyboard, virtual, async
 
-input_string_virtual_submit_get()
-  function: Get virtual return status
+input_string_submit_get()
+  function: Momentary return status
   requires: input_​string_​tick
   returned: Boolean
   
