@@ -42,7 +42,7 @@ if (input_string_platform_hint() == "keyboard")
     if (keyboard_check_pressed(vk_f2))
     {
         // Manual submission
-        input_string_submit();
+        input_string_force_submit();
     }
     
     if (keyboard_check_pressed(vk_f3))
@@ -58,7 +58,27 @@ if (input_string_platform_hint() == "keyboard")
     }
 }
 
+if (keyboard_check_pressed(vk_f5) || (keyboard_check_pressed(vk_f6)))
+{
+    if (keyboard_check_pressed(vk_f5)) search_test_index = 0;
+    if (keyboard_check_pressed(vk_f6)) search_test_index = 1;
+    
+    input_string_search_set(search_test_list[search_test_index]);
+}
+
+if (keyboard_check_pressed(vk_f7))
+{
+    search_test_index = -1;
+    input_string_search_set(undefined);
+}
+
+
 if (ticking)
 {
     input_string_tick();
+}
+
+if keyboard_check_pressed(vk_tab)
+{
+    show_debug_message(input_string_search_results());
 }
