@@ -5,7 +5,7 @@ function __input_string()
     // Self initialize
     static instance = new (function() constructor {
     
-        
+    
     #region Configuration
     
     auto_closevkb = true;   // Whether the 'Return' key closes the virtual keyboard
@@ -37,8 +37,6 @@ function __input_string()
     __callback  = undefined;
     __async_id  = undefined;
     
-    __use_steam       = false;
-    __use_trim        = false;
     __virtual_submit  = false;
     __async_submit    = false;
     __just_ticked     = false;
@@ -47,21 +45,26 @@ function __input_string()
     __keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
                          || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
                          || (os_type == os_android) || (os_type == os_switch) || (os_type == os_tvos) || (os_type == os_ios));
-        
-    // Feature detect
+    #endregion
+    
+    
+    #region Detect features
+    
+    __use_steam = false;
     try
     {
         // Try Steam setup
         steam_dismiss_floating_gamepad_text_input();
-        __use_steam = true;
         show_debug_message("Input String: Using Steamworks extension");
+        __use_steam = true;
     }
     catch(_error)
     {
-        // In absence of Steam extension
-        show_debug_message("Input String: Not using Steamworks extension");
+        // No Steam extension
+        //show_debug_message("Input String: Not using Steamworks extension");
     }
     
+    __use_trim = false;
     try
     {
         var _z = string_trim(" z ");
@@ -69,6 +72,7 @@ function __input_string()
     }
     catch(_error)
     {
+        // No `string_trim`
         //show_debug_message("Input String: Not using native trim");
     }
     
