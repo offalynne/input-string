@@ -10,7 +10,7 @@ function __input_string()
     
     auto_closevkb = true;   // Whether the 'Return' key closes the virtual keyboard
     auto_submit   = true;   // Whether the 'Return' key fires a submission callback
-    auto_search   = false;   // Whether to search on any change instead of on demand
+    auto_search   = true;   // Whether to search on any change instead of on demand
     auto_trim     = true;   // Whether submit trims leading and trailing whitespace
     
     allow_empty   = false;  // Whether a blank field submission is treated as valid
