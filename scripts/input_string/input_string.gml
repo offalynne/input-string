@@ -165,7 +165,7 @@ function __input_string()
             _trim = true;
         }
         
-        //Update internal value
+        // Update internal value
         if ((keyboard_string != _string) && ((__tick_last > (current_time - (delta_time div 1000) - 2)) || __just_ticked))
         {
             if (((os_type == os_ios) || (os_type == os_tvos))
