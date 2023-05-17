@@ -337,23 +337,22 @@ function input_string_search_set(_array)
             // Wrap
             __search_list = [_array];
         }
-        else
+        else if (array_length(_array) > 0)
         {
             // Stringify
+            var _i = 0;
             if (allow_case)
             {
                 // Case unchanged
-                var _i = 0;
                 repeat(array_length(_array))
                 {
-                    __search_list[_i] = string( _array[_i]);
+                    __search_list[_i] = string(_array[_i]);
                     ++_i;
                 }
             }
             else
             {
                 // Case flattened
-                var _i = 0;
                 repeat(array_length(_array))
                 {
                     __search_list[_i] = string_lower(string( _array[_i] ?? ""));
