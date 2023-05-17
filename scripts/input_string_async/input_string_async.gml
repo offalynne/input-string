@@ -2,7 +2,7 @@
 
 function input_string_async_get(_prompt, _string = undefined)
 {
-    _string = _string ?? __input_string().__value;
+    _string = _string ?? (__input_string()).__value;
     
     with (__input_string())
     {
@@ -117,4 +117,4 @@ function input_string_dialog_async_event()
     }
 }
 
-function input_string_async_active(){ return (__input_string().__async_id != undefined); }
+function input_string_async_active(){ return ((__input_string()).__async_id != undefined); }

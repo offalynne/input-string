@@ -10,7 +10,6 @@ function __input_string()
     
     auto_closevkb = true;   // Whether the 'Return' key closes the virtual keyboard
     auto_submit   = true;   // Whether the 'Return' key fires a submission callback
-    auto_search   = true;   // Whether to search on any change instead of on demand
     auto_trim     = true;   // Whether submit trims leading and trailing whitespace
     
     allow_empty   = false;  // Whether a blank field submission is treated as valid
@@ -37,10 +36,10 @@ function __input_string()
     __callback  = undefined;
     __async_id  = undefined;
     
-    __virtual_submit  = false;
-    __async_submit    = false;
-    __just_ticked     = false;
-    __just_set        = false;
+    __virtual_submit = false;
+    __async_submit   = false;
+    __just_ticked    = false;
+    __just_set       = false;
     
     __keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser) || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux) || (os_type == os_android) || (os_type == os_switch) || (os_type == os_tvos) || (os_type == os_ios));
     
@@ -146,11 +145,8 @@ function __input_string()
             }
         }
         
-        if (string_pos(chr(127), _string) > 0)
-        {
-            // Filter delete character (fixes Windows and Mac quirk)
-            _string = string_replace_all(_string, chr(127), "");
-        }
+        // Filter delete character (fixes Windows and Mac quirk)
+        _string = string_replace_all(_string, chr(127), "");
         
         // Enforce length
         var _max = max_length + ((os_type == os_android)? 1 : 0);
@@ -168,27 +164,24 @@ function __input_string()
         // Update internal value
         if ((keyboard_string != _string) && ((__tick_last > (current_time - (delta_time div 1000) - 2)) || __just_ticked))
         {
-            if (((os_type == os_ios) || (os_type == os_tvos))
-            &&  (string_length(keyboard_string) > _max))
-            {
-                // Close keyboard on overflow (fixes iOS string setting quirk)
-                keyboard_virtual_hide();
-            }
+            // Close keyboard on overflow (fixes iOS string setting quirk)
+            if (((os_type == os_ios) || (os_type == os_tvos)) && (string_length(keyboard_string) > _max)) keyboard_virtual_hide();
             
             // Set inbuilt value if necessary
             keyboard_string = _string;
         }
+ 
+        // Strip leading space
+        if ((os_type == os_android) && _trim) _string = string_delete(_string, 1, 1);
         
-        __just_ticked = false;
+        var _search = !((__value == _string) || (array_length(__search_list) == 0));
+        
+        // Update value
         __value = _string;
         
-        if ((os_type == os_android) && _trim)
-        {
-            //Strip leading space
-            __value = string_delete(__value, 1, 1);
-        }
-        
-        if (auto_search && (__searched != __value)) __search();
+         if (_search) __search();         
+         
+        __just_ticked = false;
     };
     
     
@@ -222,8 +215,8 @@ function __input_string()
         // Clear
         array_delete(__result_list, 0, array_length(__result_list));
         
-        // Trim
-        if (__trim(__value) == "") return ;
+        __searched = __value;
+        if (__trim(__value) == "") return;
         
         // Set case
         var _find = __value;
@@ -233,61 +226,11 @@ function __input_string()
         var _i = 0;
         repeat(array_length(__search_list))
         {
-            if (string_pos(_find, __search_list[_i]) > 0) array_push(__result_list, __search_list[_i]);
+            if (string_pos(_find, __search_list[_i]) > 0) array_push(__result_list, _i);
             ++_i;
         }
         
-        __searched = __value;
-    };
-    
-    
-    __search_set = function(_array)
-    {        
-        // Clear
-        var _was_empty = (array_length(__search_list) == 0);
-        array_delete(__search_list, 0, array_length(__search_list));
-        
-        // Coallesce
-        _array = _array ?? [];
-        
-        if (!is_array(_array))
-        {
-            // Stringify
-            _array = string(_array);
-            
-            // Case
-            if (!search_case) _array = string_lower(_array);
-            
-            // Wrap
-            __search_list = [_array];
-        }
-        else
-        {
-            // Stringify
-            if (search_case)
-            {
-                // Case unchanged
-                var _i = 0;
-                repeat(array_length(_array))
-                {
-                    __search_list[_i] = string( _array[_i]);
-                    ++_i;
-                }
-            }
-            else
-            {
-                // Case flattened
-                var _i = 0;
-                repeat(array_length(_array))
-                {
-                    __search_list[_i] = string_lower(string( _array[_i] ?? ""));
-                    ++_i;
-                }
-            }
-        }
-        
-        __searched = "";
-        if (auto_search && !(_was_empty && (array_length(__search_list) == 0))) __search();
+        show_debug_message(current_time);
     };
     
     
@@ -380,7 +323,54 @@ function __input_string()
 
 function input_string_search_set(_array)
 {
-    __input_string().__search_set(_array);
+    with (__input_string())
+    {        
+        // Clear
+        var _was_empty = (array_length(__search_list) == 0);
+        array_delete(__search_list, 0, array_length(__search_list));
+        
+        // Coallesce
+        _array = _array ?? [];
+        
+        if (!is_array(_array))
+        {
+            // Stringify
+            _array = string(_array);
+            
+            // Case
+            if (!search_case) _array = string_lower(_array);
+            
+            // Wrap
+            __search_list = [_array];
+        }
+        else
+        {
+            // Stringify
+            if (search_case)
+            {
+                // Case unchanged
+                var _i = 0;
+                repeat(array_length(_array))
+                {
+                    __search_list[_i] = string( _array[_i]);
+                    ++_i;
+                }
+            }
+            else
+            {
+                // Case flattened
+                var _i = 0;
+                repeat(array_length(_array))
+                {
+                    __search_list[_i] = string_lower(string( _array[_i] ?? ""));
+                    ++_i;
+                }
+            }
+        }
+        
+        // Search
+        if !(_was_empty && (array_length(__search_list) == 0)) __search();
+    }
 }
 
 function input_string_max_length_set(_max_length)
@@ -405,16 +395,6 @@ function input_string_max_length_set(_max_length)
     }
 }
 
-
-function input_string_search_results()
-{
-    with (__input_string())
-    {
-        if (!auto_search) __search();
-        return __result_list;
-    }
-}
-
 function input_string_callback_set(_callback)
 {
     if not (is_undefined(_callback) || is_method(_callback) || (is_numeric(_callback) && !script_exists(_callback)))
@@ -430,7 +410,7 @@ function input_string_callback_set(_callback)
         return;
     }
     
-    __input_string().__callback = _callback;
+    (__input_string()).__callback = _callback;
 }
 
 function input_string_set(_string = "")
@@ -450,7 +430,7 @@ function input_string_set(_string = "")
 
 function input_string_add(_string)
 {
-    input_string_set((__input_string()).value + string(_string));
+    input_string_set((__input_string()).__value + string(_string));
 }
 
 function input_string_keyboard_show(_keyboard_type = kbv_type_default)
@@ -499,8 +479,9 @@ function input_string_keyboard_hide()
     return undefined;
 }
 
-function input_string_platform_hint() { return (__input_string()).__platform_hint;  }
-function input_string_submit_get()    { return (__input_string()).__virtual_submit; }
-function input_string_get()           { return (__input_string()).__value;          }
-function input_string_tick()          { return (__input_string()).__tick();         }
-function input_string_force_submit()  { return (__input_string()).__submit();       }
+function input_string_search_results() { return (__input_string()).__result_list;    }
+function input_string_platform_hint()  { return (__input_string()).__platform_hint;  }
+function input_string_submit_get()     { return (__input_string()).__virtual_submit; }
+function input_string_get()            { return (__input_string()).__value;          }
+function input_string_tick()           { return (__input_string()).__tick();         }
+function input_string_force_submit()   { return (__input_string()).__submit();       }
