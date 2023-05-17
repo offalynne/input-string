@@ -186,10 +186,7 @@ function __input_string()
     
     __submit = function()
     {
-        if (auto_trim)
-        {
-            __set(__trim(input_string_get()));
-        }
+        if (auto_trim) __set(__trim(input_string_get()));
         
         if ((__callback != undefined) && ((input_string_get() != "") || allow_empty))
         {
