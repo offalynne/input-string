@@ -64,7 +64,6 @@ input_string_platform_hint()
 
 input_string_submit_get()
   function: Momentary return status
-  requires: input_​string_​tick
   returned: Boolean
   
 input_string_keyboard_show([type])
