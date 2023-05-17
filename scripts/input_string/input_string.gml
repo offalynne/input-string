@@ -35,7 +35,6 @@ function __input_string()
     __callback  = undefined;
     __async_id  = undefined;
     
-    __virtual_submit = false;
     __async_submit   = false;
     __just_ticked    = false;
     __just_set       = false;
@@ -269,6 +268,7 @@ function __input_string()
             __set(__value);
         }
         
+        _virtual_submit = false;
         if (__keyboard_supported && !__just_set && (__async_id == undefined))
         {
             // Manage text input
@@ -279,29 +279,11 @@ function __input_string()
                 _string = "";
             }
             
-            __virtual_submit = false;
-            if (!input_string_async_active())
-            {            
-                // Handle virtual keyboard submission
-                if ((os_type == os_ios) || (os_type == os_tvos))
-                {
-                    __virtual_submit = ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > string_length(value)));
-                }
-                else if ((os_type == os_android) && keyboard_check_pressed(10))
-                {
-                    __virtual_submit = true;
-                }
-                else
-                {
-                    // Keyboard submission
-                    __virtual_submit = keyboard_check_pressed(vk_enter);
-                }             
-            
-                if (auto_closevkb && __virtual_submit)
-                {
-                    // Close virtual keyboard on submission
-                    input_string_keyboard_hide();
-                }
+            _virtual_submit = input_string_submit_get();
+            if (auto_closevkb && _virtual_submit)
+            {
+                // Close virtual keyboard on submission
+                input_string_keyboard_hide();
             }
             
             if (_string != "")
@@ -335,7 +317,7 @@ function __input_string()
             __set(_string);
         }
                 
-        if (auto_submit && !__async_submit && (__virtual_submit || (__keyboard_supported && keyboard_check_pressed(vk_enter)))) __submit();
+        if (auto_submit && !__async_submit && (_virtual_submit || (__keyboard_supported && keyboard_check_pressed(vk_enter)))) __submit();
         
         __just_set     = false;
         __async_submit = false;
@@ -471,9 +453,32 @@ function input_string_search_set(_array)
     (__input_string()).__search_set(_array);
 }
 
+function input_string_submit_get()
+{
+    var _virtual_submit = false;
+    if (!input_string_async_active())
+    {            
+        // Handle virtual keyboard submission
+        if ((os_type == os_ios) || (os_type == os_tvos))
+        {
+            _virtual_submit = ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > input_string_get()));
+        }
+        else if ((os_type == os_android) && keyboard_check_pressed(10))
+        {
+            _virtual_submit = true;
+        }
+        else
+        {
+            // Keyboard submission
+            _virtual_submit = keyboard_check_pressed(vk_enter);
+        }
+    }
+                
+    return _virtual_submit;
+}
+
 function input_string_search_results()   { return (__input_string()).__result_list;        }
 function input_string_platform_hint()    { return (__input_string()).__platform_hint;      }
-function input_string_submit_get()       { return (__input_string()).__virtual_submit;     }
 function input_string_get()              { return (__input_string()).__value;              }
 function input_string_tick()             { return (__input_string()).__tick();             }
 function input_string_force_submit()     { return (__input_string()).__submit();           }
