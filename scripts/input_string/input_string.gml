@@ -24,7 +24,6 @@ function __input_string()
     #region Initialization
     
     __value     = "";
-    __searched  = "";
     __predialog = "";
 
     __search_list = [];
@@ -215,7 +214,6 @@ function __input_string()
         // Clear
         array_delete(__result_list, 0, array_length(__result_list));
         
-        __searched = __value;
         if (__trim(__value) == "") return;
         
         // Set case
