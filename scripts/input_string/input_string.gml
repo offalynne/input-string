@@ -205,6 +205,55 @@ function __input_string()
     };
     
     
+    __search_set = function(_array)
+    {
+        // Clear
+        var _was_empty = (array_length(__search_list) == 0);
+        array_delete(__search_list, 0, array_length(__search_list));
+        
+        // Coallesce
+        _array = _array ?? [];
+        
+        if (!is_array(_array))
+        {
+            // Stringify
+            _array = string(_array);
+            
+            // Case
+            if (!allow_case) _array = string_lower(_array);
+            
+            // Wrap
+            __search_list = [_array];
+        }
+        else if (array_length(_array) > 0)
+        {
+            // Stringify
+            var _i = 0;
+            if (allow_case)
+            {
+                // Case unchanged
+                repeat(array_length(_array))
+                {
+                    __search_list[_i] = string(_array[_i]);
+                    ++_i;
+                }
+            }
+            else
+            {
+                // Case flattened
+                repeat(array_length(_array))
+                {
+                    __search_list[_i] = string_lower(string( _array[_i] ?? ""));
+                    ++_i;
+                }
+            }
+        }
+        
+        // Search
+        if !(_was_empty && (array_length(__search_list) == 0)) __search();
+    };
+    
+    
     __search = function()
     {
         // Clear
@@ -223,8 +272,6 @@ function __input_string()
             if (string_pos(_find, __search_list[_i]) > 0) array_push(__result_list, _i);
             ++_i;
         }
-        
-        show_debug_message(current_time);
     };
     
     
@@ -313,57 +360,6 @@ function __input_string()
     
         
     })(); return instance;
-}
-
-function input_string_search_set(_array)
-{
-    with (__input_string())
-    {        
-        // Clear
-        var _was_empty = (array_length(__search_list) == 0);
-        array_delete(__search_list, 0, array_length(__search_list));
-        
-        // Coallesce
-        _array = _array ?? [];
-        
-        if (!is_array(_array))
-        {
-            // Stringify
-            _array = string(_array);
-            
-            // Case
-            if (!allow_case) _array = string_lower(_array);
-            
-            // Wrap
-            __search_list = [_array];
-        }
-        else if (array_length(_array) > 0)
-        {
-            // Stringify
-            var _i = 0;
-            if (allow_case)
-            {
-                // Case unchanged
-                repeat(array_length(_array))
-                {
-                    __search_list[_i] = string(_array[_i]);
-                    ++_i;
-                }
-            }
-            else
-            {
-                // Case flattened
-                repeat(array_length(_array))
-                {
-                    __search_list[_i] = string_lower(string( _array[_i] ?? ""));
-                    ++_i;
-                }
-            }
-        }
-        
-        // Search
-        if !(_was_empty && (array_length(__search_list) == 0)) __search();
-    }
 }
 
 function input_string_max_length_set(_max_length)
@@ -470,6 +466,11 @@ function input_string_keyboard_hide()
     }
     
     return undefined;
+}
+
+function input_string_search_set(_array)
+{
+    (__input_string()).__search_set(_array);
 }
 
 function input_string_search_results() { return (__input_string()).__result_list;    }
