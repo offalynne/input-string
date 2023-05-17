@@ -12,9 +12,9 @@ function __input_string()
     auto_submit   = true;   // Whether the 'Return' key fires a submission callback
     auto_trim     = true;   // Whether submit trims leading and trailing whitespace
     
+    allow_case    = false;  // Whether searches are performed with case sensitivity
     allow_empty   = false;  // Whether a blank field submission is treated as valid
     allow_newline = false;  // Whether to allow newline characters or swap to space
-    search_case   = false;  // Whether searches are performed with case sensitivity
     
     max_length = 1000;      // Maximum text entry string length. Do not exceed 1024
     
@@ -220,7 +220,7 @@ function __input_string()
         
         // Set case
         var _find = __value;
-        if (!search_case) _find = string_lower(_find);
+        if (!allow_case) _find = string_lower(_find);
     
         // Find results
         var _i = 0;
@@ -338,7 +338,7 @@ function input_string_search_set(_array)
             _array = string(_array);
             
             // Case
-            if (!search_case) _array = string_lower(_array);
+            if (!allow_case) _array = string_lower(_array);
             
             // Wrap
             __search_list = [_array];
@@ -346,7 +346,7 @@ function input_string_search_set(_array)
         else
         {
             // Stringify
-            if (search_case)
+            if (allow_case)
             {
                 // Case unchanged
                 var _i = 0;
