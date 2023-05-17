@@ -211,21 +211,7 @@ function __input_string()
         var _was_empty = (array_length(__search_list) == 0);
         array_delete(__search_list, 0, array_length(__search_list));
         
-        // Coallesce
-        _array = _array ?? [];
-        
-        if (!is_array(_array))
-        {
-            // Stringify
-            _array = string(_array);
-            
-            // Case
-            if (!allow_case) _array = string_lower(_array);
-            
-            // Wrap
-            __search_list = [_array];
-        }
-        else if (array_length(_array) > 0)
+        if (array_length(_array) > 0)
         {
             // Stringify
             var _i = 0;
@@ -243,8 +229,8 @@ function __input_string()
                 // Case flattened
                 repeat(array_length(_array))
                 {
-                    __search_list[_i] = string_lower(string( _array[_i] ?? ""));
-                    ++_i;
+                __search_list[_i] = string_lower(string( _array[_i] ?? ""));
+                ++_i;
                 }
             }
         }
@@ -469,13 +455,25 @@ function input_string_keyboard_hide()
 }
 
 function input_string_search_set(_array)
-{
+{ 
+     // Coallesce
+    _array = _array ?? [];
+        
+    if (!is_array(_array))
+    {
+        // Stringify
+        _array = string(_array);
+            
+        // Wrap
+        _array = [_array];
+    }
+        
     (__input_string()).__search_set(_array);
 }
 
-function input_string_search_results() { return (__input_string()).__result_list;    }
-function input_string_platform_hint()  { return (__input_string()).__platform_hint;  }
-function input_string_submit_get()     { return (__input_string()).__virtual_submit; }
-function input_string_get()            { return (__input_string()).__value;          }
-function input_string_tick()           { return (__input_string()).__tick();         }
-function input_string_force_submit()   { return (__input_string()).__submit();       }
+function input_string_search_results()   { return (__input_string()).__result_list;        }
+function input_string_platform_hint()    { return (__input_string()).__platform_hint;      }
+function input_string_submit_get()       { return (__input_string()).__virtual_submit;     }
+function input_string_get()              { return (__input_string()).__value;              }
+function input_string_tick()             { return (__input_string()).__tick();             }
+function input_string_force_submit()     { return (__input_string()).__submit();           }
