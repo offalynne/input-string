@@ -229,8 +229,8 @@ function __input_string()
                 // Case flattened
                 repeat(array_length(_array))
                 {
-                __search_list[_i] = string_lower(string( _array[_i] ?? ""));
-                ++_i;
+                    __search_list[_i] = string_lower(string( _array[_i] ?? ""));
+                    ++_i;
                 }
             }
         }
