@@ -29,8 +29,8 @@ function __input_string()
     __search_list = [];
     __result_list = [];
     
-    __backspace_hold_duration  = 0;
-    __tick_last                = 0;    
+    __delete_duration = 0;
+    __tick_last       = 0;    
     
     __callback  = undefined;
     __async_id  = undefined;
@@ -175,10 +175,9 @@ function __input_string()
         
         var _search = !((__value == _string) || (array_length(__search_list) == 0));
         
-        // Update value
         __value = _string;
         
-         if (_search) __search();         
+         if (_search) __search();
          
         __just_ticked = false;
     };
@@ -277,7 +276,7 @@ function __input_string()
                 // Backspace key repeat (fixes lack-of on native Mac and Linux)
                 if ((os_browser == browser_not_a_browser) &&  (os_type == os_macosx) || (os_type == os_linux))
                 {
-                    if (__backspace_hold_duration > 0)
+                    if (__delete_duration > 0)
                     {
                         if (keyboard_check_pressed(vk_control) || keyboard_check_pressed(vk_shift) || keyboard_check_pressed(vk_alt))
                         {
@@ -288,15 +287,15 @@ function __input_string()
                         var _repeat_rate = 33000;
                         if (!keyboard_check(vk_backspace))
                         {
-                            __backspace_hold_duration = 0;
+                            __delete_duration = 0;
                         }
-                        else if ((__backspace_hold_duration > 500000) && ((__backspace_hold_duration mod _repeat_rate) > ((__backspace_hold_duration + delta_time) mod _repeat_rate)))
+                        else if ((__delete_duration > 500000) && ((__delete_duration mod _repeat_rate) > ((__delete_duration + delta_time) mod _repeat_rate)))
                         {
                             _string = string_copy(_string, 1, string_length(_string) - 1);
                         }
                     }
                     
-                    if (keyboard_check(vk_backspace)) __backspace_hold_duration += delta_time;
+                    if (keyboard_check(vk_backspace)) __delete_duration += delta_time;
                 }
             }
             
