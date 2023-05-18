@@ -39,7 +39,7 @@ input_string_callback_set([function])
   argument: Function (Optional)
   returned: None
 
-input_string_search_set()
+input_string_search_set([array])
   function: Set search corpus
   argument: Array (Optional)
   returned: None
