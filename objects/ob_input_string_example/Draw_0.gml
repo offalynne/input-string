@@ -29,8 +29,11 @@ if (search_test_index >= 0)
 }
 
 // Test button labels
+if (input_string_platform_hint() != "virtual") draw_set_color(c_gray);
 draw_text(room_width * .33, 200, "Show OSK");
 draw_text(room_width * .66, 200, "Hide OSK");
+
+draw_set_color(c_white);
 draw_text(room_width * .25, 400, "Fill String" );
 draw_text(room_width * .50, 400, "Clear String");
 draw_text(room_width * .75, 400, "Set Async"   );
