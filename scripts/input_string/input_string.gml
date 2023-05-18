@@ -111,7 +111,11 @@ function __input_string()
     
     #region Utilities    
         
-    if (!__use_trim)
+    if (__use_trim)
+    {
+        __trim = function(_string){ return string_trim(_string); };
+    }
+    else
     {
         __trim = function(_string)
         {
@@ -136,10 +140,7 @@ function __input_string()
             return string_copy(_string, _left, _right - _left + 1);
        };
     }
-    else
-    {
-        __trim = function(_string){ return string_trim(_string); };
-    }
+    
     
     __set = function(_string)
     {
