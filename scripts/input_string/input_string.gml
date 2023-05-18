@@ -111,31 +111,35 @@ function __input_string()
     
     #region Utilities    
         
-    __trim = function(_string)
+    if (!__use_trim)
     {
-        if (__use_trim) return string_trim(_string);
-        
-        var _char  = 0;
-        var _right = string_length(_string);
-        var _left  = 1;
-        
-        repeat (_right)
+        __trim = function(_string)
         {
-            // Offset left
-            _char = ord(string_char_at(_string, _left));
-            if ((_char > 8) && (_char < 14) || (_char == 32)) _left++; else break;
-        }
-        
-        repeat (_right - _left)
-        {
-            // Offset right
-            _char = ord(string_char_at(_string, _right));
-            if ((_char > 8) && (_char < 14) || (_char == 32)) _right--; else break;
-        }
-        
-        return string_copy(_string, _left, _right - _left + 1);
-    };
-    
+            var _char  = 0;
+            var _right = string_length(_string);
+            var _left  = 1;
+            
+            repeat (_right)
+            {
+                // Offset left
+                _char = ord(string_char_at(_string, _left));
+                if ((_char > 8) && (_char < 14) || (_char == 32)) _left++; else break;
+            }
+            
+            repeat (_right - _left)
+            {
+                // Offset right
+                _char = ord(string_char_at(_string, _right));
+                if ((_char > 8) && (_char < 14) || (_char == 32)) _right--; else break;
+            }
+            
+            return string_copy(_string, _left, _right - _left + 1);
+       };
+    }
+    else
+    {
+        __trim = function(_string){ return string_trim(_string); };
+    }
     
     __set = function(_string)
     {
