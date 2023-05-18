@@ -63,9 +63,8 @@ function __input_string()
     try
     {
         // Try Steam setup
-        steam_dismiss_floating_gamepad_text_input();
+        __use_steam = is_bool(steam_utils_is_steam_running_on_steam_deck());
         show_debug_message("Input String: Using Steamworks extension");
-        __use_steam = true;
     }
     catch(_error)
     {
