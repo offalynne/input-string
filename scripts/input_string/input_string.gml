@@ -343,7 +343,7 @@ function __input_string()
     __submit_get = function()
     {
         var _virtual_submit = false;
-        if (!input_string_async_active())
+        if ((__input_string()).__async_id == undefined)
         {
             // Handle virtual keyboard submission
             if (__on_ios)
