@@ -59,17 +59,14 @@ function __input_string()
     
     #region Detect features
     
-    __use_steam = false;
-    try
+    if (extension_exists("Steamworks"))
     {
-        // Try Steam setup
-        __use_steam = is_bool(steam_utils_is_steam_running_on_steam_deck());
+        __use_steam = true;
         show_debug_message("Input String: Using Steamworks extension");
     }
-    catch(_error)
+    else
     {
-        // No Steam extension
-        //show_debug_message("Input String: Not using Steamworks extension");
+        __use_steam = false;
     }
     
     __use_trim = false;
