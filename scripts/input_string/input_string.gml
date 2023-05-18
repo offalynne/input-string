@@ -268,12 +268,9 @@ function __input_string()
                     ++_i;
                 }
             }
-            
-            show_debug_message(current_time);
         }
         
-        return __result_list;
-        
+        return __result_list;        
     };
     
     
