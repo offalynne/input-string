@@ -285,7 +285,7 @@ function __input_string()
             // Handle virtual keyboard submission
             if (__on_ios)
             {
-                _virtual_submit = ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > __value));
+                _virtual_submit = ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > string_length(__value)));
             }
             else if (__on_xbox && !__just_set)
             {
@@ -465,7 +465,7 @@ function input_string_keyboard_show(_keyboard_type = kbv_type_default)
     if ((_source != "virtual") && !_steam) show_debug_message("Input String Warning: Onscreen keyboard is not suitable for use on the current platform");
     if  (_source == "async")               show_debug_message("Input String Warning: Consider using async dialog for modal text input instead");
     
-    if ((__input_string()).__on_android || !keyboard_virtual_status())
+    if ((__input_string()).__on_android || (!keyboard_virtual_status() && !(__input_string()).__on_xbox))
     {
         keyboard_virtual_show(_keyboard_type, kbv_returnkey_default, kbv_autocapitalize_sentences, false);
     }
