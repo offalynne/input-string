@@ -21,20 +21,11 @@ draw_text(room_width * .50, 30, submission_test);
 if (search_test_index >= 0) 
 {
     var _search = input_string_search_results();
-    draw_text(room_width / 2, room_height - 50, "Found " + string(array_length(_search)) + " of " + string(array_length(search_test_list[search_test_index])));
+    draw_text(room_width / 2, room_height - 50, "Found " + string(array_length(_search)) + " of " + string(array_length(search_test_list[search_test_index])));    
     
-    var _a = [];
-    var _i = 0;
-    repeat(array_length(_search))
-    {
-        array_push(_a, search_test_list[search_test_index][_search[_i]]);
-        ++_i;
-    }
-    
-    _a = string(_a);
-    _a = string_copy(_a, 2, string_length(_a) - 3);
-    
-    draw_text(room_width / 2, room_height - 30, _a);
+    _search = string(_search);
+    _search = string_copy(_search, 2, string_length(_search) - 3);    
+    draw_text(room_width / 2, room_height - 30, _search);
 }
 
 // Test button labels

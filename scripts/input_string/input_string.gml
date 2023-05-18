@@ -8,15 +8,16 @@ function __input_string()
     
     #region Configuration
     
-    auto_closevkb = true;   // Whether the 'Return' key closes the virtual keyboard
-    auto_submit   = true;   // Whether the 'Return' key fires a submission callback
-    auto_trim     = true;   // Whether submit trims leading and trailing whitespace
+    auto_closevkb  = true;   // Whether the 'Return' key closes the virtual keyboard
+    auto_submit    = true;   // Whether the 'Return' key fires a submission callback
+    auto_trim      = true;   // Whether submit trims leading and trailing whitespace
     
-    allow_case    = false;  // Whether searches are performed with case sensitivity
-    allow_empty   = false;  // Whether a blank field submission is treated as valid
-    allow_newline = false;  // Whether to allow newline characters or swap to space
+    allow_case     = false;  // Whether searches are performed with case sensitivity
+    allow_empty    = false;  // Whether a blank field submission is treated as valid
+    allow_newline  = false;  // Whether to allow newline characters or swap to space
     
-    max_length = 1000;      // Maximum text entry string length. Do not exceed 1024
+    max_length     = 1000;   // Maximum text entry string length. Do not exceed 1024
+    search_timeout = 200;    // Minimum milliseconds between doing consecutive search
     
     #endregion
     
@@ -30,7 +31,8 @@ function __input_string()
     __result_list = [];
     
     __delete_duration = 0;
-    __tick_last       = 0;    
+    __tick_last       = 0;
+    __search_last     = 0;
     
     __callback  = undefined;
     __async_id  = undefined;
@@ -38,6 +40,7 @@ function __input_string()
     __async_submit = false;
     __just_ticked  = false;
     __just_set     = false;
+    __search_queue = false;
     
     __on_windows     =  (os_type == os_windows);
     __on_android     =  (os_type == os_android);
@@ -182,14 +185,11 @@ function __input_string()
         if (__on_android && _trim) _string = string_delete(_string, 1, 1);
         
         // Search on change
-        var _search = !((__value == _string) || (array_length(__search_list) == 0));
+        if (!__search_queue && (__value != _string) && (array_length(__search_list) != 0)) __search_queue = true;
         
         // Set internal value
         __value = _string;
         
-        // Search
-         if (_search) __search();
-         
         __just_ticked = false;
     };
     
@@ -224,51 +224,56 @@ function __input_string()
         
         if (array_length(_array) > 0)
         {
-            // Stringify
             var _i = 0;
-            if (allow_case)
+            repeat(array_length(_array))
             {
-                // Case unchanged
-                repeat(array_length(_array))
-                {
-                    __search_list[_i] = string(_array[_i]);
-                    ++_i;
-                }
-            }
-            else
-            {
-                // Case flattened
-                repeat(array_length(_array))
-                {
-                    __search_list[_i] = string_lower(string( _array[_i] ?? ""));
-                    ++_i;
-                }
+                __search_list[_i] = string(_array[_i]);
+                ++_i;
             }
         }
         
         // Search
-        if !(_was_empty && (array_length(__search_list) == 0)) __search();
+        if (!__search_queue && !(_was_empty && (array_length(__search_list) == 0))) __search_queue = true;
     };
     
     
     __search = function()
     {
-        // Clear
-        array_delete(__result_list, 0, array_length(__result_list));
-        
-        if (__trim(__value) == "") return;
-        
-        // Set case
-        var _find = __value;
-        if (!allow_case) _find = string_lower(_find);
-    
-        // Find results
-        var _i = 0;
-        repeat(array_length(__search_list))
+        if (__search_queue && (__search_last < (current_time - search_timeout)))
         {
-            if (string_pos(_find, __search_list[_i]) > 0) array_push(__result_list, _i);
-            ++_i;
+            __search_queue = false;
+            __search_last  = current_time;
+            
+            array_delete(__result_list, 0, array_length(__result_list));        
+            if (__trim(__value) == "") return __result_list;
+        
+            var _find = __value;
+            var _i = 0;
+            if (!allow_case) 
+            {
+                // Any case
+                _find = string_lower(_find);
+                repeat(array_length(__search_list))
+                {
+                    if (string_pos(_find, string_lower(__search_list[_i])) > 0) array_push(__result_list, __search_list[_i]);
+                    ++_i;
+                }
+            }
+            else
+            {
+                // Match case
+                repeat(array_length(__search_list))
+                {
+                    if (string_pos(_find, __search_list[_i]) > 0) array_push(__result_list, __search_list[_i]);
+                    ++_i;
+                }
+            }
+            
+            show_debug_message(current_time);
         }
+        
+        return __result_list;
+        
     };
     
     
@@ -499,9 +504,9 @@ function input_string_search_set(_array)
     (__input_string()).__search_set(_array);
 }
 
-function input_string_search_results() { return (__input_string()).__result_list;   }
 function input_string_platform_hint()  { return (__input_string()).__platform_hint; }
 function input_string_get()            { return (__input_string()).__value;         }
 function input_string_tick()           { return (__input_string()).__tick();        }
 function input_string_submit_get()     { return (__input_string()).__submit_get();  }
 function input_string_force_submit()   { return (__input_string()).__submit();      }
+function input_string_search_results() { return (__input_string()).__search();      }
