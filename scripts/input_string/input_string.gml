@@ -49,7 +49,8 @@ function __input_string()
     __on_xbox        = ((os_type == os_xboxone) || (os_type == os_xboxseriesxs));
     __on_playstation = ((os_type == os_ps4) || (os_type == os_ps5));
     __on_console     = ((os_type == os_switch) || __on_playstation || __on_xbox);
-    __on_unix_native = ((os_browser == browser_not_a_browser) && (os_type == os_macosx) || (os_type == os_linux));
+    __on_unix_native = ((os_browser == browser_not_a_browser) && ((os_type == os_macosx) || (os_type == os_linux)));
+    __on_mobile_web  = ((os_browser != browser_not_a_browser) && ((os_type != os_macosx) && (os_type != os_linux) && (os_type != os_windows) && (os_type != os_operagx)));
     
     if (__on_xbox) max_length = max(max_length, 256);
     
@@ -90,7 +91,7 @@ function __input_string()
         // Suggest 'async' (dialog) on console
         __platform_hint = "async";
     }
-    else if ((os_browser != browser_not_a_browser) && ((os_type != os_windows) && (os_type != os_macosx) && (os_type != os_operagx) && (os_type != os_linux)))
+    else if (__on_mobile_web)
     {
         // Suggest 'async' (dialog) on non-desktop web
         __platform_hint = "async";
