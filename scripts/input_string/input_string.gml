@@ -202,9 +202,9 @@ function __input_string()
     
     __submit = function()
     {
-        if (auto_trim) __set(__trim(input_string_get()));
+        if (auto_trim) __set(__trim(__value));
         
-        if ((__callback != undefined) && ((input_string_get() != "") || allow_empty))
+        if ((__callback != undefined) && ((__value != "") || allow_empty))
         {
             if (is_method(__callback))
             {
@@ -280,6 +280,51 @@ function __input_string()
     };
     
     
+    
+    __submit_get = function()
+    {
+        var _virtual_submit = false;
+        if (__async_id == undefined)
+        {
+            // Handle virtual keyboard submission
+            if (__on_ios)
+            {
+                _virtual_submit = ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > __value));
+            }
+            else if (__on_xbox && !__just_set)
+            {
+                _virtual_submit = (keyboard_string != __value);
+            }
+            else if (__on_android && keyboard_check_pressed(10))
+            {
+                _virtual_submit = true;
+            }
+            else
+            {
+                // Keyboard submission
+                _virtual_submit = keyboard_check_pressed(vk_enter);
+            }
+        }
+                
+        return _virtual_submit;
+    };
+    
+    
+    __keyboard_hide = function()
+    {
+        if (__on_android || keyboard_virtual_status())
+        {
+            keyboard_virtual_hide();
+        }
+        else if (__use_steam)
+        {        
+            return steam_dismiss_floating_gamepad_text_input();
+        }
+    
+        return undefined;
+    };
+    
+    
     __tick = function()
     {
         if (__tick_last <= (current_time - (delta_time div 1000) - 2))
@@ -299,11 +344,11 @@ function __input_string()
                 _string = "";
             }
             
-            _virtual_submit = input_string_submit_get();          
+            _virtual_submit = __submit_get();          
             if (auto_closevkb && _virtual_submit)
             {
                 // Close virtual keyboard on submission
-                input_string_keyboard_hide();
+                __keyboard_hide();
             }
             
             if (_string != "")
@@ -342,35 +387,6 @@ function __input_string()
         __async_submit = false;
         __just_set     = false;
         __tick_last    = current_time;
-    };
-    
-    
-    __submit_get = function()
-    {
-        var _virtual_submit = false;
-        if ((__input_string()).__async_id == undefined)
-        {
-            // Handle virtual keyboard submission
-            if (__on_ios)
-            {
-                _virtual_submit = ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > input_string_get()));
-            }
-            else if (__on_xbox && !__just_set)
-            {
-                _virtual_submit = (keyboard_string != __value);
-            }
-            else if (__on_android && keyboard_check_pressed(10))
-            {
-                _virtual_submit = true;
-            }
-            else
-            {
-                // Keyboard submission
-                _virtual_submit = keyboard_check_pressed(vk_enter);
-            }
-        }
-                
-        return _virtual_submit;
     };
     
     
@@ -475,20 +491,6 @@ function input_string_keyboard_show(_keyboard_type = kbv_type_default)
     
     return undefined;
 }
-   
-function input_string_keyboard_hide()
-{
-    if ((__input_string()).__on_android || keyboard_virtual_status())
-    {
-        keyboard_virtual_hide();
-    }
-    else if ((__input_string()).__use_steam)
-    {        
-        return steam_dismiss_floating_gamepad_text_input();
-    }
-    
-    return undefined;
-}
 
 function input_string_search_set(_array)
 {
@@ -507,9 +509,10 @@ function input_string_search_set(_array)
     (__input_string()).__search_set(_array);
 }
 
-function input_string_platform_hint()  { return (__input_string()).__platform_hint; }
-function input_string_get()            { return (__input_string()).__value;         }
-function input_string_tick()           { return (__input_string()).__tick();        }
-function input_string_submit_get()     { return (__input_string()).__submit_get();  }
-function input_string_force_submit()   { return (__input_string()).__submit();      }
-function input_string_search_results() { return (__input_string()).__search();      }
+function input_string_platform_hint()  { return (__input_string()).__platform_hint;   }
+function input_string_get()            { return (__input_string()).__value;           }
+function input_string_tick()           { return (__input_string()).__tick();          }
+function input_string_submit_get()     { return (__input_string()).__submit_get();    }
+function input_string_force_submit()   { return (__input_string()).__submit();        }
+function input_string_search_results() { return (__input_string()).__search();        }
+function input_string_keyboard_hide()  { return (__input_string()).__keyboard_hide(); }

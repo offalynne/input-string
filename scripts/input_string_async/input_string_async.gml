@@ -1,11 +1,10 @@
 // input-string library feather disable all
 
 function input_string_async_get(_prompt, _string = undefined)
-{
-    _string = _string ?? (__input_string()).__value;
-    
+{    
     with (__input_string())
-    {
+    {        
+        _string = _string ?? (__input_string()).__value;
         if (__async_id != undefined)
         {
             // Do not request the input modal when it is already open
@@ -15,7 +14,7 @@ function input_string_async_get(_prompt, _string = undefined)
         else
         {
             // Note platform suitability
-            var _source = input_string_platform_hint();
+            var _source = __platform_hint;
             if (_source != "async")    show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
             if (_source == "virtual")  show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
             
@@ -50,7 +49,7 @@ function input_string_async_get(_prompt, _string = undefined)
                 }
             }
         
-            __predialog = input_string_get();
+            __predialog = __value;
             __async_id  = get_string_async(_prompt, _string);
         
             return true;
@@ -85,7 +84,7 @@ function input_string_dialog_async_event()
     
     with (__input_string())
     {
-        if (input_string_async_active() && (async_load != -1) && (async_load[? "id"] == __async_id))
+        if ((__async_id != undefined) && (async_load != -1) && (async_load[? "id"] == __async_id))
         {                
             // Confirm Async
             var _result = async_load[? "result"];
