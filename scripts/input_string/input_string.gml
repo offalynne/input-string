@@ -59,15 +59,8 @@ function __input_string()
     
     #region Detect features
     
-    if (extension_exists("Steamworks"))
-    {
-        __use_steam = true;
-        show_debug_message("Input String: Using Steamworks extension");
-    }
-    else
-    {
-        __use_steam = false;
-    }
+    __use_steam = extension_exists("Steamworks");
+    if (__use_steam) show_debug_message("Input String: Using Steamworks extension");
     
     __use_trim = false;
     try
@@ -224,6 +217,7 @@ function __input_string()
         var _was_empty = (array_length(__search_list) == 0);
         array_delete(__search_list, 0, array_length(__search_list));
         
+        // Stringify
         if (array_length(_array) > 0)
         {
             var _i = 0;
