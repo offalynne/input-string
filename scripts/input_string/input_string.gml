@@ -43,8 +43,8 @@ function __input_string()
     __search_queue = false;
     
     __on_windows     =  (os_type == os_windows);
-    __on_android     =  (os_type == os_android);
     __on_ios         = ((os_type == os_ios) || (os_type == os_tvos));
+    __on_android     =  (os_type == os_android);
     __on_mobile      = (__on_android || __on_ios);
     __on_xbox        = ((os_type == os_xboxone) || (os_type == os_xboxseriesxs));
     __on_playstation = ((os_type == os_ps4) || (os_type == os_ps5));
@@ -77,14 +77,9 @@ function __input_string()
     }
     
     // Set platform hint
-    if (__on_console)
+    if (__on_console || __on_mobile_web)
     {
         // 'async' (dialog) on console
-        __platform_hint = "async";
-    }
-    else if (__on_mobile_web)
-    {
-        // 'async' (dialog) on mobile web
         __platform_hint = "async";
     }
     else if (__on_mobile)
