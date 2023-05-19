@@ -59,8 +59,10 @@ function __input_string()
     
     #region Detect features
     
-    __use_steam = extension_exists("Steamworks");
-    if (__use_steam) show_debug_message("Input String: Using Steamworks extension");
+    var _feature_report = "";
+    
+    __use_steam = extension_exists("Steamworks");    
+    if (__use_steam) _feature_report += " Using Steamworks extension.";
     
     __use_trim = false;
     try
@@ -70,30 +72,60 @@ function __input_string()
     }
     catch(_error)
     {
-        // No `string_trim`
-        //show_debug_message("Input String: Not using native trim");
+        // No `string_trim` support
+        _feature_report += " Not using native string trim.";
     }
     
     // Set platform hint
     if (__on_console)
     {
-        // Suggest 'async' (dialog) on console
+        // 'async' (dialog) on console
         __platform_hint = "async";
     }
     else if (__on_mobile_web)
     {
-        // Suggest 'async' (dialog) on non-desktop web
+        // 'async' (dialog) on mobile web
         __platform_hint = "async";
     }
     else if (__on_mobile)
     {
-        // Suggest virtual keyboard on mobile
+        // 'virtual' (OSK) on mobile native
         __platform_hint = "virtual";
+        
+        // 'keyboard' (hardware) on Android Chromebook
+        if (__on_android)
+        {
+            var _map = os_get_info();
+            if (ds_exists(_map, ds_type_map))
+            {
+                // Android on Chromebook form factor (ARC) test via Google
+                // matches(".+_cheets|cheets_.+")
+                var _device = string(_map[? "DEVICE"]);
+                if ((string_pos("_cheets", _device) > 1) || ((string_pos("cheets_", _device) > 0) && (string_pos("cheets_", _device) < (string_length(_device) - 6))))
+                {
+                    __platform_hint = "keyboard";
+                }
+
+                ds_map_destroy(_map)
+            }
+        }
     }
-    else
+    else if (__use_steam)
+    {
+        if (steam_utils_is_steam_running_on_steam_deck())
+        {
+            // 'virtual' (OSK) on Steam Deck
+            __platform_hint = "virtual";
+        }
+    }
+    else 
     {
         __platform_hint = "keyboard";
     }
+    
+    _feature_report += " Suggesting input method \"" + __platform_hint + "\".";
+    
+    show_debug_message("Input String:" + _feature_report);
     
     #endregion
     
@@ -128,8 +160,7 @@ function __input_string()
             
             return string_copy(_string, _left, _right - _left + 1);
        };
-    }
-    
+    }    
     
     __set = function(_string)
     {
@@ -186,8 +217,7 @@ function __input_string()
         __value = _string;
         
         __just_ticked = false;
-    };
-    
+    };    
     
     __submit = function()
     {
@@ -208,8 +238,7 @@ function __input_string()
                 show_error("Input String Error: Callback set to an illegal value (typeof=" + typeof(__callback) + ")", false);
             }
         }
-    };
-    
+    };    
     
     __search_set = function(_array)
     {
@@ -230,8 +259,7 @@ function __input_string()
         
         // Search
         if (!__search_queue && !(_was_empty && (array_length(__search_list) == 0))) __search_queue = true;
-    };
-    
+    };    
     
     __search = function()
     {
@@ -267,9 +295,7 @@ function __input_string()
         }
         
         return __result_list;        
-    };
-    
-    
+    };    
     
     __submit_get = function()
     {
@@ -297,8 +323,7 @@ function __input_string()
         }
                 
         return _virtual_submit;
-    };
-    
+    };    
     
     __keyboard_hide = function()
     {
@@ -312,8 +337,7 @@ function __input_string()
         }
     
         return undefined;
-    };
-    
+    };    
     
     __tick = function()
     {
@@ -377,8 +401,7 @@ function __input_string()
         __async_submit = false;
         __just_set     = false;
         __tick_last    = current_time;
-    };
-    
+    };    
     
     #endregion
     
