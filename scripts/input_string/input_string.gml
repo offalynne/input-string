@@ -52,7 +52,7 @@ function __input_string()
     __on_unix_native = ((os_browser == browser_not_a_browser) && ((os_type == os_macosx) || (os_type == os_linux)));
     __on_mobile_web  = ((os_browser != browser_not_a_browser) && ((os_type != os_macosx) && (os_type != os_linux) && (os_type != os_windows) && (os_type != os_operagx)));
     
-    if (__on_xbox) max_length = max(max_length, 256);
+    if (__on_xbox) max_length = min(max_length, 256);
     
     #endregion
     
