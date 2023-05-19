@@ -92,7 +92,6 @@ function __input_string()
         // 'virtual' (OSK) on mobile native
         __platform_hint = "virtual";
         
-        // 'keyboard' (hardware) on Android Chromebook
         if (__on_android)
         {
             var _map = os_get_info();
@@ -103,6 +102,7 @@ function __input_string()
                 var _device = string(_map[? "DEVICE"]);
                 if ((string_pos("_cheets", _device) > 1) || ((string_pos("cheets_", _device) > 0) && (string_pos("cheets_", _device) < (string_length(_device) - 6))))
                 {
+                    // 'keyboard' (hardware) on Android Chromebook
                     __platform_hint = "keyboard";
                 }
 
@@ -110,17 +110,17 @@ function __input_string()
             }
         }
     }
-    else if (__use_steam)
-    {
-        if (steam_utils_is_steam_running_on_steam_deck())
-        {
-            // 'virtual' (OSK) on Steam Deck
-            __platform_hint = "virtual";
-        }
-    }
     else 
     {
         __platform_hint = "keyboard";
+        if (__use_steam)
+        {
+            if (steam_utils_is_steam_running_on_steam_deck())
+            {
+                // 'virtual' (OSK) on Steam Deck
+                __platform_hint = "virtual";
+            }
+        }
     }
     
     _feature_report += " Suggesting input method \"" + __platform_hint + "\".";
