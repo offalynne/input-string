@@ -217,7 +217,7 @@ function __input_string()
         __value = _string;
         
         __just_ticked = false;
-    };    
+    };
     
     __submit = function()
     {
@@ -227,18 +227,21 @@ function __input_string()
         {
             if (is_method(__callback))
             {
+                // Execute method
                 __callback();
             }
             else if (is_numeric(__callback) && script_exists(__callback))
             {
+                // Execute script
                 script_execute(__callback);
             }
             else
             {
+                // Invalid callback
                 show_error("Input String Error: Callback set to an illegal value (typeof=" + typeof(__callback) + ")", false);
             }
         }
-    };    
+    };
     
     __search_set = function(_array)
     {
@@ -247,19 +250,16 @@ function __input_string()
         array_delete(__search_list, 0, array_length(__search_list));
         
         // Stringify
-        if (array_length(_array) > 0)
+        var _i = 0;
+        repeat(array_length(_array))
         {
-            var _i = 0;
-            repeat(array_length(_array))
-            {
-                __search_list[_i] = string(_array[_i]);
-                ++_i;
-            }
+            __search_list[_i] = string(_array[_i]);
+            ++_i;
         }
         
         // Search
         if (!__search_queue && !(_was_empty && (array_length(__search_list) == 0))) __search_queue = true;
-    };    
+    };
     
     __search = function()
     {
@@ -295,7 +295,7 @@ function __input_string()
         }
         
         return __result_list;        
-    };    
+    };
     
     __submit_get = function()
     {
@@ -305,25 +305,28 @@ function __input_string()
             // Handle virtual keyboard submission
             if (__on_ios)
             {
+                // iOS virtual keyboard submission
                 _virtual_submit = ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > string_length(__value)));
             }
             else if (__on_xbox && !__just_set)
             {
+                // Xbox virtual keyboard submission
                 _virtual_submit = (keyboard_string != __value);
             }
             else if (__on_android && keyboard_check_pressed(10))
             {
+                // Android virtual keyboard submission
                 _virtual_submit = true;
             }
             else
             {
-                // Keyboard submission
+                // Virtual or hardware keyboard submission
                 _virtual_submit = keyboard_check_pressed(vk_enter);
             }
         }
                 
         return _virtual_submit;
-    };    
+    };
     
     __keyboard_hide = function()
     {
@@ -337,7 +340,7 @@ function __input_string()
         }
     
         return undefined;
-    };    
+    };
     
     __tick = function()
     {
@@ -401,7 +404,7 @@ function __input_string()
         __async_submit = false;
         __just_set     = false;
         __tick_last    = current_time;
-    };    
+    };
     
     #endregion
     
