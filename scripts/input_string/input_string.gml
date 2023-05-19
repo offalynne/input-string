@@ -525,10 +525,10 @@ function input_string_search_set(_array)
     (__input_string()).__search_set(_array);
 }
 
-function input_string_platform_hint()  { return (__input_string()).__platform_hint;   }
-function input_string_get()            { return (__input_string()).__value;           }
 function input_string_tick()           { return (__input_string()).__tick();          }
 function input_string_submit_get()     { return (__input_string()).__submit_get();    }
 function input_string_force_submit()   { return (__input_string()).__submit();        }
-function input_string_search_results() { return (__input_string()).__search();        }
 function input_string_keyboard_hide()  { return (__input_string()).__keyboard_hide(); }
+function input_string_search_results() { return (__input_string()).__search();        }
+function input_string_platform_hint()  { return (__input_string()).__platform_hint;   }
+function input_string_get()            { return (__input_string()).__value;           }
