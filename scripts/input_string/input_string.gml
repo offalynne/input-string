@@ -130,7 +130,7 @@ function __input_string()
         
     if (__use_trim)
     {
-        __trim = function(_string){ return string_trim(_string); };
+        __trim = string_trim;
     }
     else
     {
