@@ -68,8 +68,7 @@ function __input_string()
     __use_trim = false;
     try
     {
-        var _z = string_trim(" z ");
-        __use_trim = (_z == "z");
+        if (string_trim(" z ") == "z")) __use_trim = true;
     }
     catch(_error)
     {
