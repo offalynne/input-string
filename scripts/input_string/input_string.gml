@@ -322,6 +322,35 @@ function __input_string()
                 
         return _virtual_submit;
     };
+                    
+    __keyboard_show(_kbv)
+    {
+        // Note platform suitability
+        if ((__platform_hint != "virtual") && !__use_steam) show_debug_message("Input String Warning: Onscreen keyboard is not suitable for use on the current platform");
+        if  (__platform_hint == "async")                    show_debug_message("Input String Warning: Consider using async dialog for modal text input instead");
+        
+        if (__on_android || (!keyboard_virtual_status() && !__on_xbox))
+        {
+            keyboard_virtual_show(_kbv, kbv_returnkey_default, kbv_autocapitalize_sentences, false);
+        }
+        else if (__use_steam)
+        {
+            switch (_kbv)
+            {
+                case kbv_type_email:   _kbv = steam_floating_gamepad_text_input_mode_email;       break;
+                case kbv_type_numbers: _kbv = steam_floating_gamepad_text_input_mode_numeric;     break;
+                default:               _kbv = steam_floating_gamepad_text_input_mode_single_line; break;
+            }
+            
+            return steam_show_floating_gamepad_text_input(_kbv, display_get_width(), 0, 0, 0);
+        }
+        else
+        {
+             show_debug_message("Input String Warning: Onscreen keyboard not supported on the current platform");
+        }
+        
+        return undefined;
+    }
     
     __keyboard_hide = function()
     {
@@ -450,6 +479,11 @@ function input_string_callback_set(_callback)
     
     (__input_string()).__callback = _callback;
 }
+                    
+input_string_keyboard_show(_keyboard_type = kbv_type_default)
+{
+    return (__input_string()).__keyboard_show(_keyboard_type);
+}
 
 function input_string_set(_string = "")
 {
@@ -469,38 +503,6 @@ function input_string_set(_string = "")
 function input_string_add(_string)
 {
     input_string_set((__input_string()).__value + string(_string));
-}
-
-function input_string_keyboard_show(_keyboard_type = kbv_type_default)
-{
-    var _steam = (__input_string()).__use_steam;
-    
-    // Note platform suitability
-    var _source = input_string_platform_hint();
-    if ((_source != "virtual") && !_steam) show_debug_message("Input String Warning: Onscreen keyboard is not suitable for use on the current platform");
-    if  (_source == "async")               show_debug_message("Input String Warning: Consider using async dialog for modal text input instead");
-    
-    if ((__input_string()).__on_android || (!keyboard_virtual_status() && !(__input_string()).__on_xbox))
-    {
-        keyboard_virtual_show(_keyboard_type, kbv_returnkey_default, kbv_autocapitalize_sentences, false);
-    }
-    else if (_steam)
-    {
-        switch (_keyboard_type)
-        {
-            case kbv_type_email:   _keyboard_type = steam_floating_gamepad_text_input_mode_email;       break;
-            case kbv_type_numbers: _keyboard_type = steam_floating_gamepad_text_input_mode_numeric;     break;
-            default:               _keyboard_type = steam_floating_gamepad_text_input_mode_single_line; break;
-        }
-        
-        return steam_show_floating_gamepad_text_input(_keyboard_type, display_get_width(), 0, 0, 0);
-    }
-    else
-    {
-         show_debug_message("Input String Warning: Onscreen keyboard not supported on the current platform");
-    }
-    
-    return undefined;
 }
 
 function input_string_search_set(_array)
