@@ -119,7 +119,7 @@ function __input_string()
         }
     }
     
-    _feature_report += " Suggesting input method \"" + __platform_hint + "\".";
+    _feature_report += " Platform hint is \"" + __platform_hint + "\".";
     
     show_debug_message("Input String:" + _feature_report);
     
