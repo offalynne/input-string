@@ -42,12 +42,12 @@ function __input_string()
     __just_set     = false;
     __search_queue = false;
     
-    __on_windows     = ( os_type == os_windows );
-    __on_android     = ( os_type == os_android );
+    __on_windows     = (os_type == os_windows);
+    __on_android     = (os_type == os_android);
     __on_ios         = ((os_type == os_ios) || (os_type == os_tvos));
-    __on_mobile      = ( __on_android || __on_ios );
-    __on_xbox        = ((os_type == os_xboxone) || (os_type == os_xboxseriesxs));
+    __on_mobile      = (__on_android || __on_ios);
     __on_playstation = ((os_type == os_ps4) || (os_type == os_ps5));
+    __on_xbox        = ((os_type == os_xboxone) || (os_type == os_xboxseriesxs));
     __on_console     = ((os_type == os_switch) || __on_playstation || __on_xbox);
     __on_unix_native = ((os_browser == browser_not_a_browser) && ((os_type == os_macosx) || (os_type == os_linux)));
     __on_mobile_web  = ((os_browser != browser_not_a_browser) && ((os_type != os_macosx) && (os_type != os_linux) && (os_type != os_windows) && (os_type != os_operagx)));
