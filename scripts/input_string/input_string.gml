@@ -424,6 +424,7 @@ function __input_string()
                         }
                         else if ((__delete_duration > 500000) && ((__delete_duration mod _repeat_rate) > ((__delete_duration + delta_time) mod _repeat_rate)))
                         {
+                            //Assumes LTR
                             _string = string_copy(_string, 1, string_length(_string) - 1);
                         }
                     }
