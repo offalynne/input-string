@@ -80,7 +80,7 @@ function __input_string()
     __use_trim = false;
     try
     {
-        if (string_trim(" z ") == "z")) __use_trim = true;
+        if (string_trim(" z ") == "z") __use_trim = true;
     }
     catch(_error)
     {
@@ -335,7 +335,7 @@ function __input_string()
         return _virtual_submit;
     };
                     
-    __keyboard_show(_kbv)
+    __keyboard_show = function(_kbv)
     {
         // Note platform suitability
         if ((__platform_hint != "virtual") && !__use_steam) show_debug_message("Input String Warning: Onscreen keyboard is not suitable for use on the current platform");
@@ -493,7 +493,7 @@ function input_string_callback_set(_callback)
     (__input_string()).__callback = _callback;
 }
                     
-input_string_keyboard_show(_keyboard_type = kbv_type_default)
+function input_string_keyboard_show(_keyboard_type = kbv_type_default)
 {
     return (__input_string()).__keyboard_show(_keyboard_type);
 }
