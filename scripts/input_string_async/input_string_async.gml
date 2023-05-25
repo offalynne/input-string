@@ -1,10 +1,11 @@
 // input-string library feather disable all
 
 function input_string_async_get(_prompt, _string = undefined)
-{    
+{
+    static _warning = false;    
     with (__input_string())
-    {        
-        _string = _string ?? (__input_string()).__value;
+    {
+        _string = _string ?? __value;
         if (__async_id != undefined)
         {
             // Do not request the input modal when it is already open
@@ -13,10 +14,13 @@ function input_string_async_get(_prompt, _string = undefined)
         }
         else
         {
-            // Note platform suitability
-            var _source = __platform_hint;
-            if (_source != "async")    show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
-            if (_source == "virtual")  show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");
+            if (!_warning)
+            {
+                // Note platform suitability
+                if (__platform_hint != "async")    show_debug_message("Input String Warning: Async dialog is not suitable for use on the current platform");
+                if (__platform_hint == "virtual")  show_debug_message("Input String Warning: Consider showing the virtual keyboard for non-modal text input instead");                
+                _warning = true;
+            }
             
             // Hide lingering overlay on dialog prompt open (Fixes mobile keyboard focus quirk)
             if (__on_mobile) keyboard_virtual_hide();
@@ -32,7 +36,7 @@ function input_string_async_get(_prompt, _string = undefined)
                     case os_ps4: case os_ps5:              _console_limit = 1024; break;
                 }
                 
-                if (_console_limit > 0)
+                if (_console_limit < string_length(_string))
                 {
                     show_debug_message("Input String Warning: Platform dialog has a limit of " + string(_console_limit) + " characters");
                     _string = string_copy(_string, 1, _console_limit);

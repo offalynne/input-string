@@ -477,7 +477,7 @@ function input_string_max_length_set(_max_length)
 
 function input_string_callback_set(_callback)
 {
-    if not (is_undefined(_callback) || is_method(_callback) || (is_numeric(_callback) && !script_exists(_callback)))
+    if !(is_undefined(_callback) || is_method(_callback) || (is_numeric(_callback) && !script_exists(_callback)))
     {
         show_error
         (
