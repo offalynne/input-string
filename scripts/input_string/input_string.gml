@@ -341,11 +341,7 @@ function __input_string()
         if ((__platform_hint != "virtual") && !__use_steam) show_debug_message("Input String Warning: Onscreen keyboard is not suitable for use on the current platform");
         if  (__platform_hint == "async")                    show_debug_message("Input String Warning: Consider using async dialog for modal text input instead");
         
-        if (__on_android || (!keyboard_virtual_status() && !__on_xbox))
-        {
-            keyboard_virtual_show(_kbv_type, kbv_returnkey_default, kbv_autocapitalize_sentences, false);
-        }
-        else if (__use_steam)
+        if (__use_steam)
         {
             switch (_kbv_type)
             {
@@ -356,9 +352,9 @@ function __input_string()
             
             return steam_show_floating_gamepad_text_input(_kbv_type, display_get_width(), 0, 0, 0);
         }
-        else
+        else if (__on_android || (!keyboard_virtual_status() && !__on_xbox))
         {
-             show_debug_message("Input String Warning: Onscreen keyboard not supported on the current platform");
+            keyboard_virtual_show(_kbv_type, kbv_returnkey_default, kbv_autocapitalize_sentences, false);
         }
         
         return undefined;
