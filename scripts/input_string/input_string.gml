@@ -350,7 +350,7 @@ function __input_string()
                 default:               _kbv_type = steam_floating_gamepad_text_input_mode_single_line; break;
             }
             
-            return steam_show_floating_gamepad_text_input(_kbv_type, display_get_width(), 0, 0, 0);
+            return steam_show_floating_gamepad_text_input(_kbv_type, 0, 0, 0, 0);
         }
         else if (__on_android || (!keyboard_virtual_status() && !__on_xbox))
         {
