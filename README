@@ -7,7 +7,7 @@ Frontend Features
 - Reliable getters and setters
 - Callback for text submission
 - Easier async dialog handling
-- Realtime string array filter
+- Realtime array search filter
 
 Backend Features
 - Safe handling at string length limit
