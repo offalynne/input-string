@@ -246,7 +246,7 @@ function __input_string()
     {
         // Clear
         var _was_empty = (array_length(__search_list) == 0);
-        array_delete(__search_list, 0, array_length(__search_list));
+        array_resize(__search_list, 0);
         
         // Stringify
         var _i = 0;
@@ -267,7 +267,7 @@ function __input_string()
             __search_queue = false;
             __search_last  = current_time;
             
-            array_delete(__result_list, 0, array_length(__result_list));        
+            array_resize(__result_list, 0);        
             if (__trim(__value) == "") return __result_list;
         
             var _find = __value;
