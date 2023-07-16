@@ -298,33 +298,32 @@ function __input_string()
     
     __submit_get = function()
     {
-        var _virtual_submit = false;
         if (__async_id == undefined)
         {
             // Handle virtual keyboard submission
             if (__on_ios)
             {
                 // iOS virtual keyboard submission
-                _virtual_submit = ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > string_length(__value)));
+                return ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > string_length(__value)));
             }
             else if (__on_xbox && !__just_set)
             {
                 // Xbox virtual keyboard submission
-                _virtual_submit = (keyboard_string != __value);
+                return (keyboard_string != __value);
             }
             else if (__on_android && keyboard_check_pressed(10))
             {
                 // Android virtual keyboard submission
-                _virtual_submit = true;
+                return true;
             }
             else
             {
                 // Virtual or hardware keyboard submission
-                _virtual_submit = keyboard_check_pressed(vk_enter);
+                return keyboard_check_pressed(vk_enter);
             }
         }
                 
-        return _virtual_submit;
+        return false;
     };
                     
     __keyboard_show = function(_kbv_type)
