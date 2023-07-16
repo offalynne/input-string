@@ -175,17 +175,9 @@ function __input_string()
         
         if (!allow_newline)
         {
-            if (!__on_windows)
-            {
-                // Filter carriage returns
-                _string = string_replace_all(_string, chr(13), "");
-            }
-            
-            if (__on_ios)
-            {
-                // Filter newlines
-                _string = string_replace_all(_string, chr(10), " ");
-            }
+            // Filter carriage return and newline
+            _string = string_replace_all(_string, chr(13), "");
+            _string = string_replace_all(_string, chr(10), " ");
         }
         
         // Filter delete character (fixes Windows and Mac quirk)
