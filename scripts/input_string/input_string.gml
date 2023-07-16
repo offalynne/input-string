@@ -121,9 +121,9 @@ function __input_string()
     {
         __platform_hint = "keyboard";
 
-        // 'virtual' (OSK) on Steam Deck
         if (__use_steam)
         {
+            // 'virtual' (OSK) on Steam Deck
             if (steam_utils_is_steam_running_on_steam_deck()) __platform_hint = "virtual";
         }
     }
