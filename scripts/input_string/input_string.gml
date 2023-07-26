@@ -299,7 +299,7 @@ function __input_string()
         if (__async_id == undefined)
         {
             // Handle virtual keyboard submission
-            if ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > string_length(__value)))
+            if ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > (string_length(__value) - (__on_android? 1 : 0))))
             {
                 // Mobile virtual keyboard submission
                 return true;
