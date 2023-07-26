@@ -299,10 +299,10 @@ function __input_string()
         if (__async_id == undefined)
         {
             // Handle virtual keyboard submission
-            if ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > string_length(__value)))
+            if (__on_ios)
             {
-                // Mobile virtual keyboard submission
-                return true;
+                // iOS virtual keyboard submission
+                return ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > string_length(__value)));
             }
             else if (__on_xbox && !__just_set)
             {
