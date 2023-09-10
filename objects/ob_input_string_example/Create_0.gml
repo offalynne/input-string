@@ -3,7 +3,7 @@
 long_string = "";
 
 //feather disable once all
-repeat((__input_string()).max_length)
+repeat((__input_string()).__max_length)
 {
     // Fill with garbage
     long_string += chr(ord("A") + irandom(25));

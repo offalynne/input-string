@@ -8,16 +8,16 @@ function __input_string()
     
     #region Configuration
     
-    auto_closevkb  = true;   // Whether the 'Return' key closes the virtual keyboard
-    auto_submit    = true;   // Whether the 'Return' key fires a submission callback
-    auto_trim      = true;   // Whether submit trims leading and trailing whitespace
+    __auto_closevkb  = true;   // Whether the 'Return' key closes the virtual keyboard
+    __auto_submit    = true;   // Whether the 'Return' key fires a submission callback
+    __auto_trim      = true;   // Whether submit trims leading and trailing whitespace
     
-    allow_case     = false;  // Whether searches are performed with case sensitivity
-    allow_empty    = false;  // Whether a blank field submission is treated as valid
-    allow_newline  = false;  // Whether to allow newline characters or swap to space
+    __allow_case     = false;  // Whether searches are performed with case sensitivity
+    __allow_empty    = false;  // Whether a blank field submission is treated as valid
+    __allow_newline  = false;  // Whether to allow newline characters or swap to space
     
-    max_length     = 1000;   // Maximum text entry string length. Do not exceed 1024
-    search_timeout = 200;    // Minimum milliseconds between doing consecutive search
+    __max_length     = 1000;   // Maximum text entry string length. Do not exceed 1024
+    __search_timeout = 200;    // Minimum milliseconds between doing consecutive search
     
     #endregion
     
@@ -53,7 +53,7 @@ function __input_string()
     __on_mobile_web  = ((os_browser != browser_not_a_browser) && ((os_type != os_macosx) && (os_type != os_linux) && (os_type != os_windows) && (os_type != os_operagx)));
     
     // GDK hard-limit for all entry methods
-    if (__on_xbox) max_length = min(max_length, 256);
+    if (__on_xbox) __max_length = min(__max_length, 256);
     
     #endregion
     
@@ -171,7 +171,7 @@ function __input_string()
     {
         _string = string(_string);
         
-        if (!allow_newline)
+        if (!__allow_newline)
         {
             // Filter carriage return and newline
             _string = string_replace_all(_string, chr(13), "");
@@ -182,7 +182,7 @@ function __input_string()
         _string = string_replace_all(_string, chr(127), "");
         
         // Enforce length
-        var _max = max_length + (__on_android? 1 : 0);
+        var _max = __max_length + (__on_android? 1 : 0);
         _string = string_copy(_string, 1, _max);
         
         // Left pad one space (fixes Android quirk on first character)
@@ -218,9 +218,9 @@ function __input_string()
     
     __submit = function()
     {
-        if (auto_trim) __set(__trim(__value));
+        if (__auto_trim) __set(__trim(__value));
         
-        if ((__callback != undefined) && ((__value != "") || allow_empty))
+        if ((__callback != undefined) && ((__value != "") || __allow_empty))
         {
             if (is_method(__callback))
             {
@@ -260,7 +260,7 @@ function __input_string()
     
     __search = function()
     {
-        if (__search_queue && (__search_last < (current_time - search_timeout)))
+        if (__search_queue && (__search_last < (current_time - __search_timeout)))
         {
             __search_queue = false;
             __search_last  = current_time;
@@ -270,7 +270,7 @@ function __input_string()
         
             var _find = __value;
             var _i = 0;
-            if (!allow_case) 
+            if (!__allow_case) 
             {
                 // Any case
                 _find = string_lower(_find);
@@ -383,7 +383,7 @@ function __input_string()
             }
             
             _virtual_submit = __submit_get();          
-            if (auto_closevkb && _virtual_submit)
+            if (__auto_closevkb && _virtual_submit)
             {
                 // Close virtual keyboard on submission
                 __keyboard_hide();
@@ -421,7 +421,7 @@ function __input_string()
             __set(_string);
         }
                 
-        if (auto_submit && !__async_submit && (_virtual_submit || (!__on_playstation && keyboard_check_pressed(vk_enter)))) __submit();
+        if (__auto_submit && !__async_submit && (_virtual_submit || (!__on_playstation && keyboard_check_pressed(vk_enter)))) __submit();
         
         __async_submit = false;
         __just_set     = false;
@@ -434,14 +434,14 @@ function __input_string()
     })(); return instance;
 }
 
-function input_string_max_length_set(_max_length)
+function input_string___max_length_set(___max_length)
 {
-    if (!is_numeric(_max_length) || (_max_length < 0) || (_max_length > 1024))
+    if (!is_numeric(___max_length) || (___max_length < 0) || (___max_length > 1024))
     {
         show_error
         (
             "Input String Error: Invalid value provided for max length: \"" 
-                + string(_max_length) 
+                + string(___max_length) 
                 + "\". Expected a value between 0 and 1024",
             true
         );
@@ -451,12 +451,12 @@ function input_string_max_length_set(_max_length)
     
     with (__input_string())
     {
-        max_length = _max_length;
+        __max_length = ___max_length;
         
         // Respect hard-limit on Xbox GDK
-        if (__on_xbox) max_length = max(max_length, 256);
+        if (__on_xbox) __max_length = max(__max_length, 256);
         
-        __set(string_copy(__value, 0, _max_length));
+        __set(string_copy(__value, 0, ___max_length));
     }
 }
 

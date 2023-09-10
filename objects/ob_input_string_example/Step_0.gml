@@ -60,7 +60,7 @@ if (keyboard_check_pressed(vk_f3) || gamepad_button_check_pressed(_gamepad_index
 if (keyboard_check_pressed(vk_f4) || gamepad_button_check_pressed(_gamepad_index, gp_padr))
 {
     // Set max-length
-    input_string_max_length_set(32);
+    input_string___max_length_set(32);
 }
 
 if (keyboard_check_pressed(vk_f5) || keyboard_check_pressed(vk_f6) || gamepad_button_check_pressed(_gamepad_index, gp_shoulderl) || gamepad_button_check_pressed(_gamepad_index, gp_shoulderr))
