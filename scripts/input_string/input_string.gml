@@ -120,13 +120,11 @@ function __input_string()
     else 
     {
         __platform_hint = "keyboard";
+
         if (__use_steam)
         {
-            if (steam_utils_is_steam_running_on_steam_deck())
-            {
-                // 'virtual' (OSK) on Steam Deck
-                __platform_hint = "virtual";
-            }
+            // 'virtual' (OSK) on Steam Deck
+            if (steam_utils_is_steam_running_on_steam_deck()) __platform_hint = "virtual";
         }
     }
     
@@ -175,17 +173,9 @@ function __input_string()
         
         if (!allow_newline)
         {
-            if (!__on_windows)
-            {
-                // Filter carriage returns
-                _string = string_replace_all(_string, chr(13), "");
-            }
-            
-            if (__on_ios)
-            {
-                // Filter newlines
-                _string = string_replace_all(_string, chr(10), " ");
-            }
+            // Filter carriage return and newline
+            _string = string_replace_all(_string, chr(13), "");
+            _string = string_replace_all(_string, chr(10), " ");
         }
         
         // Filter delete character (fixes Windows and Mac quirk)
@@ -254,7 +244,7 @@ function __input_string()
     {
         // Clear
         var _was_empty = (array_length(__search_list) == 0);
-        array_delete(__search_list, 0, array_length(__search_list));
+        array_resize(__search_list, 0);
         
         // Stringify
         var _i = 0;
@@ -275,7 +265,7 @@ function __input_string()
             __search_queue = false;
             __search_last  = current_time;
             
-            array_delete(__result_list, 0, array_length(__result_list));        
+            array_resize(__result_list, 0);        
             if (__trim(__value) == "") return __result_list;
         
             var _find = __value;
@@ -306,33 +296,32 @@ function __input_string()
     
     __submit_get = function()
     {
-        var _virtual_submit = false;
         if (__async_id == undefined)
         {
             // Handle virtual keyboard submission
-            if (__on_ios)
+            if ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > (string_length(__value) - (__on_android? 1 : 0))))
             {
-                // iOS virtual keyboard submission
-                _virtual_submit = ((ord(keyboard_lastchar) == 10) && (string_length(keyboard_string) > string_length(__value)));
+                // Mobile virtual keyboard submission
+                return true;
             }
             else if (__on_xbox && !__just_set)
             {
                 // Xbox virtual keyboard submission
-                _virtual_submit = (keyboard_string != __value);
+                return (keyboard_string != __value);
             }
             else if (__on_android && keyboard_check_pressed(10))
             {
                 // Android virtual keyboard submission
-                _virtual_submit = true;
+                return true;
             }
             else
             {
                 // Virtual or hardware keyboard submission
-                _virtual_submit = keyboard_check_pressed(vk_enter);
+                return keyboard_check_pressed(vk_enter);
             }
         }
                 
-        return _virtual_submit;
+        return false;
     };
                     
     __keyboard_show = function(_kbv_type)

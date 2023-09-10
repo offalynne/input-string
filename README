@@ -7,7 +7,7 @@ Frontend Features
 - Reliable getters and setters
 - Callback for text submission
 - Easier async dialog handling
-- Realtime string array filter
+- Realtime array search filter
 
 Backend Features
 - Safe handling at string length limit
@@ -77,7 +77,7 @@ input_string_keyboard_hide()
 
 input_string_tick()
   function: Update state
-  in event: Begin Step
+  in event: Begin Step (Optional)
   returned: None
 
 input_string_async_active()
