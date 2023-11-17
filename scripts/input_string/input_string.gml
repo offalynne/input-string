@@ -434,7 +434,7 @@ function __input_string()
     })(); return instance;
 }
 
-function input_string___max_length_set(___max_length)
+function input_string_max_length_set(___max_length)
 {
     if (!is_numeric(___max_length) || (___max_length < 0) || (___max_length > 1024))
     {
