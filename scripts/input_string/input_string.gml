@@ -434,14 +434,14 @@ function __input_string()
     })(); return instance;
 }
 
-function input_string_max_length_set(___max_length)
+function input_string_max_length_set(_max_length)
 {
-    if (!is_numeric(___max_length) || (___max_length < 0) || (___max_length > 1024))
+    if (!is_numeric(_max_length) || (_max_length < 0) || (_max_length > 1024))
     {
         show_error
         (
             "Input String Error: Invalid value provided for max length: \"" 
-                + string(___max_length) 
+                + string(_max_length) 
                 + "\". Expected a value between 0 and 1024",
             true
         );
@@ -451,12 +451,12 @@ function input_string_max_length_set(___max_length)
     
     with (__input_string())
     {
-        __max_length = ___max_length;
+        __max_length = _max_length;
         
         // Respect hard-limit on Xbox GDK
         if (__on_xbox) __max_length = max(__max_length, 256);
         
-        __set(string_copy(__value, 0, ___max_length));
+        __set(string_copy(__value, 0, __max_length));
     }
 }
 
