@@ -46,7 +46,7 @@ input_string_search_set([array])
 
 input_string_search_results()
   function: Get search results
-  returned: Array of integers
+  returned: Array of indexes
 
 input_string_force_submit()
   function: Force submission callback
