@@ -107,7 +107,8 @@ function __input_string()
                 // Android on Chromebook form factor (ARC) test via Google
                 // matches(".+_cheets|cheets_.+")
                 var _device = string(_map[? "DEVICE"]);
-                if ((string_pos("_cheets", _device) > 1) || ((string_pos("cheets_", _device) > 0) && (string_pos("cheets_", _device) < (string_length(_device) - 6))))
+                var _match = string_pos("_cheets", _device);
+                if ((_match > 1) || ((_match > 0) && (_match < (string_length(_device) - 6))))
                 {
                     // 'keyboard' (hardware) on Android Chromebook
                     __platform_hint = "keyboard";
