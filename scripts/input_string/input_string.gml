@@ -17,7 +17,7 @@ function __input_string()
     __allow_newline  = false;  // Whether to allow newline characters or swap to space
     
     __max_length     = 1000;   // Maximum text entry string length. Do not exceed 1024
-    __search_timeout = 200;    // Minimum milliseconds between doing consecutive search
+    __search_timeout = 200;    // Minimum millisecond delay between consecutive search
     
     #endregion
     
